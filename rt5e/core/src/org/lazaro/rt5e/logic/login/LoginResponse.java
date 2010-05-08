@@ -6,7 +6,7 @@ package org.lazaro.rt5e.logic.login;
 public enum LoginResponse {
     ALREADY_ONLINE(5), BANNED(4), CLIENT_UPDATED(6), CURRENTLY_UPDATING(14), ERROR(13), INVALID_DETAILS(3), LOGIN(2), LOGIN_LIMIT_EXCEEDED(9), LOGIN_SERVER_OFFLINE(8), WORLD_FULL(7);
 
-    public static LoginResponse forIntegerCode(int responseCode) {
+    public static LoginResponse valueFor(int responseCode) {
         switch (responseCode) {
             case 2:
                 return LOGIN;

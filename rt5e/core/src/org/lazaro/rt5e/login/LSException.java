@@ -9,4 +9,8 @@ public class LSException extends Exception {
     public LSException(String message) {
         super(message);
     }
+
+    public LSException(String message, Throwable e) {
+        super(message, e);
+    }
 }

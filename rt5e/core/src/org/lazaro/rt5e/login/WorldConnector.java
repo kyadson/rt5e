@@ -1,9 +1,16 @@
 package org.lazaro.rt5e.login;
 
+import org.jboss.netty.buffer.ChannelBuffers;
+import org.lazaro.rt5e.Constants;
 import org.lazaro.rt5e.Context;
 import org.lazaro.rt5e.WorldApp;
+import org.lazaro.rt5e.logic.login.LoginResponse;
+import org.lazaro.rt5e.logic.map.Tile;
+import org.lazaro.rt5e.logic.player.Player;
+import org.lazaro.rt5e.logic.player.PlayerDefinition;
 import org.lazaro.rt5e.network.Packet;
 import org.lazaro.rt5e.network.PacketBuilder;
+import org.lazaro.rt5e.utility.BufferUtilities;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -21,7 +28,7 @@ public class WorldConnector implements Runnable {
     private DataOutputStream output = null;
     private Socket socket = null;
     private Thread thread;
-    private Map<String, Runnable> futureQueue = new HashMap<String, Runnable>();
+    private Map<String, Packet> packetQueue = new HashMap<String, Packet>();
 
     public WorldConnector() throws IOException {
         connect();
@@ -56,5 +63,115 @@ public class WorldConnector implements Runnable {
     }
 
     public void run() {
+        while (true) {
+            try {
+                int opcode = input.read() & 0xff;
+                int size = input.read() & 0xff;
+                String userName = BufferUtilities.getString(input);
+                byte[] data = new byte[size];
+                if (size > 0) {
+                    input.read(data);
+                }
+                synchronized (packetQueue) {
+                    packetQueue.put(userName, new Packet(opcode, size, null, ChannelBuffers.wrappedBuffer(data)));
+                    packetQueue.notifyAll();
+                }
+            } catch (IOException e) {
+                try {
+                    output.close();
+                    input.close();
+                    socket.close();
+                } catch (IOException e2) {
+                } finally {
+                    synchronized (packetQueue) {
+                        packetQueue.notifyAll();
+                    }
+                }
+                System.err.println("Login server disconnected! Attempting reconnection.");
+                while (true) {
+                    try {
+                        connect();
+                        Thread.sleep(5000);
+                    } catch (IOException e2) {
+                        continue;
+                    } catch (InterruptedException e2) {
+                        continue;
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    private Packet waitForPacket(String userName) throws LSException {
+        synchronized (packetQueue) {
+            while (true) {
+                if (socket != null && socket.isConnected()
+                        && !socket.isClosed()) {
+                    try {
+                        packetQueue.wait();
+                    } catch (InterruptedException e) {
+                        continue;
+                    }
+                    Packet packet = packetQueue.remove(userName);
+                    if (packet != null) {
+                        return packet;
+                    }
+                } else {
+                    throw new LSException("Login server disconnected!");
+                }
+            }
+        }
+    }
+
+    private void sendPacket(Packet packet) throws LSException {
+        synchronized (lock) {
+            try {
+                if (!packet.isRaw()) {
+                    output.write(packet.getOpcode());
+                    output.write(packet.getLength());
+                }
+                output.write(packet.getBytes());
+                output.flush();
+            } catch (IOException e) {
+                throw new LSException("Unable to send message to login server!", e);
+            }
+        }
+    }
+
+    public LoginResponse loadPlayer(Player player) throws LSException {
+        PacketBuilder pb = new PacketBuilder(2);
+        pb.putString(player.getName());
+        pb.putByte(player.getLoginOpcode());
+        pb.putString(player.getPassword());
+        sendPacket(pb.toPacket());
+        Packet packet = waitForPacket(player.getName());
+        LoginResponse result = LoginResponse.valueFor(packet.getUnsigned());
+        if (result == LoginResponse.LOGIN) {
+            PlayerDefinition def = (PlayerDefinition) packet.getObject();
+            player.setLocation(Tile.locate(def.getCoordX(), def.getCoordY(), def
+                    .getCoordZ()));
+        }
+        return result;
+    }
+
+
+    public void savePlayer(Player player) throws LSException {
+        PacketBuilder pb = new PacketBuilder(2);
+        pb.putString(player.getName()).putByte(player.getLoginOpcode());
+        PlayerDefinition def = new PlayerDefinition();
+        def.setCoordX(player.getLocation().getX());
+        def.setCoordY(player.getLocation().getY());
+        def.setCoordZ(player.getLocation().getZ());
+        pb.putObject(def);
+        sendPacket(pb.toPacket());
+    }
+
+    public byte[] worldListData() throws LSException {
+        PacketBuilder smf = new PacketBuilder(3);
+        smf.putString(Constants.ROOT_USER_NAME);
+        sendPacket(smf.toPacket());
+        Packet message = waitForPacket(Constants.ROOT_USER_NAME);
+        return message.getBytes();
     }
 }

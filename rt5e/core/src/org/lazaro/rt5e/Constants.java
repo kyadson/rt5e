@@ -12,4 +12,9 @@ public interface Constants {
     public static final String LOGIN_SERVER_CONFIG = "./data/login_server.ini";
 
     public static final int UPDATE_INTERVAL = 600;
+
+    /**
+     * The server's internal user name used for security purposes.
+     */
+    public static final String ROOT_USER_NAME = "root";
 }
