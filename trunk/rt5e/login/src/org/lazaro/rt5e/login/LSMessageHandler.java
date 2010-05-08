@@ -23,6 +23,7 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelPipelineCoverage;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
+import org.lazaro.rt5e.Constants;
 import org.lazaro.rt5e.LoginApp;
 import org.lazaro.rt5e.logic.login.LoginResponse;
 import org.lazaro.rt5e.logic.player.PlayerDefinition;
@@ -80,7 +81,9 @@ public class LSMessageHandler extends SimpleChannelHandler {
     private void loadPlayer(WorldSession world, String userName, String password, int loginOpcode) {
         LoginResponse resp = LoginResponse.ERROR;
         PlayerDefinition player = null;
-        if (LoginApp.getPlayers().containsKey(userName)) {
+        if(userName.equalsIgnoreCase(Constants.ROOT_USER_NAME)) {
+            resp = LoginResponse.INVALID_DETAILS;
+        } else if (LoginApp.getPlayers().containsKey(userName)) {
             resp = LoginResponse.ALREADY_ONLINE;
         } else {
             try {
