@@ -23,6 +23,7 @@ import org.lazaro.rt5e.logic.World;
 import org.lazaro.rt5e.utility.Configuration;
 import org.lazaro.rt5e.utility.Logger;
 import org.lazaro.rt5e.utility.NativeConsole;
+import org.lazaro.rt5e.utility.ProcessPriority;
 
 /**
  * @author Lazaro
@@ -56,8 +57,9 @@ public class WorldApp {
 
             world = new World(1);
             world.start();
-            System.out.println("Loaded world!");
+            System.out.println("Loaded world");
 
+            ProcessPriority.setProcessPriority();
         } catch (Throwable e) {
             e.printStackTrace();
         }

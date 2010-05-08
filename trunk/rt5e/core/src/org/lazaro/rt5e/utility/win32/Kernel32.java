@@ -225,6 +225,15 @@ public interface Kernel32 extends W32API {
 
     int TRUNCATE_EXISTING = 5;
 
+    int ABOVE_NORMAL_PRIORITY_CLASS = 0x00008000;
+    int BELOW_NORMAL_PRIORITY_CLASS = 0x00004000;
+    int HIGH_PRIORITY_CLASS= 0x00000080;
+    int IDLE_PRIORITY_CLASS = 0x00000040;
+    int NORMAL_PRIORITY_CLASS = 0x00000020;
+    int PROCESS_MODE_BACKGROUND_BEGIN = 0x00100000;
+    int PROCESS_MODE_BACKGROUND_END = 0x00200000;
+    int REALTIME_PRIORITY_CLASS = 0x00000100;
+
 
     boolean CloseHandle(HANDLE hObject);
 
@@ -318,4 +327,6 @@ public interface Kernel32 extends W32API {
     void SetLastError(int dwErrCode);
 
     int WaitForSingleObject(HANDLE hHandle, int dwMilliseconds);
+    
+    boolean SetPriorityClass(HANDLE hProcess, int dwPriorityClass);
 }
