@@ -42,8 +42,8 @@ public class LSConnectionHandler extends SimpleChannelHandler {
                                     ChannelStateEvent e) {
         Channel ch = ctx.getChannel();
         Connection conn = ConnectionMap.forChannel(ch);
-        
-        WorldSession world  = (WorldSession) conn.getAttachment();
+
+        WorldSession world = (WorldSession) conn.getAttachment();
 
         if (world.isLobbyWorld())
             LoginApp.getLobbyWorlds().remove(world.getId());

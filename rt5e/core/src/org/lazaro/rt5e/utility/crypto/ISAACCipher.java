@@ -17,7 +17,7 @@
  * along with RT5E.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.lazaro.rt5e.network.encryption;
+package org.lazaro.rt5e.utility.crypto;
 
 /**
  * <p>

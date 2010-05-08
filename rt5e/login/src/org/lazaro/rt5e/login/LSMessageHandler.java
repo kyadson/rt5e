@@ -81,7 +81,7 @@ public class LSMessageHandler extends SimpleChannelHandler {
     private void loadPlayer(WorldSession world, String userName, String password, int loginOpcode) {
         LoginResponse resp = LoginResponse.ERROR;
         PlayerDefinition player = null;
-        if(userName.equalsIgnoreCase(Constants.ROOT_USER_NAME)) {
+        if (userName.equalsIgnoreCase(Constants.ROOT_USER_NAME)) {
             resp = LoginResponse.INVALID_DETAILS;
         } else if (LoginApp.getPlayers().containsKey(userName)) {
             resp = LoginResponse.ALREADY_ONLINE;
