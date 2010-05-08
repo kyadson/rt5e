@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager" verified="true">
-    <list default="true" readonly="true" id="e2f389fe-8554-4ab2-99c9-1298bbae0213" name="Default" comment="" />
+    <list default="true" readonly="true" id="e2f389fe-8554-4ab2-99c9-1298bbae0213" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="rt5e.iws" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -108,7 +110,7 @@
       <file leaf-file-name="Constants.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="34" selection-start="363" selection-end="363" vertical-scroll-proportion="0.54214126">
+            <state line="15" column="0" selection-start="364" selection-end="364" vertical-scroll-proportion="0.5808656">
               <folding />
             </state>
           </provider>
@@ -640,7 +642,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="34" selection-start="363" selection-end="363" vertical-scroll-proportion="0.54214126">
+        <state line="15" column="0" selection-start="364" selection-end="364" vertical-scroll-proportion="0.5808656">
           <folding />
         </state>
       </provider>
