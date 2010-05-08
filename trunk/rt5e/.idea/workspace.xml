@@ -2,7 +2,28 @@
 <project version="4">
   <component name="ChangeListManager" verified="true">
     <list default="true" readonly="true" id="e2f389fe-8554-4ab2-99c9-1298bbae0213" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/map/Direction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/Constants.java" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/Constants.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/map" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/ChatMessage.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/player/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSMessageHandler.java" afterPath="$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSMessageHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/map/Part.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Graphics.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/WorldConnector.java" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/WorldConnector.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Animation.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/Entity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/LSException.java" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/LSException.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Masks.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/FaceDirection.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Mask.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/map/Tile.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/Node.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/login/LoginResponse.java" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/login/LoginResponse.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Hit.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/Locatable.java" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="rt5e.iws" />
@@ -62,10 +83,59 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="WorldApp.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/WorldApp.java">
+      <file leaf-file-name="Locatable.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/Locatable.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="52" selection-start="584" selection-end="584" vertical-scroll-proportion="0.0">
+            <state line="10" column="22" selection-start="209" selection-end="209" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WorldConnector.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/WorldConnector.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="166" column="34" selection-start="5974" selection-end="5974" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChatMessage.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/ChatMessage.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="25" selection-start="175" selection-end="175" vertical-scroll-proportion="0.309795">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constants.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/Constants.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="18" column="35" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginResponse.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/login/LoginResponse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="40" selection-start="316" selection-end="316" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LSException.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/LSException.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="32" selection-start="247" selection-end="247" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -74,79 +144,38 @@
       <file leaf-file-name="LSMessageHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSMessageHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="127" column="12" selection-start="5488" selection-end="5488" vertical-scroll-proportion="0.0">
+            <state line="45" column="40" selection-start="1707" selection-end="1707" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Part.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/map/Part.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="23" selection-start="671" selection-end="671" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Player.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/player/Player.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="5" selection-start="337" selection-end="337" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LSDecoder.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSDecoder.java">
+      <file leaf-file-name="Masks.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Masks.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="32" selection-start="2210" selection-end="2210" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WorldSession.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/WorldSession.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="128" selection-start="511" selection-end="511" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WorldConnector.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/WorldConnector.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="122" selection-start="1211" selection-end="1211" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Constants.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/Constants.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="0" selection-start="364" selection-end="364" vertical-scroll-proportion="0.5808656">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Context.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/Context.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="13" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Benchmark.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/utility/Benchmark.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="13" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Engine.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/engine/Engine.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="70" selection-start="771" selection-end="771" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="World.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/World.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="0" selection-start="628" selection-end="628" vertical-scroll-proportion="0.0">
+            <state line="16" column="19" selection-start="448" selection-end="448" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -162,22 +191,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Masks.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Mask.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Hit.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Graphics.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/ChatMessage.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Animation.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/FaceDirection.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/Entity.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/map/Part.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/Locatable.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/player/Player.java" />
         <option value="$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSMessageHandler.java" />
-        <option value="$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSClientSession.java" />
-        <option value="$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSException.java" />
         <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/LSException.java" />
-        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/utility/Benchmark.java" />
-        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/io/SQLHandler.java" />
-        <option value="$PROJECT_DIR$/login/src/org/lazaro/rt5e/LoginApp.java" />
-        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/WorldApp.java" />
-        <option value="$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSServerSession.java" />
-        <option value="$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSConnectionHandler.java" />
-        <option value="$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSDecoder.java" />
-        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/LSClientSession.java" />
-        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/World.java" />
-        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/engine/Engine.java" />
-        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/WorldConnector.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/login/LoginResponse.java" />
         <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/Constants.java" />
+        <option value="$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/WorldConnector.java" />
       </list>
     </option>
   </component>
@@ -197,7 +226,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -223,6 +252,82 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="rt5e" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="login" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="login" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lazaro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="login" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lazaro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="login" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lobby" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -258,6 +363,202 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lazaro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="login" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lazaro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lazaro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="player" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lazaro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mask" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lazaro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="map" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="org" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lazaro" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="rt5e" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="login" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -510,6 +811,7 @@
     <layout>
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32921812" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.643347" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -523,7 +825,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7777778" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Repositories" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32921812" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24946082" sideWeight="0.50870144" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -563,86 +864,128 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/engine/Semaphore.java">
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="72" selection-end="72" vertical-scroll-proportion="0.0" />
+        <state line="14" column="47" selection-start="365" selection-end="365" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/FaceDirection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="77" selection-start="325" selection-end="325" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Animation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="76" selection-end="76" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Hit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="17" selection-start="151" selection-end="151" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Graphics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="13" selection-start="76" selection-end="76" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/Masks.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="19" selection-start="448" selection-end="448" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/map/Tile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="16" selection-start="88" selection-end="88" vertical-scroll-proportion="0.19362187">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/Locatable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="22" selection-start="209" selection-end="209" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/map/Part.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="23" selection-start="671" selection-end="671" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/LSException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0" />
+        <state line="11" column="32" selection-start="247" selection-end="247" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/io/SQLHandler.java">
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/login/LoginResponse.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="58" selection-start="1228" selection-end="1228" vertical-scroll-proportion="0.0" />
+        <state line="8" column="40" selection-start="316" selection-end="316" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/network/world/ConnectionHandler.java">
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/player/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="190" selection-end="1118" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login/src/org/lazaro/rt5e/LoginApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="38" selection-start="3322" selection-end="3322" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSConnectionHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="13" selection-start="1314" selection-end="1314" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/WorldApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="52" selection-start="584" selection-end="584" vertical-scroll-proportion="0.0">
+        <state line="16" column="5" selection-start="337" selection-end="337" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSMessageHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="12" selection-start="5488" selection-end="5488" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/LSDecoder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="32" selection-start="2210" selection-end="2210" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/login/src/org/lazaro/rt5e/login/WorldSession.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="128" selection-start="511" selection-end="511" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/WorldConnector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="122" selection-start="1211" selection-end="1211" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/Context.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="13" selection-start="112" selection-end="112" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/utility/Benchmark.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="73" selection-end="73" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/engine/Engine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="70" selection-start="771" selection-end="771" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/World.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="0" selection-start="628" selection-end="628" vertical-scroll-proportion="0.0" />
+        <state line="45" column="40" selection-start="1707" selection-end="1707" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/Constants.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="0" selection-start="364" selection-end="364" vertical-scroll-proportion="0.5808656">
+        <state line="18" column="35" selection-start="481" selection-end="481" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/login/WorldConnector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="166" column="34" selection-start="5974" selection-end="5974" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/org/lazaro/rt5e/logic/mask/ChatMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="25" selection-start="175" selection-end="175" vertical-scroll-proportion="0.309795">
           <folding />
         </state>
       </provider>

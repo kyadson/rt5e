@@ -27,11 +27,11 @@ public class LSMessageHandler extends SimpleChannelHandler {
      * For revision: 594 - 597
      *
      * @param world    The world the user is on.
-     * @param username
+     * @param userName
      */
-    private void generateWorldListData(WorldSession world, String username) {
+    private void generateWorldListData(WorldSession world, String userName) {
         PacketBuilder mb = new PacketBuilder(3, Packet.Type.VAR_BYTE);
-        mb.putString(username);
+        mb.putString(userName);
 
         mb.putByte(1).putByte(2).putByte(1);
 
@@ -58,17 +58,17 @@ public class LSMessageHandler extends SimpleChannelHandler {
         world.getConnection().write(mb.toPacket());
     }
 
-    private void loadPlayer(WorldSession world, String username, String password, int type) {
+    private void loadPlayer(WorldSession world, String userName, String password, int loginOpcode) {
         LoginResponse resp = LoginResponse.ERROR;
         PlayerDefinition player = null;
-        if (LoginApp.getPlayers().containsKey(username)) {
+        if (LoginApp.getPlayers().containsKey(userName)) {
             resp = LoginResponse.ALREADY_ONLINE;
         } else {
             try {
                 ResultSet rs = LoginApp.getSQLHandler()
                         .getConnection().createStatement().executeQuery(
-                                "SELECT * FROM saved_games WHERE username='"
-                                        + username + "' LIMIT 1");
+                                "SELECT * FROM saved_games WHERE userName='"
+                                        + userName + "' LIMIT 1");
                 do {
                     if (rs.next()) {
                         String savedPassword = rs.getString("password");
@@ -89,32 +89,32 @@ public class LSMessageHandler extends SimpleChannelHandler {
                                 .getConnection().createStatement()
                                 .executeUpdate(
                                         "INSERT INTO saved_games (username, password) VALUES ('"
-                                                + username + "', '" + password
+                                                + userName + "', '" + password
                                                 + "')"); // If you want to
                         // automatically
                         // create an account
                         // like most private
                         // servers do.
-                        loadPlayer(world, username, password, type);
+                        loadPlayer(world, userName, password, loginOpcode);
                         return;
                     }
                 } while (false);
             } catch (Exception e) {
-                System.err.println("Error loading character [name=" + username + "]");
+                System.err.println("Error loading character [name=" + userName + "]");
                 e.printStackTrace();
                 resp = LoginResponse.ERROR;
             }
         }
 
         PacketBuilder mb = new PacketBuilder(2, Packet.Type.VAR_BYTE);
-        mb.putString(username).putByte(resp.getResponseCode());
+        mb.putString(userName).putByte(resp.getResponseCode());
         if (resp == LoginResponse.LOGIN) {
             mb.putObject(player);
-            if (type != 19) {
-                LoginApp.getPlayers().put(username, world);
-                world.getPlayers().add(username);
+            if (loginOpcode != 19) {
+                LoginApp.getPlayers().put(userName, world);
+                world.getPlayers().add(userName);
 
-                System.out.println("Registered player [name=" + username + ", world="
+                System.out.println("Registered player [name=" + userName + ", world="
                         + world.getId() + "]");
             }
         }
@@ -129,52 +129,47 @@ public class LSMessageHandler extends SimpleChannelHandler {
 
             if (conn.getAttachment() != null) {
                 WorldSession world = (WorldSession) conn.getAttachment();
-                String username = packet.getString();
+                String userName = packet.getString();
                 switch (packet.getOpcode()) {
-                    case 1: // check if player is online
-                        PacketBuilder smf = new PacketBuilder(1, Packet.Type.VAR_BYTE).putString(username).putByte(LoginApp.getPlayers()
-                                .containsKey(username) ? 1 : 0);
-                        conn.write(smf.toPacket());
-                        break;
-                    case 2: // load player
-                        int type = packet.getUnsigned();
+                    case 1: // load player
+                        int loginOpcode = packet.getUnsigned();
                         String password = packet.getString();
-                        loadPlayer(world, username, password, type);
+                        loadPlayer(world, userName, password, loginOpcode);
                         break;
-                    case 3: // save player
-                        type = packet.getUnsigned();
+                    case 2: // save player
+                        loginOpcode = packet.getUnsigned();
                         PlayerDefinition player = (PlayerDefinition) packet.getObject();
-                        savePlayer(world, username, type, player);
+                        savePlayer(world, userName, loginOpcode, player);
                         break;
-                    case 4: // generate world list data
-                        generateWorldListData(world, username);
+                    case 3: // generate world list data
+                        generateWorldListData(world, userName);
                         break;
                 }
             }
         }
     }
 
-    private void savePlayer(WorldSession world, String username, int type, PlayerDefinition player) {
+    private void savePlayer(WorldSession world, String userName, int loginOpcode, PlayerDefinition player) {
         StringBuilder query = new StringBuilder();
         query.append("UPDATE saved_games SET ");
         query.append("coord_x='").append(player.getCoordX()).append("'");
         query.append(", coord_y='").append(player.getCoordY()).append("'");
         query.append(", coord_z='").append(player.getCoordZ()).append("'");
-        query.append(" WHERE username='").append(username).append("'");
+        query.append(" WHERE userName='").append(userName).append("'");
         try {
             LoginApp.getSQLHandler().getConnection()
                     .createStatement().executeUpdate(query.toString());
         } catch (Exception e) {
-            System.err.println("Unable to save player : " + username
+            System.err.println("Unable to save player : " + userName
                     + "!");
             e.printStackTrace();
         }
 
-        if (type != 19) {
-            LoginApp.getPlayers().remove(username);
-            world.getPlayers().remove(username);
+        if (loginOpcode != 19) {
+            LoginApp.getPlayers().remove(userName);
+            world.getPlayers().remove(userName);
 
-            System.out.println("Un-registered player [name=" + username + ", world="
+            System.out.println("Un-registered player [name=" + userName + ", world="
                     + world.getId() + "]");
         }
     }
