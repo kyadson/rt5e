@@ -25,16 +25,30 @@ import java.io.PrintStream;
  * @author Lazaro
  */
 public class Logger {
+    protected static Object lock = new Object();
     protected static int indentationLevel = 0;
+    protected static boolean textOnLine = false;
+
 
     public static void setupLogging() {
         System.setOut(new PrintStream(System.out) {
             @Override
             public void print(String string) {
-                for (int i = 0; i < indentationLevel; i++) {
-                    super.print(" ");
+                if(string.length() > 0) {
+                    synchronized(lock) {
+                        if(!textOnLine) {
+                            for (int i = 0; i < indentationLevel; i++) {
+                                super.print(" ");
+                            }
+                            if(string.charAt(string.length() - 1) != '\n') {
+                                textOnLine = true;
+                            }
+                        } else if(string.charAt(string.length() - 1) == '\n') {
+                            textOnLine = false;
+                        }
+                        super.print(string);
+                    }
                 }
-                super.print(string);
             }
 
             @Override
@@ -50,10 +64,21 @@ public class Logger {
         System.setErr(new PrintStream(System.err) {
             @Override
             public void print(String string) {
-                for (int i = 0; i < indentationLevel; i++) {
-                    super.print(" ");
+                if(string.length() > 0) {
+                    synchronized(lock) {
+                        if(!textOnLine) {
+                            for (int i = 0; i < indentationLevel; i++) {
+                                super.print(" ");
+                            }
+                            if(string.charAt(string.length() - 1) != '\n') {
+                                textOnLine = true;
+                            }
+                        } else if(string.charAt(string.length() - 1) == '\n') {
+                            textOnLine = false;
+                        }
+                        super.print(string);
+                    }
                 }
-                super.print(string);
             }
 
             @Override

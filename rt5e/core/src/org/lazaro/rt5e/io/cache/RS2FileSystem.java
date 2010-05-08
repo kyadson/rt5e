@@ -98,7 +98,6 @@ public class RS2FileSystem {
 
                 remaining -= amount;
 
-                // if (remaining > 0) {
                 /* Checks for next block details */
                 if (nextFileId != fileId) {
                     throw new IOException("Invalid next file id read! [cache=" + id + ", file=" + fileId + ", next file id=" + nextFileId + "]");
@@ -108,7 +107,6 @@ public class RS2FileSystem {
                     throw new IOException(
                             "Invalid next file system id read! [cache=" + id + ", file=" + fileId + ", next cache=" + nextFileSystemId + "]");
                 }
-                //}
                 offset++;
             }
             buffer.flip();
@@ -134,6 +132,7 @@ public class RS2FileSystem {
         return null;
     }
 
+    @Deprecated
     public boolean setFile(int fileId, int compression, byte[] data, int decompressedLength) {
         try {
             boolean fileExists = getFile(fileId) != null;

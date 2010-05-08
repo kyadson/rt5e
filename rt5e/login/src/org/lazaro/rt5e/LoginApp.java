@@ -32,6 +32,7 @@ import org.lazaro.rt5e.network.StandardPacketEncoder;
 import org.lazaro.rt5e.utility.Configuration;
 import org.lazaro.rt5e.utility.Logger;
 import org.lazaro.rt5e.utility.NativeConsole;
+import org.lazaro.rt5e.utility.ProcessPriority;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -103,6 +104,7 @@ public class LoginApp {
             startupNetworking();
             System.out.println("Bound port : " + Context.getConfiguration().getInt("LOGIN_SERVER_PORT"));
 
+            ProcessPriority.setProcessPriority();
 
             Logger.resetIndentation();
             System.out.println("DONE!");
