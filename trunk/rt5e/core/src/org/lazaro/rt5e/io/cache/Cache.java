@@ -22,6 +22,8 @@ package org.lazaro.rt5e.io.cache;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.ByteBuffer;
+import java.util.zip.CRC32;
 
 /**
  * @author Lazaro, Defyboy
@@ -72,6 +74,23 @@ public class Cache {
         if (debug) {
             System.out.println("Loaded descriptor file tables.");
         }
+
+        ByteBuffer buffer = ByteBuffer.allocate(descriptorTableFile.getLength() * 8);
+        CRC32 crc = new CRC32();
+        for (int i = 0; i < descriptorTableFile.getLength(); i++) {
+            RS2File file = descriptorTableFile.getFile(i);
+            crc.update(ByteBuffer.allocate(5).put((byte) file.getCompression()).putInt(file.getLength()).array());
+            crc.update(file.getBytes());
+            buffer.putInt((int) crc.getValue());
+            buffer.putInt(fileSystems[i].getDescriptorTable().getRevision());
+            crc.reset();
+        }
+        buffer.flip();
+        cacheHash = new RS2File(255, 255, 0, descriptorTableFile.getLength() * 8, buffer);
+
+        if (debug) {
+            System.out.println("Calculated cache checksums");
+        }
     }
 
     public Cache(String directory) throws IOException {
@@ -90,7 +109,7 @@ public class Cache {
         return descriptorTableFile;
     }
 
-    public RS2File getFile(int fileSystemId, int fileId) {
+    public synchronized RS2File getFile(int fileSystemId, int fileId) {
         if (fileSystemId == 255 && fileId == 255) {
             return cacheHash;
         }

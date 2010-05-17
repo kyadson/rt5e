@@ -17,7 +17,7 @@
  * along with RT5E.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.lazaro.rt5e.network.world;
+package org.lazaro.rt5e.network.protocol.world;
 
 import org.jboss.netty.channel.*;
 import org.lazaro.rt5e.network.Connection;

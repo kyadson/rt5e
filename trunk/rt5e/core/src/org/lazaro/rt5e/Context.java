@@ -19,9 +19,12 @@
  */
 package org.lazaro.rt5e;
 
+import org.lazaro.rt5e.io.cache.Cache;
 import org.lazaro.rt5e.utility.Configuration;
 
 /**
+ * A simple static class used for storing variables used by multiple modules.
+ *
  * @author Lazaro
  */
 public class Context {
@@ -34,4 +37,14 @@ public class Context {
     }
 
     private static Configuration configuration = null;
+
+    public static Cache getCache() {
+        return cache;
+    }
+
+    public static void setCache(Cache cache) {
+        Context.cache = cache;
+    }
+
+    private static Cache cache = null;
 }

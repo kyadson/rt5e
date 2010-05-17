@@ -19,11 +19,23 @@
  */
 package org.lazaro.rt5e;
 
+import org.jboss.netty.bootstrap.ServerBootstrap;
+import org.jboss.netty.channel.ChannelFactory;
+import org.jboss.netty.channel.ChannelPipeline;
+import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+import org.lazaro.rt5e.io.cache.Cache;
 import org.lazaro.rt5e.logic.World;
+import org.lazaro.rt5e.network.StandardPacketEncoder;
+import org.lazaro.rt5e.network.protocol.HandshakeDecoder;
+import org.lazaro.rt5e.network.protocol.world.ConnectionHandler;
 import org.lazaro.rt5e.utility.Configuration;
 import org.lazaro.rt5e.utility.Logger;
 import org.lazaro.rt5e.utility.NativeConsole;
 import org.lazaro.rt5e.utility.ProcessPriority;
+
+import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author Lazaro
@@ -41,6 +53,27 @@ public class WorldApp {
 
     private static World world = null;
 
+    private static ExecutorService bossExecutor = Executors.newCachedThreadPool();
+    private static ExecutorService workerExecutor = Executors.newCachedThreadPool();
+
+
+    private static void startupNetworking() throws Throwable {
+        ChannelFactory factory = new NioServerSocketChannelFactory(
+                bossExecutor, workerExecutor);
+        ConnectionHandler handler = new ConnectionHandler();
+
+        ServerBootstrap bootstrap = new ServerBootstrap(factory);
+        ChannelPipeline pipeline = bootstrap.getPipeline();
+        pipeline.addLast("handler", handler);
+        pipeline.addLast("encoder", new StandardPacketEncoder());
+        pipeline.addLast("decoder", new HandshakeDecoder());
+
+        bootstrap.setOption("child.tcpNoDelay", false);
+        bootstrap.setOption("child.keepAlive", true);
+
+        bootstrap.bind(new InetSocketAddress(Context.getConfiguration().getInt("WORLD_SERVER_PORT")));
+    }
+
     public static void main(String[] args) {
         active = true;
 
@@ -52,12 +85,18 @@ public class WorldApp {
         Logger.incrementIndentationTab();
 
         try {
-            Context.setConfiguration(new Configuration(Constants.LOGIN_SERVER_CONFIG));
+            Context.setConfiguration(new Configuration(Constants.WORLD_SERVER_CONFIG));
             System.out.println("Loaded settings");
+
+            Context.setCache(new Cache(Constants.CACHE_DIRECTORY));
+            System.out.println("Loaded cache");
 
             world = new World(1);
             world.start();
             System.out.println("Loaded world");
+
+            startupNetworking();
+            System.out.println("Bound port : " + Context.getConfiguration().getInt("WORLD_SERVER_PORT"));
 
             ProcessPriority.setProcessPriority();
         } catch (Throwable e) {
@@ -66,5 +105,6 @@ public class WorldApp {
 
         Logger.resetIndentation();
         System.out.println("DONE!");
+        System.out.println();
     }
 }

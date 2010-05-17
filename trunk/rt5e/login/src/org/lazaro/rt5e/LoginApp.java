@@ -108,6 +108,7 @@ public class LoginApp {
 
             Logger.resetIndentation();
             System.out.println("DONE!");
+            System.out.println();
         } catch (Throwable e) {
             System.err.println("Failed to start server");
             e.printStackTrace();

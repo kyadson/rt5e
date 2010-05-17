@@ -40,7 +40,7 @@ public class Engine {
     private Semaphore semaphore = new Semaphore();
     private Executor asyncExecutor = Executors.newSingleThreadExecutor();
     private Executor parallelExecutor = Executors.newFixedThreadPool((int) ((Runtime.getRuntime().availableProcessors() == 1 ? 2 : Runtime.getRuntime().availableProcessors()) * THREAD_MULTIPLIER));
-    private Executor blockingExecutor = Executors.newFixedThreadPool(2);
+    private Executor blockingExecutor = Executors.newFixedThreadPool(8);
 
     public Executor getAsyncExecutor() {
         return asyncExecutor;

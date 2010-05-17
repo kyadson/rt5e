@@ -30,14 +30,29 @@ public class ProcessPriority {
     private static final int WIN32_PROCESS_PRIORITY_CLASS = Kernel32.REALTIME_PRIORITY_CLASS;
 
     public static void setProcessPriority() {
-        if(Platform.isWindows()) {
+        if (Platform.isWindows()) {
             W32API.HANDLE currentProcess = Kernel32.INSTANCE.GetCurrentProcess();
-            System.out.print("Setting process priority... ");
-            if(Kernel32.INSTANCE.SetPriorityClass(currentProcess, WIN32_PROCESS_PRIORITY_CLASS)) {
-                System.out.println("SUCCESS!");
-            } else {
-                System.out.println("FAILED!");
+            if (Kernel32.INSTANCE.SetPriorityClass(currentProcess, WIN32_PROCESS_PRIORITY_CLASS)) {
+                System.out.println("Set process to " + win32PriorityName(WIN32_PROCESS_PRIORITY_CLASS) + " priority mode");
             }
+        } else if (Platform.isLinux()) {
+            // TODO Write low level code for Linux
         }
+    }
+
+    private static String win32PriorityName(int priorityClass) {
+        switch (priorityClass) {
+            case Kernel32.ABOVE_NORMAL_PRIORITY_CLASS:
+                return "above normal";
+            case Kernel32.BELOW_NORMAL_PRIORITY_CLASS:
+                return "below normal";
+            case Kernel32.HIGH_PRIORITY_CLASS:
+                return "high";
+            case Kernel32.IDLE_PRIORITY_CLASS:
+                return "idle";
+            case Kernel32.REALTIME_PRIORITY_CLASS:
+                return "realtime";
+        }
+        return "unknown";
     }
 }
