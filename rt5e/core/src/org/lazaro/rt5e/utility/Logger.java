@@ -34,16 +34,16 @@ public class Logger {
         System.setOut(new PrintStream(System.out) {
             @Override
             public void print(String string) {
-                if(string.length() > 0) {
-                    synchronized(lock) {
-                        if(!textOnLine) {
+                if (string.length() > 0) {
+                    synchronized (lock) {
+                        if (!textOnLine) {
                             for (int i = 0; i < indentationLevel; i++) {
                                 super.print(" ");
                             }
-                            if(string.charAt(string.length() - 1) != '\n') {
+                            if (string.charAt(string.length() - 1) != '\n') {
                                 textOnLine = true;
                             }
-                        } else if(string.charAt(string.length() - 1) == '\n') {
+                        } else if (string.charAt(string.length() - 1) == '\n') {
                             textOnLine = false;
                         }
                         super.print(string);
@@ -64,16 +64,16 @@ public class Logger {
         System.setErr(new PrintStream(System.err) {
             @Override
             public void print(String string) {
-                if(string.length() > 0) {
-                    synchronized(lock) {
-                        if(!textOnLine) {
+                if (string.length() > 0) {
+                    synchronized (lock) {
+                        if (!textOnLine) {
                             for (int i = 0; i < indentationLevel; i++) {
                                 super.print(" ");
                             }
-                            if(string.charAt(string.length() - 1) != '\n') {
+                            if (string.charAt(string.length() - 1) != '\n') {
                                 textOnLine = true;
                             }
-                        } else if(string.charAt(string.length() - 1) == '\n') {
+                        } else if (string.charAt(string.length() - 1) == '\n') {
                             textOnLine = false;
                         }
                         super.print(string);
@@ -95,12 +95,12 @@ public class Logger {
 
     public static void printInfo() {
         System.out.println("//****************************************************\\\\");
-        Logger.incrementIndentation();
+        Logger.incrementIndentationTab();
         System.out.println("RT5E (RuneTek 5 Emulator)");
         System.out.println("Copyright (C) Lazaro Brito 2010");
         System.out.println("Running " + System.getProperty("os.name") + " on a(n) " + System.getProperty("os.arch") + " architecture");
         System.out.println("Java version is " + System.getProperty("java.version"));
-        Logger.decrementIndentation();
+        Logger.decrementIndentationTab();
         System.out.println("\\\\****************************************************//");
         System.out.println();
     }

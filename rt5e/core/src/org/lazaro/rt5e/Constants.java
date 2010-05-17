@@ -28,12 +28,40 @@ public interface Constants {
      */
     public static final int PLAYER_CAP = 2047;
 
+    /**
+     * Configuration file location for the login server.
+     */
     public static final String LOGIN_SERVER_CONFIG = "./data/login_server.ini";
 
+    /**
+     * Configuration file location for the world server.
+     */
+    public static final String WORLD_SERVER_CONFIG = "./data/world_server.ini";
+
+    /**
+     * How often the world updater runs in milliseconds.
+     * <p/>
+     * Suggested rate is 600ms.
+     */
     public static final int UPDATE_INTERVAL = 600;
 
     /**
      * The server's internal user name used for security purposes.
      */
     public static final String ROOT_USER_NAME = "root";
+
+    /**
+     * The RS2 cache that the server uses.
+     */
+    public static final String CACHE_DIRECTORY = "./data/cache/";
+
+    /**
+     * The JS5 protocol opcode.
+     */
+    public static final int JS5_PROTOCOL_OPCODE = 15;
+
+    /**
+     * The client's revision/version.
+     */
+    public static final int CLIENT_REVISION = 525;
 }

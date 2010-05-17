@@ -47,7 +47,7 @@ public class PacketBuilder {
         this.opcode = opcode;
         this.type = type;
 
-        this.buffer = ChannelBuffers.buffer(128);
+        this.buffer = ChannelBuffers.dynamicBuffer(128);
     }
 
     public int getPosition() {
