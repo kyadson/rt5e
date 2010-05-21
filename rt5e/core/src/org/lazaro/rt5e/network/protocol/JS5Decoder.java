@@ -55,14 +55,16 @@ public class JS5Decoder extends FrameDecoder {
                     });
             }
         }
-        Engine.getInstance().executeBlocking(new Runnable() {
-            public void run() {
-                while (requests.size() > 0) {
-                    int[] req = requests.removeFirst();
-                    channel.write(prepareFilePacket(0, Context.getCache().getFile(req[0], req[1])));
+        if (!requests.isEmpty()) {
+            Engine.getInstance().executeBlocking(new Runnable() {
+                public void run() {
+                    while (requests.size() > 0) {
+                        int[] req = requests.removeFirst();
+                        channel.write(prepareFilePacket(0, Context.getCache().getFile(req[0], req[1])));
+                    }
                 }
-            }
-        });
+            });
+        }
         return null;
     }
 
