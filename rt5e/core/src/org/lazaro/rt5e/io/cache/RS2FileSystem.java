@@ -118,11 +118,10 @@ public class RS2FileSystem {
                         : fileLength];
                 buffer.get(file);
                 ByteBuffer fileBuffer = ByteBuffer.wrap(file);
-
-
                 return new RS2File(id, fileId, compression, fileLength, fileBuffer);
+
             } catch (Exception e) {
-                System.out.println("comp=" + compression + ", length=" + fileLength + ", limit=" + buffer.limit());
+
                 e.printStackTrace();
             }
 

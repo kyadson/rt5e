@@ -272,19 +272,19 @@ public class PacketBuilder {
         return this;
     }
 
-    public PacketBuilder putVariable(int i_23_) {
-        if ((~0x7f & i_23_) != 0) {
-            if ((i_23_ & ~0x3fff) != 0) {
-                if ((i_23_ & ~0x1fffff) != 0) {
-                    if ((~0xfffffff & i_23_) != 0)
-                        putByte(i_23_ >>> 28 | 0x80);
-                    putByte((0x101e39d8 | i_23_) >>> 21);
+    public PacketBuilder putVariable(int i) {
+        if ((~0x7f & i) != 0) {
+            if ((i & ~0x3fff) != 0) {
+                if ((i & ~0x1fffff) != 0) {
+                    if ((~0xfffffff & i) != 0)
+                        putByte(i >>> 28 | 0x80);
+                    putByte((0x101e39d8 | i) >>> 21);
                 }
-                putByte(i_23_ >>> 14 | 0x80);
+                putByte(i >>> 14 | 0x80);
             }
-            putByte(i_23_ >>> 7 | 0x80);
+            putByte(i >>> 7 | 0x80);
         }
-        putByte(i_23_ & 0x7f);
+        putByte(i & 0x7f);
         return this;
     }
 

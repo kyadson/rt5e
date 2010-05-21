@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.zip.CRC32;
 
 /**
@@ -89,7 +90,7 @@ public class Cache {
         cacheHash = new RS2File(255, 255, 0, descriptorTableFile.getLength() * 8, buffer);
 
         if (debug) {
-            System.out.println("Calculated cache checksums");
+            System.out.println("Calculated cache checksums \n" + Arrays.toString(cacheHash.getBytes()));
         }
     }
 

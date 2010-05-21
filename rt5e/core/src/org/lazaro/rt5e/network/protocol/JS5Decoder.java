@@ -50,7 +50,7 @@ public class JS5Decoder extends FrameDecoder {
                 case 1:
                     Engine.getInstance().executeBlocking(new Runnable() {
                         public void run() {
-                            channel.write(prepareFilePacket(Context.getCache().getFile(index, file)));
+                            channel.write(prepareFilePacket(1, Context.getCache().getFile(index, file)));
                         }
                     });
             }
@@ -59,21 +59,25 @@ public class JS5Decoder extends FrameDecoder {
             public void run() {
                 while (requests.size() > 0) {
                     int[] req = requests.removeFirst();
-                    channel.write(prepareFilePacket(Context.getCache().getFile(req[0], req[1])));
+                    channel.write(prepareFilePacket(0, Context.getCache().getFile(req[0], req[1])));
                 }
             }
         });
         return null;
     }
 
-    private Packet prepareFilePacket(RS2File file) {
-        System.out.println("index: " + file.getParentId() + ", file: " + file.getId());
+    private Packet prepareFilePacket(int opcode, RS2File file) {
         int compression = file.getCompression();
         int length = file.getLength();
 
+        int attributes = compression;
+        if (opcode == 0) {
+            attributes |= 0x80;
+        }
+
         PacketBuilder pb = new PacketBuilder();
         pb.putByte(file.getParentId()).putShort(file.getId()).putByte(
-                compression).putInt(length);
+                attributes).putInt(length);
 
         ByteBuffer data = file.getData();
         int blockOffset = 8;
