@@ -63,5 +63,5 @@ public interface Constants {
     /**
      * The client's revision/version.
      */
-    public static final int CLIENT_REVISION = 525;
+    public static final int CLIENT_REVISION = 597;
 }
