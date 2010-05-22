@@ -23,6 +23,7 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+import org.lazaro.rt5e.engine.Engine;
 import org.lazaro.rt5e.io.cache.Cache;
 import org.lazaro.rt5e.logic.World;
 import org.lazaro.rt5e.logic.login.LoginWorker;
@@ -55,6 +56,7 @@ public class LobbyApp {
 
         ServerBootstrap bootstrap = new ServerBootstrap(factory);
         ChannelPipeline pipeline = bootstrap.getPipeline();
+        pipeline.addLast("monitor", BandwidthMonitor.getInstance());
         pipeline.addLast("handler", handler);
         pipeline.addLast("encoder", new StandardPacketEncoder());
         pipeline.addLast("decoder", new HandshakeDecoder());
@@ -89,6 +91,9 @@ public class LobbyApp {
             Context.setLoginWorker(new LoginWorker());
             new Thread(Context.getLoginWorker()).start();
             System.out.println("Loaded login worker(s)");
+
+            Engine.getInstance().submitMiscEvent(new Monitor());
+            Engine.getInstance().start();
 
             startupNetworking();
             System.out.println("Bound port : " + Context.getConfiguration().getInt("LOBBY_SERVER_PORT"));

@@ -23,6 +23,7 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+import org.lazaro.rt5e.engine.Engine;
 import org.lazaro.rt5e.io.MapXTEA;
 import org.lazaro.rt5e.io.cache.Cache;
 import org.lazaro.rt5e.logic.World;
@@ -35,6 +36,7 @@ import org.lazaro.rt5e.utility.*;
 import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Lazaro
@@ -62,6 +64,7 @@ public class WorldApp {
 
         ServerBootstrap bootstrap = new ServerBootstrap(factory);
         ChannelPipeline pipeline = bootstrap.getPipeline();
+        pipeline.addLast("monitor", BandwidthMonitor.getInstance());
         pipeline.addLast("handler", handler);
         pipeline.addLast("encoder", new StandardPacketEncoder());
         pipeline.addLast("decoder", new HandshakeDecoder());
@@ -93,11 +96,15 @@ public class WorldApp {
 
             Context.setWorld(new World(Context.getConfiguration().getInt("WORLD_ID")));
             Context.getWorld().start();
+            Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(Context.getWorld(), 0, 600, TimeUnit.MILLISECONDS);
             System.out.println("Loaded world");
 
             Context.setLoginWorker(new LoginWorker());
             new Thread(Context.getLoginWorker()).start();
             System.out.println("Loaded login worker(s)");
+
+            Engine.getInstance().submitMiscEvent(new Monitor());
+            Engine.getInstance().start();
 
             startupNetworking();
             System.out.println("Bound port : " + (Context.getConfiguration().getInt("WORLD_SERVER_PORT_OFFSET") + Context.getConfiguration().getInt("WORLD_ID")));
