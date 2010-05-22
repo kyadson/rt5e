@@ -69,7 +69,7 @@ public class WorldConnector implements Runnable {
         PacketBuilder pb = new PacketBuilder();
         pb.putString(Context.getConfiguration().getString(
                 "LOGIN_SERVER_PASS"));
-        pb.putByte(WorldApp.isActive() ? 0 : 1).putShort(WorldApp.getWorld().getId());
+        pb.putByte(WorldApp.isActive() ? 0 : 1).putShort(Context.getWorld().getId());
         Packet p = pb.toPacket();
         output.write(p.getLength());
         output.write(p.getBytes());
@@ -84,8 +84,11 @@ public class WorldConnector implements Runnable {
     public void run() {
         while (true) {
             try {
-                int opcode = input.read() & 0xff;
-                int size = input.read() & 0xff;
+                int opcode = input.read();
+                if (opcode == -1) {
+                    throw new IOException();
+                }
+                int size = input.read();
                 String userName = BufferUtilities.getString(input);
                 byte[] data = new byte[size];
                 if (size > 0) {
@@ -123,8 +126,8 @@ public class WorldConnector implements Runnable {
     }
 
     private Packet waitForPacket(String userName) throws LSException {
-        synchronized (packetQueue) {
-            while (true) {
+        while (true) {
+            synchronized (packetQueue) {
                 if (socket != null && socket.isConnected()
                         && !socket.isClosed()) {
                     try {
@@ -159,7 +162,7 @@ public class WorldConnector implements Runnable {
     }
 
     public LoginResponse loadPlayer(Player player) throws LSException {
-        PacketBuilder pb = new PacketBuilder(2);
+        PacketBuilder pb = new PacketBuilder(1);
         pb.putString(player.getName());
         pb.putByte(player.getLoginOpcode());
         pb.putString(player.getPassword());

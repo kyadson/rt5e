@@ -136,9 +136,9 @@ public class LSMessageHandler extends SimpleChannelHandler {
                 LoginApp.getPlayers().put(userName, world);
                 world.getPlayers().add(userName);
 
-                System.out.println("Registered player [name=" + userName + ", world="
-                        + world.getId() + "]");
             }
+            System.out.println("Registered player [name=" + userName + ", world="
+                    + world.getId() + "]");
         }
         world.getConnection().write(mb.toPacket());
     }

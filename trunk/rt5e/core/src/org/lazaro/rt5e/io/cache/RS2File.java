@@ -130,9 +130,9 @@ public class RS2File {
 
     public int getLength() {
         return length;
-	}
+    }
 
-	public int getParentId() {
-		return parentId;
-	}
+    public int getParentId() {
+        return parentId;
+    }
 }

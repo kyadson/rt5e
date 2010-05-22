@@ -23,6 +23,8 @@ import org.lazaro.rt5e.Constants;
 import org.lazaro.rt5e.engine.Engine;
 import org.lazaro.rt5e.engine.Permit;
 import org.lazaro.rt5e.engine.Semaphore;
+import org.lazaro.rt5e.logic.player.Player;
+import org.lazaro.rt5e.logic.utility.NodeCollection;
 import org.lazaro.rt5e.login.WorldConnector;
 import org.lazaro.rt5e.utility.Benchmark;
 
@@ -47,7 +49,26 @@ public class World implements Runnable {
     private boolean running = true;
     private Thread thread;
 
+    public WorldConnector getSession() {
+        return session;
+    }
+
     private WorldConnector session;
+
+    private NodeCollection<Player> globalPlayers = new NodeCollection<Player>();
+
+    public boolean register(Player player) {
+        boolean success = globalPlayers.add(player);
+        if (success) {
+            System.out.println("Registered player [" + player + "]");
+        }
+        return success;
+    }
+
+    public void remove(Player player) {
+        globalPlayers.remove(player);
+        System.out.println("Removed player [" + player + "]");
+    }
 
     public World(int id) {
         this.id = id;

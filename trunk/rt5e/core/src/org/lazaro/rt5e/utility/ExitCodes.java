@@ -17,40 +17,12 @@
  * along with RT5E.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.lazaro.rt5e.logic.player;
-
-import java.io.Serializable;
+package org.lazaro.rt5e.utility;
 
 /**
  * @author Lazaro
  */
-public class PlayerDefinition implements Serializable {
-    private static final long serialVersionUID = 238268914180215319L;
-    private int coordX;
-    private int coordY;
-    private int coordZ;
-
-    public int getCoordX() {
-        return coordX;
-    }
-
-    public int getCoordY() {
-        return coordY;
-    }
-
-    public int getCoordZ() {
-        return coordZ;
-    }
-
-    public void setCoordX(int coordX) {
-        this.coordX = coordX;
-    }
-
-    public void setCoordY(int coordY) {
-        this.coordY = coordY;
-    }
-
-    public void setCoordZ(int corodZ) {
-        this.coordZ = corodZ;
-    }
+public interface ExitCodes {
+    public static final int INVALID_ARGUMENTS = 1;
+    public static final int UNKNOWN_ERROR = 2;
 }

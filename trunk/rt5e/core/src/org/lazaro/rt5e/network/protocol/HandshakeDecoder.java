@@ -25,7 +25,10 @@ import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.handler.codec.frame.FrameDecoder;
 import org.lazaro.rt5e.Constants;
+import org.lazaro.rt5e.network.Connection;
+import org.lazaro.rt5e.network.ConnectionMap;
 import org.lazaro.rt5e.network.PacketBuilder;
+import org.lazaro.rt5e.network.protocol.world.LoginDecoder597;
 
 /**
  * @author Lazaro
@@ -34,11 +37,25 @@ public class HandshakeDecoder extends FrameDecoder {
 
     @Override
     protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer) throws Exception {
+        Connection conn = ConnectionMap.forChannel(channel);
         if (buffer.readableBytes() >= 1) {
             buffer.markReaderIndex();
 
             int opcode = buffer.readByte() & 0xff;
             switch (opcode) {
+                case Constants.RS2_PROTOCOL_OPCODE:
+                    if (buffer.readableBytes() >= 1) {
+                        int nameHash = buffer.readByte() & 0xff;
+
+                        conn.setServerSessionKey(((long) (Math.random() * 99999999D) << 32) + (long) (Math.random() * 99999999D));
+
+                        channel.write(new PacketBuilder().putByte(0).putLong(conn.getServerSessionKey()).toPacket());
+                        channel.getPipeline().replace("decoder", "decoder", new LoginDecoder597());
+                    } else {
+                        buffer.resetReaderIndex();
+                        return null;
+                    }
+                    break;
                 case Constants.JS5_PROTOCOL_OPCODE:
                     if (buffer.readableBytes() >= 4) {
                         int revision = buffer.readInt();

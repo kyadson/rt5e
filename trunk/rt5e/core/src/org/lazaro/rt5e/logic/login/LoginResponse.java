@@ -64,4 +64,8 @@ public enum LoginResponse {
     public int getResponseCode() {
         return responseCode;
     }
+
+    public String toString() {
+        return "response=" + super.toString().replace("_", " ").toLowerCase();
+    }
 }

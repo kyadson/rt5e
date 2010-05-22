@@ -23,7 +23,6 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
-import org.lazaro.rt5e.io.MapXTEA;
 import org.lazaro.rt5e.io.cache.Cache;
 import org.lazaro.rt5e.logic.World;
 import org.lazaro.rt5e.logic.login.LoginWorker;
@@ -39,7 +38,7 @@ import java.util.concurrent.Executors;
 /**
  * @author Lazaro
  */
-public class WorldApp {
+public class LobbyApp {
     public static boolean isActive() {
         return active;
     }
@@ -48,12 +47,6 @@ public class WorldApp {
 
     private static ExecutorService bossExecutor = Executors.newCachedThreadPool();
     private static ExecutorService workerExecutor = Executors.newCachedThreadPool();
-
-    public static MapXTEA getMapXTEA() {
-        return mapXTEA;
-    }
-
-    private static MapXTEA mapXTEA = null;
 
     private static void startupNetworking() throws Throwable {
         ChannelFactory factory = new NioServerSocketChannelFactory(
@@ -69,27 +62,25 @@ public class WorldApp {
         bootstrap.setOption("child.tcpNoDelay", false);
         bootstrap.setOption("child.keepAlive", true);
 
-        bootstrap.bind(new InetSocketAddress(Context.getConfiguration().getInt("WORLD_SERVER_PORT_OFFSET") + Context.getConfiguration().getInt("WORLD_ID")));
+        bootstrap.bind(new InetSocketAddress(Context.getConfiguration().getInt("LOBBY_SERVER_PORT")));
     }
 
     public static void main(String[] args) {
         active = true;
 
-        NativeConsole.setHeader("RT5E [World Server]");
+        NativeConsole.setHeader("RT5E [Lobby Server]");
         Logger.setupLogging();
         Logger.printInfo();
 
-        System.out.println("Starting world server...");
+        System.out.println("Starting lobby server...");
         Logger.incrementIndentationTab();
 
         try {
-            Context.setConfiguration(new Configuration(Constants.WORLD_SERVER_CONFIG));
+            Context.setConfiguration(new Configuration(Constants.LOBBY_SERVER_CONFIG));
             System.out.println("Loaded settings");
 
             Context.setCache(new Cache(Constants.CACHE_DIRECTORY));
             System.out.println("Loaded cache");
-
-            mapXTEA = new MapXTEA();
 
             Context.setWorld(new World(Context.getConfiguration().getInt("WORLD_ID")));
             Context.getWorld().start();
@@ -100,7 +91,7 @@ public class WorldApp {
             System.out.println("Loaded login worker(s)");
 
             startupNetworking();
-            System.out.println("Bound port : " + (Context.getConfiguration().getInt("WORLD_SERVER_PORT_OFFSET") + Context.getConfiguration().getInt("WORLD_ID")));
+            System.out.println("Bound port : " + Context.getConfiguration().getInt("LOBBY_SERVER_PORT"));
 
             ProcessPriority.setProcessPriority();
         } catch (Throwable e) {
