@@ -22,7 +22,7 @@ package org.lazaro.rt5e;
 /**
  * @author Lazaro
  */
-public interface Constants {
+public class Constants {
     /**
      * The maximum amount of players allowed online at any given time on one world..
      */
@@ -56,6 +56,11 @@ public interface Constants {
     public static final String CACHE_DIRECTORY = "./data/cache/";
 
     /**
+     * The RS2 protocol opcode.
+     */
+    public static final int RS2_PROTOCOL_OPCODE = 14;
+
+    /**
      * The JS5 protocol opcode.
      */
     public static final int JS5_PROTOCOL_OPCODE = 15;
@@ -64,4 +69,19 @@ public interface Constants {
      * The client's revision/version.
      */
     public static final int CLIENT_REVISION = 597;
+
+    public static final String MAP_XTEA_DIR = "./data/mapxtea/";
+
+    public static final String MAP_XTEA_FILE = "./data/mapxtea.dat";
+
+    public static final int[] MESSAGE_LENGTHS = new int[256];
+
+    static {
+        for (int i = 0; i < 256; i++) {
+            MESSAGE_LENGTHS[i] = -3;
+        }
+        MESSAGE_LENGTHS[43] = 0; // world list req
+    }
+
+    public static final String LOBBY_SERVER_CONFIG = "./data/lobby_server.ini";
 }

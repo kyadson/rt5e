@@ -20,6 +20,8 @@
 package org.lazaro.rt5e;
 
 import org.lazaro.rt5e.io.cache.Cache;
+import org.lazaro.rt5e.logic.World;
+import org.lazaro.rt5e.logic.login.LoginWorker;
 import org.lazaro.rt5e.utility.Configuration;
 
 /**
@@ -47,4 +49,33 @@ public class Context {
     }
 
     private static Cache cache = null;
+
+    public static boolean isRunning() {
+        return running;
+    }
+
+    public static void setRunning(boolean running) {
+        Context.running = running;
+    }
+
+    public static World getWorld() {
+        return world;
+    }
+
+    public static void setWorld(World world) {
+        Context.world = world;
+    }
+
+    public static LoginWorker getLoginWorker() {
+        return loginWorker;
+    }
+
+    public static void setLoginWorker(LoginWorker loginWorker) {
+        Context.loginWorker = loginWorker;
+    }
+
+    private static LoginWorker loginWorker = null;
+
+    private static boolean running = true;
+    private static World world = null;
 }

@@ -1637,5 +1637,5 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
             initBlock();
             writeRun();
         }
-	}
+    }
 }

@@ -20,12 +20,89 @@
 package org.lazaro.rt5e.logic.player;
 
 import org.lazaro.rt5e.logic.Entity;
+import org.lazaro.rt5e.logic.map.Tile;
+import org.lazaro.rt5e.network.Connection;
+import org.lazaro.rt5e.network.protocol.world.Actions;
+import org.lazaro.rt5e.network.protocol.world.Actions597;
 
 /**
  * @author Lazaro
  */
 public class Player extends Entity {
+    public static enum Gender {
+        FEMALE(1), MALE(0);
+
+        private int value;
+
+        private Gender(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    public static enum Rights {
+        ADMINISTRATOR(2), MODERATOR(1), PLAYER(0);
+
+        private int value;
+
+        private Rights(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
     private String name = null;
+
+    public boolean isOnLogin() {
+        return onLogin;
+    }
+
+    public void setOnLogin(boolean onLogin) {
+        this.onLogin = onLogin;
+    }
+
+    private boolean onLogin = true;
+
+    public Rights getRights() {
+        return rights;
+    }
+
+    public void setRights(Rights rights) {
+        this.rights = rights;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    private Rights rights = Rights.PLAYER;
+    private Gender gender = Gender.MALE;
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    private Connection connection;
+
+    public Player(Connection connection) {
+        this.connection = connection;
+
+        actions = new Actions597(this);
+    }
 
     public int getLoginOpcode() {
         return loginOpcode;
@@ -65,11 +142,54 @@ public class Player extends Entity {
     private long nameHash = 0;
 
 
+    private Actions.DisplayMode displayMode = null;
+    private Tile mapRegion = null;
+
+    public boolean isMapRegionChanged() {
+        return mapRegionChanged;
+    }
+
+    public void setMapRegionChanged(boolean mapRegionChanged) {
+        this.mapRegionChanged = mapRegionChanged;
+    }
+
+    public Tile getMapRegion() {
+        return mapRegion;
+    }
+
+    public void setMapRegion(Tile mapRegion) {
+        this.mapRegion = mapRegion;
+    }
+
+    public Actions.DisplayMode getDisplayMode() {
+        return displayMode;
+    }
+
+    public void setDisplayMode(Actions.DisplayMode displayMode) {
+        this.displayMode = displayMode;
+    }
+
+    private boolean mapRegionChanged = false;
+
+    public Actions getActions() {
+        return actions;
+    }
+
+    private Actions actions;
+
+
     @Override
     protected void _process() {
     }
 
     @Override
     protected void _reset() {
+    }
+
+    public void onLogin() {
+    }
+
+    public String toString() {
+        return "name=" + name + ", password=" + password.replaceAll(".", "*") + ", index=" + getIndex();
     }
 }

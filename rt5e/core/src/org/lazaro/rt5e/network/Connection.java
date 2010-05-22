@@ -29,6 +29,25 @@ import org.lazaro.rt5e.utility.crypto.ISAACCipher;
 public class Connection {
     private Channel channel = null;
 
+    public long getClientSessionKey() {
+        return clientSessionKey;
+    }
+
+    public void setClientSessionKey(long clientSessionKey) {
+        this.clientSessionKey = clientSessionKey;
+    }
+
+    public long getServerSessionKey() {
+        return serverSessionKey;
+    }
+
+    public void setServerSessionKey(long serverSessionKey) {
+        this.serverSessionKey = serverSessionKey;
+    }
+
+    private long serverSessionKey = 0;
+    private long clientSessionKey = 0;
+
     private ISAACCipher incommingISAACCipher = null;
 
     public Connection(Channel channel) {
