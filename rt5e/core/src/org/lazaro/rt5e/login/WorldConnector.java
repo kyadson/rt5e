@@ -193,7 +193,7 @@ public class WorldConnector implements Runnable {
         PacketBuilder smf = new PacketBuilder(3);
         smf.putString(Constants.ROOT_USER_NAME);
         sendPacket(smf.toPacket());
-        Packet message = waitForPacket(Constants.ROOT_USER_NAME);
-        return message.getBytes();
+        Packet packet = waitForPacket(Constants.ROOT_USER_NAME);
+        return packet.getBytes();
     }
 }

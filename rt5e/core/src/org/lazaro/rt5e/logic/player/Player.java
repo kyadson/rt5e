@@ -22,8 +22,12 @@ package org.lazaro.rt5e.logic.player;
 import org.lazaro.rt5e.logic.Entity;
 import org.lazaro.rt5e.logic.map.Tile;
 import org.lazaro.rt5e.network.Connection;
+import org.lazaro.rt5e.network.Packet;
 import org.lazaro.rt5e.network.protocol.world.Actions;
 import org.lazaro.rt5e.network.protocol.world.Actions597;
+
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 /**
  * @author Lazaro
@@ -192,4 +196,20 @@ public class Player extends Entity {
     public String toString() {
         return "name=" + name + ", password=" + password.replaceAll(".", "*") + ", index=" + getIndex();
     }
+
+    private boolean[] packetReceived = new boolean[256];
+
+    public boolean isPacketReceived(int opcode) {
+        return packetReceived[opcode];
+    }
+
+    public void setPacketReceived(int opcode, boolean value) {
+        packetReceived[opcode] = value;
+    }
+
+    public Queue<Packet> getPacketQueue() {
+        return packetQueue;
+    }
+
+    private Queue<Packet> packetQueue = new ArrayDeque();
 }

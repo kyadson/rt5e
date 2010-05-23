@@ -152,7 +152,7 @@ public class LoginDecoder597 extends FrameDecoder {
 
             if (response == LoginResponse.LOGIN) {
                 channel.getPipeline().replace("decoder", "decoder", new StandardPacketDecoder());
-                // channel.getPipeline().addLast("message_handler", MessageDispatcher.getInstance()); // TODO
+                channel.getPipeline().addLast("dispatcher", PacketDispatcher.getInstance());
 
                 Context.getLoginWorker().dispatchLogin(login);
                 System.out.println("Dispatched login [" + login + "]");

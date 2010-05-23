@@ -21,6 +21,7 @@ package org.lazaro.rt5e.network.protocol.world;
 
 import org.jboss.netty.channel.ChannelFutureListener;
 import org.lazaro.rt5e.WorldApp;
+import org.lazaro.rt5e.engine.event.impl.WorldListUpdater;
 import org.lazaro.rt5e.logic.login.LoginResponse;
 import org.lazaro.rt5e.logic.player.Player;
 import org.lazaro.rt5e.network.Packet;
@@ -100,10 +101,11 @@ public class Actions597 implements Actions {
 
         if (response == LoginResponse.LOGIN.getResponseCode()) {
             PacketBuilder responseBlock = new PacketBuilder();
-            responseBlock.putByte(player.getRights().getValue()).putByte(0).putByte(0).putByte(0).putByte(0).putByte(0).putShort(player.getIndex()).putByte(1).putByte(1);
 
-            Packet responseBlockMessage = responseBlock.toPacket();
-            pb.putByte(responseBlockMessage.getLength()).put(responseBlockMessage.getBytes());
+            responseBlock.putByte(player.getRights().getValue()).putByte(0).putByte(0).putByte(0).putByte(0).putByte(0).putShort(player.getIndex()).putByte(1).putTriByte(0).putByte(1);
+
+            Packet responseBlockPacket = responseBlock.toPacket();
+            pb.putByte(responseBlockPacket.getLength()).put(responseBlockPacket.getBytes());
 
             player.getConnection().write(pb.toPacket());
         } else {
@@ -183,7 +185,12 @@ public class Actions597 implements Actions {
     }
 
     public Actions sendWorldList() {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+        if (WorldListUpdater.getInstance().getCachedWorldList() != null) {
+            PacketBuilder pb = new PacketBuilder(110, Packet.Type.VAR_SHORT);
+            pb.put(WorldListUpdater.getInstance().getCachedWorldList());
+            player.getConnection().write(pb.toPacket());
+        }
+        return this;
     }
 
     public Actions switchToFixedScreen() {

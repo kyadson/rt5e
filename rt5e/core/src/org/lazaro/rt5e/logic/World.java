@@ -49,6 +49,10 @@ public class World implements Runnable {
 
     private WorldConnector session;
 
+    public NodeCollection<Player> getGlobalPlayers() {
+        return globalPlayers;
+    }
+
     private NodeCollection<Player> globalPlayers = new NodeCollection<Player>();
 
     public boolean register(Player player) {

@@ -49,16 +49,16 @@ public class LoginWorker implements Runnable {
                     response = LoginResponse.LOGIN_SERVER_OFFLINE;
                 }
                 if (response == LoginResponse.LOGIN) {
+                    login.getConnection().setAttachment(player);
+                    Context.getWorld().register(player);
                     switch (login.getLoginOpcode()) {
                         case 16:
                         case 18:
                             player.getActions().sendLoginResponse(response.getResponseCode());
                             player.getActions().sendLogin();
-                            Context.getWorld().register(player);
                             break;
                         case 19:
                             player.getActions().sendLobbyResponse(response.getResponseCode());
-                            Context.getWorld().register(player);
                             break;
                     }
                 } else {

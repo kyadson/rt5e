@@ -24,17 +24,20 @@ import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.lazaro.rt5e.engine.Engine;
+import org.lazaro.rt5e.engine.event.impl.WorldListUpdater;
 import org.lazaro.rt5e.io.cache.Cache;
 import org.lazaro.rt5e.logic.World;
 import org.lazaro.rt5e.logic.login.LoginWorker;
 import org.lazaro.rt5e.network.StandardPacketEncoder;
 import org.lazaro.rt5e.network.protocol.HandshakeDecoder;
 import org.lazaro.rt5e.network.protocol.world.ConnectionHandler;
+import org.lazaro.rt5e.network.protocol.world.PacketHandlerWorker;
 import org.lazaro.rt5e.utility.*;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Lazaro
@@ -92,8 +95,14 @@ public class LobbyApp {
             new Thread(Context.getLoginWorker()).start();
             System.out.println("Loaded login worker(s)");
 
+            PacketHandlerWorker.loadPacketHandlers();
+
+            Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(new PacketHandlerWorker(), 0, 600, TimeUnit.MILLISECONDS);
+
+            Engine.getInstance().submitMiscEvent(WorldListUpdater.getInstance());
             Engine.getInstance().submitMiscEvent(new Monitor());
             Engine.getInstance().start();
+            System.out.println("Started engine");
 
             startupNetworking();
             System.out.println("Bound port : " + Context.getConfiguration().getInt("LOBBY_SERVER_PORT"));
