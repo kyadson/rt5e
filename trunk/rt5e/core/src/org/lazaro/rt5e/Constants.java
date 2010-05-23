@@ -84,4 +84,6 @@ public class Constants {
     }
 
     public static final String LOBBY_SERVER_CONFIG = "./data/lobby_server.ini";
+
+    public static final String PACKET_HANDLER_CONFIG = "./data/packet_handlers.ini";
 }

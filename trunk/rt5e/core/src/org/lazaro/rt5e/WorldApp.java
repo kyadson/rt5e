@@ -31,6 +31,7 @@ import org.lazaro.rt5e.logic.login.LoginWorker;
 import org.lazaro.rt5e.network.StandardPacketEncoder;
 import org.lazaro.rt5e.network.protocol.HandshakeDecoder;
 import org.lazaro.rt5e.network.protocol.world.ConnectionHandler;
+import org.lazaro.rt5e.network.protocol.world.PacketHandlerWorker;
 import org.lazaro.rt5e.utility.*;
 
 import java.net.InetSocketAddress;
@@ -96,15 +97,20 @@ public class WorldApp {
 
             Context.setWorld(new World(Context.getConfiguration().getInt("WORLD_ID")));
             Context.getWorld().start();
-            Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(Context.getWorld(), 0, 600, TimeUnit.MILLISECONDS);
             System.out.println("Loaded world");
 
             Context.setLoginWorker(new LoginWorker());
             new Thread(Context.getLoginWorker()).start();
             System.out.println("Loaded login worker(s)");
 
+            PacketHandlerWorker.loadPacketHandlers();
+
+            Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(Context.getWorld(), 0, 600, TimeUnit.MILLISECONDS);
+            Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(new PacketHandlerWorker(), 300, 600, TimeUnit.MILLISECONDS);
+
             Engine.getInstance().submitMiscEvent(new Monitor());
             Engine.getInstance().start();
+            System.out.println("Started engine");
 
             startupNetworking();
             System.out.println("Bound port : " + (Context.getConfiguration().getInt("WORLD_SERVER_PORT_OFFSET") + Context.getConfiguration().getInt("WORLD_ID")));
