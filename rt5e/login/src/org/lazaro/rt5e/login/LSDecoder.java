@@ -30,7 +30,7 @@ import org.lazaro.rt5e.network.Connection;
 import org.lazaro.rt5e.network.ConnectionMap;
 import org.lazaro.rt5e.network.Packet;
 import org.lazaro.rt5e.network.PacketBuilder;
-import org.lazaro.rt5e.utility.BufferUtilities;
+import org.lazaro.rt5e.utility.StreamUtilities;
 
 /**
  * @author Lazaro
@@ -63,7 +63,7 @@ public class LSDecoder extends FrameDecoder {
 
                 int size = buffer.readByte() & 0xff;
                 if (buffer.readableBytes() >= size) {
-                    String password = BufferUtilities.getString(buffer);
+                    String password = StreamUtilities.getString(buffer);
                     if (!password.equals(Context.getConfiguration().getString("LOGIN_SERVER_PASS"))) {
                         conn.write(new PacketBuilder().putByte(2).toPacket());
                         channel.close();

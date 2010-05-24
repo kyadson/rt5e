@@ -34,8 +34,8 @@ import org.lazaro.rt5e.network.Connection;
 import org.lazaro.rt5e.network.ConnectionMap;
 import org.lazaro.rt5e.network.PacketBuilder;
 import org.lazaro.rt5e.network.StandardPacketDecoder;
-import org.lazaro.rt5e.utility.BufferUtilities;
 import org.lazaro.rt5e.utility.NameUtilities;
+import org.lazaro.rt5e.utility.StreamUtilities;
 
 /**
  * @author Lazaro
@@ -74,9 +74,9 @@ public class LoginDecoder597 extends FrameDecoder {
                                 int height = buffer.readShort();
                                 buffer.readByte();
                                 for (int i = 0; i < 24; i++) {
-                                    buffer.readByte(); // related to cache
+                                    buffer.readByte();
                                 }
-                                BufferUtilities.getString(buffer); // settings
+                                StreamUtilities.getString(buffer); // settings
                                 buffer.readInt();
                                 int settingsBlockLength = buffer.readByte();
                                 buffer.skipBytes(settingsBlockLength);
@@ -98,7 +98,7 @@ public class LoginDecoder597 extends FrameDecoder {
                                 conn.setServerSessionKey(serverSessionKey);
 
                                 name = NameUtilities.longToString(buffer.readLong());
-                                password = BufferUtilities.getString(buffer);
+                                password = StreamUtilities.getString(buffer);
 
                                 login = new LoginRequest(conn, name, password, loginOpcode);
                             } else {
@@ -111,9 +111,9 @@ public class LoginDecoder597 extends FrameDecoder {
                                 buffer.readByte();
                                 displayMode = buffer.readByte();
                                 for (int i = 0; i < 24; i++) {
-                                    buffer.readByte(); // related to cache
+                                    buffer.readByte();
                                 }
-                                BufferUtilities.getString(buffer); // settings
+                                StreamUtilities.getString(buffer); // settings
                                 buffer.readInt();
                                 for (int i = 0; i < 30; i++) {
                                     buffer.readInt(); // cache crcs
@@ -132,7 +132,7 @@ public class LoginDecoder597 extends FrameDecoder {
                                 conn.setServerSessionKey(serverSessionKey);
 
                                 name = NameUtilities.longToString(buffer.readLong());
-                                password = BufferUtilities.getString(buffer);
+                                password = StreamUtilities.getString(buffer);
 
                                 login = new LoginRequest(conn, name, password, loginOpcode);
                             } else {
