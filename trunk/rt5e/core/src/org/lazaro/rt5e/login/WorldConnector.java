@@ -29,7 +29,7 @@ import org.lazaro.rt5e.logic.player.Player;
 import org.lazaro.rt5e.logic.player.PlayerDefinition;
 import org.lazaro.rt5e.network.Packet;
 import org.lazaro.rt5e.network.PacketBuilder;
-import org.lazaro.rt5e.utility.BufferUtilities;
+import org.lazaro.rt5e.utility.StreamUtilities;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -89,7 +89,7 @@ public class WorldConnector implements Runnable {
                     throw new IOException();
                 }
                 int size = input.read();
-                String userName = BufferUtilities.getString(input);
+                String userName = StreamUtilities.getString(input);
                 byte[] data = new byte[size];
                 if (size > 0) {
                     input.read(data);
