@@ -65,7 +65,9 @@ public class Masks {
     }
 
     public boolean requiresUpdate() {
-        return animation != null || appearance || chat != null || forcedChat != null || faceDirection != null || graphics != null || hit != null || hit2 != null;
+        return animation != null || appearance || chat != null
+                || forcedChat != null || faceDirection != null
+                || graphics != null || hit != null || hit2 != null;
     }
 
     public boolean requiresUpdate(Mask.MaskType mask) {

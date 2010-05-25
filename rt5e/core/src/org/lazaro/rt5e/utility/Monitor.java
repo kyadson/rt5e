@@ -32,18 +32,13 @@ public class Monitor extends Event {
     public Monitor() {
         super(1000);
 
-        if(WorldApp.isActive()) {
+        if (WorldApp.isActive()) {
             moduleName = "World Server";
-        } else if(LobbyApp.isActive()) {
+        } else if (LobbyApp.isActive()) {
             moduleName = "Lobby Server";
         } else {
             moduleName = "Login Server";
         }
-    }
-
-    public void run() {
-        NativeConsole.setHeader("RT5E [" + moduleName + "] [bandwidth=(" + bandwidthInfo() + ")]");
-        BandwidthMonitor.getInstance().reset();
     }
 
     private String bandwidthInfo() {
@@ -51,22 +46,29 @@ public class Monitor extends Event {
         long out = BandwidthMonitor.getInstance().getBytesSent();
         String inMeasure = "B";
         String outMeasure = "B";
-        if(in > 1024) {
+        if (in > 1024) {
             in /= 1024;
             inMeasure = "kB";
-            if(in > 1024) {
+            if (in > 1024) {
                 in /= 1024;
                 inMeasure = "mB";
             }
         }
-        if(out > 1024) {
+        if (out > 1024) {
             out /= 1024;
             outMeasure = "kB";
-            if(out > 1024) {
+            if (out > 1024) {
                 out /= 1024;
                 outMeasure = "mB";
             }
         }
-        return "in: " + in + " " + inMeasure + "/s, out: " + out + " " + outMeasure + "/s";
+        return "in: " + in + " " + inMeasure + "/s, out: " + out + " "
+                + outMeasure + "/s";
+    }
+
+    public void run() {
+        NativeConsole.setHeader("RT5E [" + moduleName + "] [bandwidth=("
+                + bandwidthInfo() + ")]");
+        BandwidthMonitor.getInstance().reset();
     }
 }

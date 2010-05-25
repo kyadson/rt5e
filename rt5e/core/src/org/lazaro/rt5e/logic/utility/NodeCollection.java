@@ -76,7 +76,7 @@ public class NodeCollection<N extends Node> extends AbstractCollection<N> {
             return false;
         }
         nodes[index] = node;
-        indexes.add((Integer) index);
+        indexes.add(index);
         node.setIndex(index);
         return true;
     }

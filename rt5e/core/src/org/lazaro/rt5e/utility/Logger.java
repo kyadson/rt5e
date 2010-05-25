@@ -25,10 +25,47 @@ import java.io.PrintStream;
  * @author Lazaro
  */
 public class Logger {
-    protected static Object lock = new Object();
     protected static int indentationLevel = 0;
+    protected static Object lock = new Object();
     protected static boolean textOnLine = false;
 
+    public static void decrementIndentation() {
+        indentationLevel--;
+    }
+
+    public static void decrementIndentationTab() {
+        indentationLevel -= 3;
+    }
+
+    public static void incrementIndentation() {
+        indentationLevel++;
+    }
+
+    public static void incrementIndentationTab() {
+        indentationLevel += 3;
+    }
+
+    public static void printInfo() {
+        System.out
+                .println("//****************************************************\\\\");
+        Logger.incrementIndentationTab();
+        System.out.println("RT5E (RuneTek 5 Emulator)");
+        System.out.println("Copyright (C) Lazaro Brito 2010");
+        System.out
+                .println("Running " + System.getProperty("os.name")
+                        + " on a(n) " + System.getProperty("os.arch")
+                        + " architecture");
+        System.out.println("Java version is "
+                + System.getProperty("java.version"));
+        Logger.decrementIndentationTab();
+        System.out
+                .println("\\\\****************************************************//");
+        System.out.println();
+    }
+
+    public static void resetIndentation() {
+        indentationLevel = 0;
+    }
 
     public static void setupLogging() {
         System.setOut(new PrintStream(System.out) {
@@ -52,13 +89,13 @@ public class Logger {
             }
 
             @Override
-            public void println(String string) {
-                print(string + "\n");
+            public void println() {
+                print("\n");
             }
 
             @Override
-            public void println() {
-                print("\n");
+            public void println(String string) {
+                print(string + "\n");
             }
         });
         System.setErr(new PrintStream(System.err) {
@@ -82,47 +119,15 @@ public class Logger {
             }
 
             @Override
-            public void println(String string) {
-                print(string + "\n");
-            }
-
-            @Override
             public void println() {
                 print("\n");
             }
+
+            @Override
+            public void println(String string) {
+                print(string + "\n");
+            }
         });
-    }
-
-    public static void printInfo() {
-        System.out.println("//****************************************************\\\\");
-        Logger.incrementIndentationTab();
-        System.out.println("RT5E (RuneTek 5 Emulator)");
-        System.out.println("Copyright (C) Lazaro Brito 2010");
-        System.out.println("Running " + System.getProperty("os.name") + " on a(n) " + System.getProperty("os.arch") + " architecture");
-        System.out.println("Java version is " + System.getProperty("java.version"));
-        Logger.decrementIndentationTab();
-        System.out.println("\\\\****************************************************//");
-        System.out.println();
-    }
-
-    public static void incrementIndentation() {
-        indentationLevel++;
-    }
-
-    public static void decrementIndentation() {
-        indentationLevel--;
-    }
-
-    public static void incrementIndentationTab() {
-        indentationLevel += 3;
-    }
-
-    public static void decrementIndentationTab() {
-        indentationLevel -= 3;
-    }
-
-    public static void resetIndentation() {
-        indentationLevel = 0;
     }
 
 }

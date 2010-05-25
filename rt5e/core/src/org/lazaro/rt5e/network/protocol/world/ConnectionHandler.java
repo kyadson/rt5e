@@ -35,8 +35,8 @@ public class ConnectionHandler extends SimpleChannelHandler {
 
         ConnectionMap.register(new Connection(ch));
 
-        System.out.println("Channel connected <" + ch.getRemoteAddress().toString()
-                + ">");
+        System.out.println("Channel connected <"
+                + ch.getRemoteAddress().toString() + ">");
     }
 
     @Override
@@ -46,8 +46,8 @@ public class ConnectionHandler extends SimpleChannelHandler {
 
         ConnectionMap.release(ch);
 
-        System.out.println("Channel disconnected <" + ch.getRemoteAddress().toString()
-                + ">");
+        System.out.println("Channel disconnected <"
+                + ch.getRemoteAddress().toString() + ">");
     }
 
     @Override

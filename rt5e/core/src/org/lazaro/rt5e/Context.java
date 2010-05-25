@@ -30,52 +30,53 @@ import org.lazaro.rt5e.utility.Configuration;
  * @author Lazaro
  */
 public class Context {
-    public static Configuration getConfiguration() {
-        return configuration;
-    }
-
-    public static void setConfiguration(Configuration configuration) {
-        Context.configuration = configuration;
-    }
+    private static Cache cache = null;
 
     private static Configuration configuration = null;
+
+    private static LoginWorker loginWorker = null;
+
+    private static boolean running = true;
+
+    private static World world = null;
 
     public static Cache getCache() {
         return cache;
     }
 
-    public static void setCache(Cache cache) {
-        Context.cache = cache;
-    }
-
-    private static Cache cache = null;
-
-    public static boolean isRunning() {
-        return running;
-    }
-
-    public static void setRunning(boolean running) {
-        Context.running = running;
-    }
-
-    public static World getWorld() {
-        return world;
-    }
-
-    public static void setWorld(World world) {
-        Context.world = world;
+    public static Configuration getConfiguration() {
+        return configuration;
     }
 
     public static LoginWorker getLoginWorker() {
         return loginWorker;
     }
 
+    public static World getWorld() {
+        return world;
+    }
+
+    public static boolean isRunning() {
+        return running;
+    }
+
+    public static void setCache(Cache cache) {
+        Context.cache = cache;
+    }
+
+    public static void setConfiguration(Configuration configuration) {
+        Context.configuration = configuration;
+    }
+
     public static void setLoginWorker(LoginWorker loginWorker) {
         Context.loginWorker = loginWorker;
     }
 
-    private static LoginWorker loginWorker = null;
+    public static void setRunning(boolean running) {
+        Context.running = running;
+    }
 
-    private static boolean running = true;
-    private static World world = null;
+    public static void setWorld(World world) {
+        Context.world = world;
+    }
 }

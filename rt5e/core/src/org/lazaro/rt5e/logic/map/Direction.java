@@ -23,11 +23,14 @@ package org.lazaro.rt5e.logic.map;
  * @author Lazaro
  */
 public class Direction {
-    public static final byte[] DIRECTION_DELTA_X = new byte[]{1, 2, 4, 7, 6, 5, 3, 0};
+    public static final byte[] DIRECTION_DELTA_X = new byte[]{1, 2, 4, 7, 6,
+            5, 3, 0};
 
-    public static final byte[] DIRECTION_DELTA_Y = new byte[]{1, 0, 1, -1, 1, -1, 0, 1};
+    public static final byte[] DIRECTION_DELTA_Y = new byte[]{1, 0, 1, -1, 1,
+            -1, 0, 1};
 
-    public static final byte[] DIRECTION_XLATE = new byte[]{-1, -1, -1, 0, 0, 1, 1, 1};
+    public static final byte[] DIRECTION_XLATE = new byte[]{-1, -1, -1, 0, 0,
+            1, 1, 1};
 
     /**
      * Generates the direction in which to turn.

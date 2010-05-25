@@ -50,7 +50,9 @@ public class StandardPacketDecoder extends FrameDecoder {
                 }
             }
             if (length < 0) {
-                System.err.println("Invalid message length, guessing '" + buffer.readableBytes() + "' instead [opcode=" + opcode + ", length=" + length + "]");
+                System.err.println("Invalid message length, guessing '"
+                        + buffer.readableBytes() + "' instead [opcode="
+                        + opcode + ", length=" + length + "]");
                 length = buffer.readableBytes();
             }
             if (buffer.readableBytes() >= length) {

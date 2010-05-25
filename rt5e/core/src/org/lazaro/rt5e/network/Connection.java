@@ -27,71 +27,48 @@ import org.lazaro.rt5e.utility.crypto.ISAACCipher;
  * @author Lazaro
  */
 public class Connection {
+    private Object attachment = null;
+
     private Channel channel = null;
 
-    public long getClientSessionKey() {
-        return clientSessionKey;
-    }
-
-    public void setClientSessionKey(long clientSessionKey) {
-        this.clientSessionKey = clientSessionKey;
-    }
-
-    public long getServerSessionKey() {
-        return serverSessionKey;
-    }
-
-    public void setServerSessionKey(long serverSessionKey) {
-        this.serverSessionKey = serverSessionKey;
-    }
-
-    private long serverSessionKey = 0;
     private long clientSessionKey = 0;
 
     private ISAACCipher incommingISAACCipher = null;
 
+    private ISAACCipher outgoingISAACCipher = null;
+
+    private long serverSessionKey = 0;
+
     public Connection(Channel channel) {
         this.channel = channel;
+    }
+
+    public ChannelFuture close() {
+        return channel.close();
+    }
+
+    public Object getAttachment() {
+        return attachment;
+    }
+
+    public Channel getChannel() {
+        return channel;
+    }
+
+    public long getClientSessionKey() {
+        return clientSessionKey;
     }
 
     public ISAACCipher getIncommingISAACCipher() {
         return incommingISAACCipher;
     }
 
-    public void setIncommingISAACCipher(ISAACCipher incommingISAACCipher) {
-        this.incommingISAACCipher = incommingISAACCipher;
-    }
-
     public ISAACCipher getOutgoingISAACCipher() {
         return outgoingISAACCipher;
     }
 
-    public void setOutgoingISAACCipher(ISAACCipher outgoingISAACCipher) {
-        this.outgoingISAACCipher = outgoingISAACCipher;
-    }
-
-    private ISAACCipher outgoingISAACCipher = null;
-
-    public Object getAttachment() {
-        return attachment;
-    }
-
-    public void setAttachment(Object attachment) {
-        this.attachment = attachment;
-    }
-
-    private Object attachment = null;
-
-    public Channel getChannel() {
-        return channel;
-    }
-
-    public void setChannel(Channel channel) {
-        this.channel = channel;
-    }
-
-    public ChannelFuture close() {
-        return channel.close();
+    public long getServerSessionKey() {
+        return serverSessionKey;
     }
 
     public boolean isConnected() {
@@ -102,6 +79,29 @@ public class Connection {
         return channel.isOpen();
     }
 
+    public void setAttachment(Object attachment) {
+        this.attachment = attachment;
+    }
+
+    public void setChannel(Channel channel) {
+        this.channel = channel;
+    }
+
+    public void setClientSessionKey(long clientSessionKey) {
+        this.clientSessionKey = clientSessionKey;
+    }
+
+    public void setIncommingISAACCipher(ISAACCipher incommingISAACCipher) {
+        this.incommingISAACCipher = incommingISAACCipher;
+    }
+
+    public void setOutgoingISAACCipher(ISAACCipher outgoingISAACCipher) {
+        this.outgoingISAACCipher = outgoingISAACCipher;
+    }
+
+    public void setServerSessionKey(long serverSessionKey) {
+        this.serverSessionKey = serverSessionKey;
+    }
 
     public ChannelFuture write(Packet packet) {
         return channel.write(packet);

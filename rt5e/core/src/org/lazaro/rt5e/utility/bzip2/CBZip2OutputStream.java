@@ -78,9 +78,6 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
         int ll;
     }
 
-    protected static final int SETMASK = (1 << 21);
-
-    protected static final int CLEARMASK = (~SETMASK);
     protected static final int DEPTH_THRESH = 10;
     protected static final int GREATER_ICOST = 15;
     protected static final int LESSER_ICOST = 0;
@@ -91,6 +88,8 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
       * very generous.
       */
     protected static final int QSORT_STACK_SIZE = 1000;
+    protected static final int SETMASK = (1 << 21);
+    protected static final int CLEARMASK = (~SETMASK);
 
     protected static final int SMALL_THRESH = 20;
 

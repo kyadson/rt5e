@@ -30,10 +30,10 @@ import java.util.zip.CRC32;
  * @author Lazaro, Defyboy
  */
 public class Cache {
-    private RandomAccessFile dataFile = null;
     private RS2File cacheHash = null;
-    private RS2FileSystem[] fileSystems = new RS2FileSystem[32];
+    private RandomAccessFile dataFile = null;
     private RS2FileSystem descriptorTableFile = null;
+    private RS2FileSystem[] fileSystems = new RS2FileSystem[32];
 
     public Cache(File directory) throws IOException {
         this(directory, false);
@@ -45,7 +45,8 @@ public class Cache {
                 if (file.getName().equals("main_file_cache.dat2")) {
                     dataFile = new RandomAccessFile(file, "rw");
                     if (debug) {
-                        System.out.println("Loaded cache file : " + file.getName());
+                        System.out.println("Loaded cache file : "
+                                + file.getName());
                     }
                 } else if (file.getName().startsWith("main_file_cache.idx")) {
                     int id = Integer.parseInt(file.getName().substring(
@@ -55,13 +56,15 @@ public class Cache {
                         fileSystems[id] = new RS2FileSystem(id, dataFile,
                                 new RandomAccessFile(file, "rw"), this);
                         if (debug) {
-                            System.out.println("Loaded file system file : " + file.getName());
+                            System.out.println("Loaded file system file : "
+                                    + file.getName());
                         }
                     } else {
                         descriptorTableFile = new RS2FileSystem(id, dataFile,
                                 new RandomAccessFile(file, "rw"), this);
                         if (debug) {
-                            System.out.println("Loaded refrence table file : " + file.getName());
+                            System.out.println("Loaded refrence table file : "
+                                    + file.getName());
                         }
                     }
                 }
@@ -76,21 +79,25 @@ public class Cache {
             System.out.println("Loaded descriptor file tables.");
         }
 
-        ByteBuffer buffer = ByteBuffer.allocate(descriptorTableFile.getLength() * 8);
+        ByteBuffer buffer = ByteBuffer
+                .allocate(descriptorTableFile.getLength() * 8);
         CRC32 crc = new CRC32();
         for (int i = 0; i < descriptorTableFile.getLength(); i++) {
             RS2File file = descriptorTableFile.getFile(i);
-            crc.update(ByteBuffer.allocate(5).put((byte) file.getCompression()).putInt(file.getLength()).array());
+            crc.update(ByteBuffer.allocate(5).put((byte) file.getCompression())
+                    .putInt(file.getLength()).array());
             crc.update(file.getBytes());
             buffer.putInt((int) crc.getValue());
             buffer.putInt(fileSystems[i].getDescriptorTable().getRevision());
             crc.reset();
         }
         buffer.flip();
-        cacheHash = new RS2File(255, 255, 0, descriptorTableFile.getLength() * 8, buffer);
+        cacheHash = new RS2File(255, 255, 0,
+                descriptorTableFile.getLength() * 8, buffer);
 
         if (debug) {
-            System.out.println("Calculated cache checksums \n" + Arrays.toString(cacheHash.getBytes()));
+            System.out.println("Calculated cache checksums \n"
+                    + Arrays.toString(cacheHash.getBytes()));
         }
     }
 

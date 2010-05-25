@@ -42,7 +42,8 @@ import org.lazaro.rt5e.utility.StreamUtilities;
  */
 public class LoginDecoder597 extends FrameDecoder {
     @Override
-    protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer) throws Exception {
+    protected Object decode(ChannelHandlerContext ctx, Channel channel,
+                            ChannelBuffer buffer) throws Exception {
         Connection conn = ConnectionMap.forChannel(channel);
         if (buffer.readableBytes() >= 3) {
             buffer.markReaderIndex();
@@ -97,10 +98,12 @@ public class LoginDecoder597 extends FrameDecoder {
                                 conn.setClientSessionKey(clientSessionKey);
                                 conn.setServerSessionKey(serverSessionKey);
 
-                                name = NameUtilities.longToString(buffer.readLong());
+                                name = NameUtilities
+                                        .longToString(buffer.readLong());
                                 password = StreamUtilities.getString(buffer);
 
-                                login = new LoginRequest(conn, name, password, loginOpcode);
+                                login = new LoginRequest(conn, name, password,
+                                        loginOpcode);
                             } else {
                                 response = LoginResponse.ERROR;
                                 break loginBlock;
@@ -131,10 +134,12 @@ public class LoginDecoder597 extends FrameDecoder {
                                 conn.setClientSessionKey(clientSessionKey);
                                 conn.setServerSessionKey(serverSessionKey);
 
-                                name = NameUtilities.longToString(buffer.readLong());
+                                name = NameUtilities
+                                        .longToString(buffer.readLong());
                                 password = StreamUtilities.getString(buffer);
 
-                                login = new LoginRequest(conn, name, password, loginOpcode);
+                                login = new LoginRequest(conn, name, password,
+                                        loginOpcode);
                             } else {
                                 response = LoginResponse.ERROR;
                                 break loginBlock;
@@ -151,13 +156,18 @@ public class LoginDecoder597 extends FrameDecoder {
             } while (false);
 
             if (response == LoginResponse.LOGIN) {
-                channel.getPipeline().replace("decoder", "decoder", new StandardPacketDecoder());
-                channel.getPipeline().addLast("dispatcher", PacketDispatcher.getInstance());
+                channel.getPipeline().replace("decoder", "decoder",
+                        new StandardPacketDecoder());
+                channel.getPipeline().addLast("dispatcher",
+                        PacketDispatcher.getInstance());
 
                 Context.getLoginWorker().dispatchLogin(login);
                 System.out.println("Dispatched login [" + login + "]");
             } else {
-                channel.write(new PacketBuilder().putByte(response.getResponseCode()).toPacket()).addListener(ChannelFutureListener.CLOSE);
+                channel.write(
+                        new PacketBuilder().putByte(response.getResponseCode())
+                                .toPacket()).addListener(
+                        ChannelFutureListener.CLOSE);
             }
         }
         return null;

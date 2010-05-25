@@ -37,7 +37,8 @@ import java.util.LinkedList;
  */
 public class JS5Decoder extends FrameDecoder {
     @Override
-    protected Object decode(ChannelHandlerContext ctx, final Channel channel, ChannelBuffer buffer) throws Exception {
+    protected Object decode(ChannelHandlerContext ctx, final Channel channel,
+                            ChannelBuffer buffer) throws Exception {
         final LinkedList<int[]> requests = new LinkedList<int[]>();
         while (buffer.readableBytes() >= 4) {
             final int opcode = buffer.readByte() & 0xff;
@@ -50,7 +51,8 @@ public class JS5Decoder extends FrameDecoder {
                 case 1:
                     Engine.getInstance().executeBlocking(new Runnable() {
                         public void run() {
-                            channel.write(prepareFilePacket(1, Context.getCache().getFile(index, file)));
+                            channel.write(prepareFilePacket(1, Context.getCache()
+                                    .getFile(index, file)));
                         }
                     });
             }
@@ -60,7 +62,8 @@ public class JS5Decoder extends FrameDecoder {
                 public void run() {
                     while (requests.size() > 0) {
                         int[] req = requests.removeFirst();
-                        channel.write(prepareFilePacket(0, Context.getCache().getFile(req[0], req[1])));
+                        channel.write(prepareFilePacket(0, Context.getCache()
+                                .getFile(req[0], req[1])));
                     }
                 }
             });

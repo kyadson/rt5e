@@ -22,6 +22,8 @@ import com.sun.jna.Structure;
  * "pshpack1.h", which disables automatic alignment of structure fields.
  */
 public interface Shell32 extends W32API {
+    Shell32 INSTANCE = (Shell32) Native.loadLibrary("shell32", Shell32.class,
+            DEFAULT_OPTIONS);
 
     class SHFILEOPSTRUCT extends Structure {
         public boolean fAnyOperationsAborted;
@@ -131,8 +133,7 @@ public interface Shell32 extends W32API {
     int FOF_SILENT = 4;
     int FOF_SIMPLEPROGRESS = 256;
     int FOF_WANTMAPPINGHANDLE = 32;
-    Shell32 INSTANCE = (Shell32) Native.loadLibrary("shell32", Shell32.class,
-            DEFAULT_OPTIONS);
+
     DWORD SHGFP_TYPE_CURRENT = new DWORD(0); // current value for user, verify
     // it exists
     DWORD SHGFP_TYPE_DEFAULT = new DWORD(1); // default value, may not exist

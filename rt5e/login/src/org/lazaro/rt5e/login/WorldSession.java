@@ -31,15 +31,8 @@ public class WorldSession {
     private Connection connection;
     private int id = -1;
 
-    public boolean isLobbyWorld() {
-        return lobbyWorld;
-    }
-
-    public void setLobbyWorld(boolean lobbyWorld) {
-        this.lobbyWorld = lobbyWorld;
-    }
-
     private boolean lobbyWorld = false;
+
     private List<String> players = new LinkedList<String>();
 
     public WorldSession(Connection connection) {
@@ -58,8 +51,16 @@ public class WorldSession {
         return players;
     }
 
+    public boolean isLobbyWorld() {
+        return lobbyWorld;
+    }
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setLobbyWorld(boolean lobbyWorld) {
+        this.lobbyWorld = lobbyWorld;
     }
 
     public void setPlayers(List<String> players) {

@@ -42,12 +42,12 @@ import java.util.Map;
  * @author Lazaro
  */
 public class WorldConnector implements Runnable {
-    private Object lock = new Object();
     private DataInputStream input = null;
+    private Object lock = new Object();
     private DataOutputStream output = null;
+    private Map<String, Packet> packetQueue = new HashMap<String, Packet>();
     private Socket socket = null;
     private Thread thread;
-    private Map<String, Packet> packetQueue = new HashMap<String, Packet>();
 
     public WorldConnector() throws IOException {
         connect();
@@ -56,20 +56,11 @@ public class WorldConnector implements Runnable {
         thread.start();
     }
 
-    private void connect() throws IOException {
-        socket = new Socket(Context.getConfiguration().getString(
-                "LOGIN_SERVER_ADDR"), Context.getConfiguration()
-                .getInt("LOGIN_SERVER_PORT"));
-        input = new DataInputStream(socket.getInputStream());
-        output = new DataOutputStream(socket.getOutputStream());
-        authenticate();
-    }
-
     private void authenticate() throws IOException {
         PacketBuilder pb = new PacketBuilder();
-        pb.putString(Context.getConfiguration().getString(
-                "LOGIN_SERVER_PASS"));
-        pb.putByte(WorldApp.isActive() ? 0 : 1).putShort(Context.getWorld().getId());
+        pb.putString(Context.getConfiguration().getString("LOGIN_SERVER_PASS"));
+        pb.putByte(WorldApp.isActive() ? 0 : 1).putShort(
+                Context.getWorld().getId());
         Packet p = pb.toPacket();
         output.write(p.getLength());
         output.write(p.getBytes());
@@ -77,8 +68,34 @@ public class WorldConnector implements Runnable {
 
         int resp = input.read() & 0xff;
         if (resp != 1) {
-            throw new IOException("Invalid response code [" + resp + "] recieved!");
+            throw new IOException("Invalid response code [" + resp
+                    + "] recieved!");
         }
+    }
+
+    private void connect() throws IOException {
+        socket = new Socket(Context.getConfiguration().getString(
+                "LOGIN_SERVER_ADDR"), Context.getConfiguration().getInt(
+                "LOGIN_SERVER_PORT"));
+        input = new DataInputStream(socket.getInputStream());
+        output = new DataOutputStream(socket.getOutputStream());
+        authenticate();
+    }
+
+    public LoginResponse loadPlayer(Player player) throws LSException {
+        PacketBuilder pb = new PacketBuilder(1);
+        pb.putString(player.getName());
+        pb.putByte(player.getLoginOpcode());
+        pb.putString(player.getPassword());
+        sendPacket(pb.toPacket());
+        Packet packet = waitForPacket(player.getName());
+        LoginResponse result = LoginResponse.valueFor(packet.getUnsigned());
+        if (result == LoginResponse.LOGIN) {
+            PlayerDefinition def = (PlayerDefinition) packet.getObject();
+            player.setLocation(Tile.locate(def.getCoordX(), def.getCoordY(),
+                    def.getCoordZ()));
+        }
+        return result;
     }
 
     public void run() {
@@ -95,7 +112,8 @@ public class WorldConnector implements Runnable {
                     input.read(data);
                 }
                 synchronized (packetQueue) {
-                    packetQueue.put(userName, new Packet(opcode, size, null, ChannelBuffers.wrappedBuffer(data)));
+                    packetQueue.put(userName, new Packet(opcode, size, null,
+                            ChannelBuffers.wrappedBuffer(data)));
                     packetQueue.notifyAll();
                 }
             } catch (IOException e) {
@@ -109,7 +127,8 @@ public class WorldConnector implements Runnable {
                         packetQueue.notifyAll();
                     }
                 }
-                System.err.println("Login server disconnected! Attempting reconnection.");
+                System.err
+                        .println("Login server disconnected! Attempting reconnection.");
                 while (true) {
                     try {
                         connect();
@@ -121,6 +140,33 @@ public class WorldConnector implements Runnable {
                     }
                     break;
                 }
+            }
+        }
+    }
+
+    public void savePlayer(Player player) throws LSException {
+        PacketBuilder pb = new PacketBuilder(2);
+        pb.putString(player.getName()).putByte(player.getLoginOpcode());
+        PlayerDefinition def = new PlayerDefinition();
+        def.setCoordX(player.getLocation().getX());
+        def.setCoordY(player.getLocation().getY());
+        def.setCoordZ(player.getLocation().getZ());
+        pb.putObject(def);
+        sendPacket(pb.toPacket());
+    }
+
+    private void sendPacket(Packet packet) throws LSException {
+        synchronized (lock) {
+            try {
+                if (!packet.isRaw()) {
+                    output.write(packet.getOpcode());
+                    output.write(packet.getLength());
+                }
+                output.write(packet.getBytes());
+                output.flush();
+            } catch (IOException e) {
+                throw new LSException(
+                        "Unable to send message to login server!", e);
             }
         }
     }
@@ -144,49 +190,6 @@ public class WorldConnector implements Runnable {
                 }
             }
         }
-    }
-
-    private void sendPacket(Packet packet) throws LSException {
-        synchronized (lock) {
-            try {
-                if (!packet.isRaw()) {
-                    output.write(packet.getOpcode());
-                    output.write(packet.getLength());
-                }
-                output.write(packet.getBytes());
-                output.flush();
-            } catch (IOException e) {
-                throw new LSException("Unable to send message to login server!", e);
-            }
-        }
-    }
-
-    public LoginResponse loadPlayer(Player player) throws LSException {
-        PacketBuilder pb = new PacketBuilder(1);
-        pb.putString(player.getName());
-        pb.putByte(player.getLoginOpcode());
-        pb.putString(player.getPassword());
-        sendPacket(pb.toPacket());
-        Packet packet = waitForPacket(player.getName());
-        LoginResponse result = LoginResponse.valueFor(packet.getUnsigned());
-        if (result == LoginResponse.LOGIN) {
-            PlayerDefinition def = (PlayerDefinition) packet.getObject();
-            player.setLocation(Tile.locate(def.getCoordX(), def.getCoordY(), def
-                    .getCoordZ()));
-        }
-        return result;
-    }
-
-
-    public void savePlayer(Player player) throws LSException {
-        PacketBuilder pb = new PacketBuilder(2);
-        pb.putString(player.getName()).putByte(player.getLoginOpcode());
-        PlayerDefinition def = new PlayerDefinition();
-        def.setCoordX(player.getLocation().getX());
-        def.setCoordY(player.getLocation().getY());
-        def.setCoordZ(player.getLocation().getZ());
-        pb.putObject(def);
-        sendPacket(pb.toPacket());
     }
 
     public byte[] worldListData() throws LSException {

@@ -91,8 +91,8 @@ public class Packet {
     }
 
     /**
-     * Gets the underlying Netty <code>ChannelBuffer</code> that stores this message's
-     * data.
+     * Gets the underlying Netty <code>ChannelBuffer</code> that stores this
+     * message's data.
      *
      * @return The data.
      */
@@ -160,7 +160,8 @@ public class Packet {
 
     public Object getObject() {
         try {
-            ObjectInputStream stream = new ObjectInputStream(new ChannelBufferInputStream(buffer));
+            ObjectInputStream stream = new ObjectInputStream(
+                    new ChannelBufferInputStream(buffer));
             Object object = stream.readObject();
             stream.close();
             return object;
@@ -249,16 +250,19 @@ public class Packet {
         return opcode == -1;
     }
 
+    @Override
     public String toString() {
         byte[] data = new byte[length > 6 ? 6 : length];
         buffer.getBytes(0, data);
         String dataPreview = Arrays.toString(data);
         if (length > 6) {
-            dataPreview = dataPreview.substring(0, dataPreview.length() - 1) + ", ...]";
+            dataPreview = dataPreview.substring(0, dataPreview.length() - 1)
+                    + ", ...]";
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("opcode=").append(opcode).append(", length=").append(getLength()).append(", data=").append(dataPreview);
+        sb.append("opcode=").append(opcode).append(", length=").append(
+                getLength()).append(", data=").append(dataPreview);
         return sb.toString();
     }
 }

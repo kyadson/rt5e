@@ -19,6 +19,7 @@
  */
 package org.lazaro.rt5e.logic.player;
 
+import org.lazaro.rt5e.Constants;
 import org.lazaro.rt5e.logic.Entity;
 import org.lazaro.rt5e.logic.map.Tile;
 import org.lazaro.rt5e.network.Connection;
@@ -61,126 +62,38 @@ public class Player extends Entity {
         }
     }
 
-    private String name = null;
-
-    public boolean isOnLogin() {
-        return onLogin;
-    }
-
-    public void setOnLogin(boolean onLogin) {
-        this.onLogin = onLogin;
-    }
-
-    private boolean onLogin = true;
-
-    public Rights getRights() {
-        return rights;
-    }
-
-    public void setRights(Rights rights) {
-        this.rights = rights;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    private Rights rights = Rights.PLAYER;
-    private Gender gender = Gender.MALE;
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
+    private Actions actions;
 
     private Connection connection;
+
+    private Actions.DisplayMode displayMode = null;
+
+    private Gender gender = Gender.MALE;
+
+    private int loginOpcode = 0;
+
+    private Tile mapRegion = null;
+
+    private boolean mapRegionChanged = false;
+
+    private String name = null;
+
+    private long nameHash = 0;
+    private boolean onLogin = true;
+
+    private Queue<Packet> packetQueue = new ArrayDeque();
+
+    private boolean[] packetReceived = new boolean[256];
+
+    private String password = null;
+
+    private Rights rights = Rights.PLAYER;
 
     public Player(Connection connection) {
         this.connection = connection;
 
         actions = new Actions597(this);
     }
-
-    public int getLoginOpcode() {
-        return loginOpcode;
-    }
-
-    public void setLoginOpcode(int loginOpcode) {
-        this.loginOpcode = loginOpcode;
-    }
-
-    private int loginOpcode = 0;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public long getNameHash() {
-        return nameHash;
-    }
-
-    public void setNameHash(long nameHash) {
-        this.nameHash = nameHash;
-    }
-
-    private String password = null;
-    private long nameHash = 0;
-
-
-    private Actions.DisplayMode displayMode = null;
-    private Tile mapRegion = null;
-
-    public boolean isMapRegionChanged() {
-        return mapRegionChanged;
-    }
-
-    public void setMapRegionChanged(boolean mapRegionChanged) {
-        this.mapRegionChanged = mapRegionChanged;
-    }
-
-    public Tile getMapRegion() {
-        return mapRegion;
-    }
-
-    public void setMapRegion(Tile mapRegion) {
-        this.mapRegion = mapRegion;
-    }
-
-    public Actions.DisplayMode getDisplayMode() {
-        return displayMode;
-    }
-
-    public void setDisplayMode(Actions.DisplayMode displayMode) {
-        this.displayMode = displayMode;
-    }
-
-    private boolean mapRegionChanged = false;
-
-    public Actions getActions() {
-        return actions;
-    }
-
-    private Actions actions;
-
 
     @Override
     protected void _process() {
@@ -190,26 +103,117 @@ public class Player extends Entity {
     protected void _reset() {
     }
 
-    public void onLogin() {
+    public Actions getActions() {
+        return actions;
     }
 
-    public String toString() {
-        return "name=" + name + ", password=" + password.replaceAll(".", "*") + ", index=" + getIndex();
+    public Connection getConnection() {
+        return connection;
     }
 
-    private boolean[] packetReceived = new boolean[256];
-
-    public boolean isPacketReceived(int opcode) {
-        return packetReceived[opcode];
+    public Actions.DisplayMode getDisplayMode() {
+        return displayMode;
     }
 
-    public void setPacketReceived(int opcode, boolean value) {
-        packetReceived[opcode] = value;
+    public Gender getGender() {
+        return gender;
+    }
+
+    public int getLoginOpcode() {
+        return loginOpcode;
+    }
+
+    public Tile getMapRegion() {
+        return mapRegion;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public long getNameHash() {
+        return nameHash;
     }
 
     public Queue<Packet> getPacketQueue() {
         return packetQueue;
     }
 
-    private Queue<Packet> packetQueue = new ArrayDeque();
+    public String getPassword() {
+        return password;
+    }
+
+    public Rights getRights() {
+        return rights;
+    }
+
+    public boolean isMapRegionChanged() {
+        return mapRegionChanged;
+    }
+
+    public boolean isOnLogin() {
+        return onLogin;
+    }
+
+    public boolean isPacketReceived(int opcode) {
+        return packetReceived[opcode];
+    }
+
+    public void onLogin() {
+        actions.sendMessage("Welcome to " + Constants.GAME_NAME + ".");
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public void setDisplayMode(Actions.DisplayMode displayMode) {
+        this.displayMode = displayMode;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setLoginOpcode(int loginOpcode) {
+        this.loginOpcode = loginOpcode;
+    }
+
+    public void setMapRegion(Tile mapRegion) {
+        this.mapRegion = mapRegion;
+    }
+
+    public void setMapRegionChanged(boolean mapRegionChanged) {
+        this.mapRegionChanged = mapRegionChanged;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNameHash(long nameHash) {
+        this.nameHash = nameHash;
+    }
+
+    public void setOnLogin(boolean onLogin) {
+        this.onLogin = onLogin;
+    }
+
+    public void setPacketReceived(int opcode, boolean value) {
+        packetReceived[opcode] = value;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRights(Rights rights) {
+        this.rights = rights;
+    }
+
+    @Override
+    public String toString() {
+        return "name=" + name + ", password=" + password.replaceAll(".", "*")
+                + ", index=" + getIndex();
+    }
 }

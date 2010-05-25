@@ -45,11 +45,11 @@ import java.util.concurrent.Executors;
  */
 public class LoginApp {
     private static ExecutorService bossExecutor = Executors.newCachedThreadPool();
-    private static ExecutorService workerExecutor = Executors.newCachedThreadPool();
     private static Map<Integer, WorldSession> gameWorlds = new HashMap<Integer, WorldSession>();
     private static Map<Integer, WorldSession> lobbyWorlds = new HashMap<Integer, WorldSession>();
     private static Map<String, WorldSession> players = new HashMap<String, WorldSession>();
     private static SQLHandler sqlHandler = null;
+    private static ExecutorService workerExecutor = Executors.newCachedThreadPool();
 
     public static Map<Integer, WorldSession> getGameWorlds() {
         return gameWorlds;
@@ -65,24 +65,6 @@ public class LoginApp {
 
     public static SQLHandler getSQLHandler() {
         return sqlHandler;
-    }
-
-    private static void startupNetworking() throws Throwable {
-        ChannelFactory factory = new NioServerSocketChannelFactory(
-                bossExecutor, workerExecutor);
-        LSConnectionHandler handler = new LSConnectionHandler();
-
-        ServerBootstrap bootstrap = new ServerBootstrap(factory);
-        ChannelPipeline pipeline = bootstrap.getPipeline();
-        pipeline.addLast("handler", handler);
-        pipeline.addLast("encoder", new StandardPacketEncoder());
-        pipeline.addLast("decoder", new LSDecoder());
-        pipeline.addLast("message_handler", new LSMessageHandler());
-
-        bootstrap.setOption("child.tcpNoDelay", false);
-        bootstrap.setOption("child.keepAlive", true);
-
-        bootstrap.bind(new InetSocketAddress(Context.getConfiguration().getInt("LOGIN_SERVER_PORT")));
     }
 
     public static void main(String[] args) {
@@ -113,5 +95,23 @@ public class LoginApp {
             System.err.println("Failed to start server");
             e.printStackTrace();
         }
+    }
+
+    private static void startupNetworking() throws Throwable {
+        ChannelFactory factory = new NioServerSocketChannelFactory(
+                bossExecutor, workerExecutor);
+        LSConnectionHandler handler = new LSConnectionHandler();
+
+        ServerBootstrap bootstrap = new ServerBootstrap(factory);
+        ChannelPipeline pipeline = bootstrap.getPipeline();
+        pipeline.addLast("handler", handler);
+        pipeline.addLast("encoder", new StandardPacketEncoder());
+        pipeline.addLast("decoder", new LSDecoder());
+        pipeline.addLast("message_handler", new LSMessageHandler());
+
+        bootstrap.setOption("child.tcpNoDelay", false);
+        bootstrap.setOption("child.keepAlive", true);
+
+        bootstrap.bind(new InetSocketAddress(Context.getConfiguration().getInt("LOGIN_SERVER_PORT")));
     }
 }

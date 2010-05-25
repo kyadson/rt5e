@@ -29,7 +29,8 @@ public class FaceDirection implements Mask {
     private int id;
 
     public FaceDirection(Entity e) {
-        this(e instanceof Player ? ((Player) e).getIndex() + 0x5000 : e.getIndex());
+        this(e instanceof Player ? ((Player) e).getIndex() + 0x5000 : e
+                .getIndex());
     }
 
     public FaceDirection(int id) {

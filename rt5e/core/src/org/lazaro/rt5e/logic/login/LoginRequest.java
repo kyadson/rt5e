@@ -25,14 +25,28 @@ import org.lazaro.rt5e.network.Connection;
  * @author Lazaro
  */
 public class LoginRequest {
+    private Connection connection;
+    private int loginOpcode;
+
     private String name;
+
     private String password;
+
+    public LoginRequest(Connection connection, String name, String password,
+                        int loginOpcode) {
+        this.connection = connection;
+        this.name = name;
+        this.password = password;
+        this.loginOpcode = loginOpcode;
+    }
 
     public Connection getConnection() {
         return connection;
     }
 
-    private Connection connection;
+    public int getLoginOpcode() {
+        return loginOpcode;
+    }
 
     public String getName() {
         return name;
@@ -42,22 +56,9 @@ public class LoginRequest {
         return password;
     }
 
-
-    public int getLoginOpcode() {
-        return loginOpcode;
-    }
-
-
-    private int loginOpcode;
-
-    public LoginRequest(Connection connection, String name, String password, int loginOpcode) {
-        this.connection = connection;
-        this.name = name;
-        this.password = password;
-        this.loginOpcode = loginOpcode;
-    }
-
+    @Override
     public String toString() {
-        return "name=" + name + ", password=" + password.replaceAll(".", "*") + ", opcode=" + loginOpcode;
+        return "name=" + name + ", password=" + password.replaceAll(".", "*")
+                + ", opcode=" + loginOpcode;
     }
 }

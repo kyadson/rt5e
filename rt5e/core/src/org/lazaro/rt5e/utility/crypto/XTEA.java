@@ -25,9 +25,9 @@ import java.nio.ByteBuffer;
  * @author Lazaro
  */
 public class XTEA {
+    private static final int DELTA = 0x9E3779B9;
     /* RuneScape setup. */
     private static final int NUM_ROUNDS = 32;
-    private static final int DELTA = 0x9E3779B9;
     private final int[] key;
 
     public XTEA(int[] key) {
@@ -37,9 +37,11 @@ public class XTEA {
     private void decipher(int[] block) {
         long sum = (long) DELTA * NUM_ROUNDS;
         for (int i = 0; i < NUM_ROUNDS; i++) {
-            block[1] -= (((block[0] << 4) ^ (block[0] >> 5)) + block[0]) ^ (sum + key[((int) ((sum >> 11) & 3))]);
+            block[1] -= (((block[0] << 4) ^ (block[0] >> 5)) + block[0])
+                    ^ (sum + key[((int) ((sum >> 11) & 3))]);
             sum -= DELTA;
-            block[0] -= (((block[1] << 4) ^ (block[1] >> 5)) + block[0]) ^ (sum + key[((int) (sum & 3))]);
+            block[0] -= (((block[1] << 4) ^ (block[1] >> 5)) + block[0])
+                    ^ (sum + key[((int) (sum & 3))]);
         }
     }
 
@@ -57,9 +59,11 @@ public class XTEA {
     private void encipher(int[] block) {
         long sum = 0;
         for (int i = 0; i < NUM_ROUNDS; i++) {
-            block[0] += (((block[1] << 4) ^ (block[1] >> 5)) + block[1]) ^ (sum + key[((int) (sum & 3))]);
+            block[0] += (((block[1] << 4) ^ (block[1] >> 5)) + block[1])
+                    ^ (sum + key[((int) (sum & 3))]);
             sum += DELTA;
-            block[1] += (((block[0] << 4) ^ (block[0] >> 5)) + block[0]) ^ (sum + key[((int) ((sum >> 11) & 3))]);
+            block[1] += (((block[0] << 4) ^ (block[0] >> 5)) + block[0])
+                    ^ (sum + key[((int) ((sum >> 11) & 3))]);
         }
     }
 

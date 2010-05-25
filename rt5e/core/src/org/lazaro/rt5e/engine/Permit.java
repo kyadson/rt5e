@@ -25,11 +25,11 @@ package org.lazaro.rt5e.engine;
 public class Permit {
     private boolean valid = true;
 
-    public boolean isValid() {
-        return valid;
-    }
-
     public void cancelPermit() {
         valid = false;
+    }
+
+    public boolean isValid() {
+        return valid;
     }
 }

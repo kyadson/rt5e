@@ -85,7 +85,8 @@ public class RS2FileDescriptorTable {
         }
         for (int i = 0; i < count; i++) {
             RS2FileDescriptor entry = entries[spacing[i]];
-            RS2FileDescriptor.SubRS2FileDescriptor[] subEntries = new RS2FileDescriptor.SubRS2FileDescriptor[buffer.getShort() & 0xffff];
+            RS2FileDescriptor.SubRS2FileDescriptor[] subEntries = new RS2FileDescriptor.SubRS2FileDescriptor[buffer
+                    .getShort() & 0xffff];
             for (int j = 0; j < subEntries.length; j++) {
                 subEntries[j] = new RS2FileDescriptor.SubRS2FileDescriptor();
             }
@@ -103,11 +104,36 @@ public class RS2FileDescriptorTable {
             for (int i = 0; i < count; i++) {
                 RS2FileDescriptor entry = entries[spacing[i]];
                 for (int j = 0; j < entry.getSubFiles().length; j++) {
-                    entries[spacing[i]].getSubFiles()[j].setNameHash(buffer.getInt());
+                    entries[spacing[i]].getSubFiles()[j].setNameHash(buffer
+                            .getInt());
                 }
 
             }
         }
+    }
+
+    public Map<Integer, RS2FileDescriptor> getDescriptorMap() {
+        return descriptorMap;
+    }
+
+    public RS2FileDescriptor[] getEntries() {
+        return entries;
+    }
+
+    public RS2File getFile() {
+        return infoFile;
+    }
+
+    public int getRevision() {
+        return revision;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public boolean isTitled() {
+        return titled;
     }
 
     public byte[] toByteArray() {
@@ -169,29 +195,5 @@ public class RS2FileDescriptorTable {
             e.printStackTrace();
         }
         return null;
-    }
-
-    public Map<Integer, RS2FileDescriptor> getDescriptorMap() {
-        return descriptorMap;
-    }
-
-    public RS2FileDescriptor[] getEntries() {
-        return entries;
-    }
-
-    public RS2File getFile() {
-        return infoFile;
-    }
-
-    public int getRevision() {
-        return revision;
-    }
-
-    public int getVersion() {
-        return version;
-    }
-
-    public boolean isTitled() {
-        return titled;
     }
 }

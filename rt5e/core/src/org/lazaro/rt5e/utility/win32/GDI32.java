@@ -25,6 +25,8 @@ import java.awt.*;
  * Definition (incomplete) of <code>gdi32.dll</code>.
  */
 public interface GDI32 extends W32API {
+    GDI32 INSTANCE = (GDI32) Native.loadLibrary("gdi32", GDI32.class,
+            DEFAULT_OPTIONS);
 
     class BITMAPINFO extends Structure {
         // RGBQUAD:
@@ -118,9 +120,6 @@ public interface GDI32 extends W32API {
     int DIB_RGB_COLORS = 0;
 
     int ERROR = 0;
-
-    GDI32 INSTANCE = (GDI32) Native.loadLibrary("gdi32", GDI32.class,
-            DEFAULT_OPTIONS);
 
     int NULLREGION = 1;
     int RDH_RECTANGLES = 1;

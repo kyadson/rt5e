@@ -34,6 +34,10 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class LoginWorker implements Runnable {
     private BlockingQueue<LoginRequest> loginQueue = new LinkedBlockingQueue<LoginRequest>();
 
+    public void dispatchLogin(LoginRequest login) {
+        loginQueue.offer(login);
+    }
+
     public void run() {
         while (Context.isRunning()) {
             try {
@@ -44,7 +48,8 @@ public class LoginWorker implements Runnable {
                 player.setLoginOpcode(login.getLoginOpcode());
                 LoginResponse response;
                 try {
-                    response = Context.getWorld().getSession().loadPlayer(player);
+                    response = Context.getWorld().getSession().loadPlayer(
+                            player);
                 } catch (LSException e) {
                     response = LoginResponse.LOGIN_SERVER_OFFLINE;
                 }
@@ -54,23 +59,25 @@ public class LoginWorker implements Runnable {
                     switch (login.getLoginOpcode()) {
                         case 16:
                         case 18:
-                            player.getActions().sendLoginResponse(response.getResponseCode());
+                            player.getActions().sendLoginResponse(
+                                    response.getResponseCode());
                             player.getActions().sendLogin();
                             break;
                         case 19:
-                            player.getActions().sendLobbyResponse(response.getResponseCode());
+                            player.getActions().sendLobbyResponse(
+                                    response.getResponseCode());
                             break;
                     }
                 } else {
-                    System.out.println("Refused login [" + response + ", " + login + "]");
-                    login.getConnection().write(new PacketBuilder().putByte(response.getResponseCode()).toPacket()).addListener(ChannelFutureListener.CLOSE);
+                    System.out.println("Refused login [" + response + ", "
+                            + login + "]");
+                    login.getConnection().write(
+                            new PacketBuilder().putByte(
+                                    response.getResponseCode()).toPacket())
+                            .addListener(ChannelFutureListener.CLOSE);
                 }
             } catch (InterruptedException e) {
             }
         }
-    }
-
-    public void dispatchLogin(LoginRequest login) {
-        loginQueue.offer(login);
     }
 }

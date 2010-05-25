@@ -36,7 +36,8 @@ import org.lazaro.rt5e.network.protocol.world.LoginDecoder597;
 public class HandshakeDecoder extends FrameDecoder {
 
     @Override
-    protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer) throws Exception {
+    protected Object decode(ChannelHandlerContext ctx, Channel channel,
+                            ChannelBuffer buffer) throws Exception {
         Connection conn = ConnectionMap.forChannel(channel);
         if (buffer.readableBytes() >= 1) {
             buffer.markReaderIndex();
@@ -47,10 +48,14 @@ public class HandshakeDecoder extends FrameDecoder {
                     if (buffer.readableBytes() >= 1) {
                         int nameHash = buffer.readByte() & 0xff;
 
-                        conn.setServerSessionKey(((long) (Math.random() * 99999999D) << 32) + (long) (Math.random() * 99999999D));
+                        conn
+                                .setServerSessionKey(((long) (Math.random() * 99999999D) << 32)
+                                        + (long) (Math.random() * 99999999D));
 
-                        channel.write(new PacketBuilder().putByte(0).putLong(conn.getServerSessionKey()).toPacket());
-                        channel.getPipeline().replace("decoder", "decoder", new LoginDecoder597());
+                        channel.write(new PacketBuilder().putByte(0).putLong(
+                                conn.getServerSessionKey()).toPacket());
+                        channel.getPipeline().replace("decoder", "decoder",
+                                new LoginDecoder597());
                     } else {
                         buffer.resetReaderIndex();
                         return null;
@@ -60,10 +65,17 @@ public class HandshakeDecoder extends FrameDecoder {
                     if (buffer.readableBytes() >= 4) {
                         int revision = buffer.readInt();
                         if (revision != Constants.CLIENT_REVISION) {
-                            channel.write(new PacketBuilder().putByte(6).toPacket()).addListener(ChannelFutureListener.CLOSE);
+                            channel
+                                    .write(
+                                            new PacketBuilder().putByte(6)
+                                                    .toPacket()).addListener(
+                                    ChannelFutureListener.CLOSE);
                         } else {
-                            channel.write(new PacketBuilder().putByte(0).toPacket());
-                            channel.getPipeline().replace("decoder", "decoder", new JS5Decoder());
+                            channel
+                                    .write(new PacketBuilder().putByte(0)
+                                            .toPacket());
+                            channel.getPipeline().replace("decoder", "decoder",
+                                    new JS5Decoder());
                         }
                     } else {
                         buffer.resetReaderIndex();

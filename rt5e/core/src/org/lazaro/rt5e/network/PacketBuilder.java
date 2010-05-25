@@ -105,7 +105,8 @@ public class PacketBuilder {
         bitPosition += numBits;
         int pos = (bitPosition + 7) / 8;
         while (pos + 1 > buffer.capacity()) {
-            buffer.writeByte((byte) 0); // Netty does not provide any other way of resizing the buffer.
+            buffer.writeByte((byte) 0); // Netty does not provide any other way
+            // of resizing the buffer.
         }
         buffer.writerIndex(pos);
 
@@ -114,17 +115,26 @@ public class PacketBuilder {
         for (; numBits > bitOffset; bitOffset = 8) {
             b = buffer.getByte(bytePos);
             buffer.setByte(bytePos, (byte) (b & ~Packet.BIT_MASK[bitOffset]));
-            buffer.setByte(bytePos, (byte) (b | (value >> (numBits - bitOffset)) & Packet.BIT_MASK[bitOffset]));
+            buffer.setByte(bytePos,
+                    (byte) (b | (value >> (numBits - bitOffset))
+                            & Packet.BIT_MASK[bitOffset]));
             bytePos++;
             numBits -= bitOffset;
         }
         b = buffer.getByte(bytePos);
         if (numBits == bitOffset) {
             buffer.setByte(bytePos, (byte) (b & ~Packet.BIT_MASK[bitOffset]));
-            buffer.setByte(bytePos, (byte) (b | value & Packet.BIT_MASK[bitOffset]));
+            buffer.setByte(bytePos, (byte) (b | value
+                    & Packet.BIT_MASK[bitOffset]));
         } else {
-            buffer.setByte(bytePos, (byte) (b & ~(Packet.BIT_MASK[numBits] << (bitOffset - numBits))));
-            buffer.setByte(bytePos, (byte) (b | (value & Packet.BIT_MASK[numBits]) << (bitOffset - numBits)));
+            buffer
+                    .setByte(
+                            bytePos,
+                            (byte) (b & ~(Packet.BIT_MASK[numBits] << (bitOffset - numBits))));
+            buffer
+                    .setByte(
+                            bytePos,
+                            (byte) (b | (value & Packet.BIT_MASK[numBits]) << (bitOffset - numBits)));
         }
         return this;
     }
@@ -209,7 +219,8 @@ public class PacketBuilder {
 
     public PacketBuilder putObject(Object object) {
         try {
-            ObjectOutputStream stream = new ObjectOutputStream(new ChannelBufferOutputStream(buffer));
+            ObjectOutputStream stream = new ObjectOutputStream(
+                    new ChannelBufferOutputStream(buffer));
             stream.writeObject(object);
             stream.close();
         } catch (Exception e) {
