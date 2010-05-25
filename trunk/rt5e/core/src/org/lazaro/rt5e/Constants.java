@@ -24,19 +24,54 @@ package org.lazaro.rt5e;
  */
 public class Constants {
     /**
-     * The maximum amount of players allowed online at any given time on one world..
+     * The RS2 cache that the server uses.
      */
-    public static final int PLAYER_CAP = 2047;
+    public static final String CACHE_DIRECTORY = "./data/cache/";
+
+    /**
+     * The client's revision/version.
+     */
+    public static final int CLIENT_REVISION = 597;
+
+    public static final String GAME_NAME = "RuneScape";
+
+    /**
+     * The JS5 protocol opcode.
+     */
+    public static final int JS5_PROTOCOL_OPCODE = 15;
+
+    public static final String LOBBY_SERVER_CONFIG = "./data/lobby_server.ini";
 
     /**
      * Configuration file location for the login server.
      */
     public static final String LOGIN_SERVER_CONFIG = "./data/login_server.ini";
 
+    public static final String MAP_XTEA_DIR = "./data/mapxtea/";
+
+    public static final String MAP_XTEA_FILE = "./data/mapxtea.dat";
+
+    public static final int[] MESSAGE_LENGTHS = new int[256];
+
+    public static final String PACKET_HANDLER_CONFIG = "./data/packet_handlers.ini";
+
+    public static final String PACKET_HANDLER_PACKAGE = "org.lazaro.rt5e.network.protocol.world.handler";
+
     /**
-     * Configuration file location for the world server.
+     * The maximum amount of players allowed online at any given time on one
+     * world..
      */
-    public static final String WORLD_SERVER_CONFIG = "./data/world_server.ini";
+    public static final int PLAYER_CAP = 2047;
+
+    /**
+     * The server's internal user name used for security purposes.
+     */
+    public static final String ROOT_USER_NAME = "root";
+
+    /**
+     * The RS2 protocol opcode.
+     */
+    public static final int RS2_PROTOCOL_OPCODE = 14;
 
     /**
      * How often the world updater runs in milliseconds.
@@ -46,44 +81,16 @@ public class Constants {
     public static final int UPDATE_INTERVAL = 600;
 
     /**
-     * The server's internal user name used for security purposes.
+     * Configuration file location for the world server.
      */
-    public static final String ROOT_USER_NAME = "root";
-
-    /**
-     * The RS2 cache that the server uses.
-     */
-    public static final String CACHE_DIRECTORY = "./data/cache/";
-
-    /**
-     * The RS2 protocol opcode.
-     */
-    public static final int RS2_PROTOCOL_OPCODE = 14;
-
-    /**
-     * The JS5 protocol opcode.
-     */
-    public static final int JS5_PROTOCOL_OPCODE = 15;
-
-    /**
-     * The client's revision/version.
-     */
-    public static final int CLIENT_REVISION = 597;
-
-    public static final String MAP_XTEA_DIR = "./data/mapxtea/";
-
-    public static final String MAP_XTEA_FILE = "./data/mapxtea.dat";
-
-    public static final int[] MESSAGE_LENGTHS = new int[256];
+    public static final String WORLD_SERVER_CONFIG = "./data/world_server.ini";
 
     static {
         for (int i = 0; i < 256; i++) {
             MESSAGE_LENGTHS[i] = -3;
         }
         MESSAGE_LENGTHS[43] = 0; // world list req
+
+        MESSAGE_LENGTHS[66] = 6; // screen set
     }
-
-    public static final String LOBBY_SERVER_CONFIG = "./data/lobby_server.ini";
-
-    public static final String PACKET_HANDLER_CONFIG = "./data/packet_handlers.ini";
 }

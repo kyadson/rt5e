@@ -33,7 +33,10 @@ public class Tile {
     }
 
     public static Tile locate(int x, int y, int z) {
-        /* This implementation is more memory efficient, sacrificing a little CPU */
+        /*
+           * This implementation is more memory efficient, sacrificing a little
+           * CPU
+           */
         int tileHash = z << 30 | x << 15 | y;
 
         Tile tile = tileMap.get(tileHash);
@@ -43,7 +46,10 @@ public class Tile {
         }
         return tile;
 
-        /* This implementation is faster, but is not very memory efficient, and it requires more GC operations. */
+        /*
+           * This implementation is faster, but is not very memory efficient, and
+           * it requires more GC operations.
+           */
         // return new Tile(x, y, z);
     }
 
@@ -56,8 +62,8 @@ public class Tile {
     }
 
     public boolean differentMap(Tile tile) {
-        return distanceFormula(getPartX(), getPartY(), tile.getPartX(),
-                tile.getPartY()) >= 4;
+        return distanceFormula(getPartX(), getPartY(), tile.getPartX(), tile
+                .getPartY()) >= 4;
     }
 
     public int distance(Tile tile) {

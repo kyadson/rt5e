@@ -39,15 +39,13 @@ public class Locatable extends Node {
     }
 
     public void setLocation(Tile location) {
-        /* int x = location.getPartX(), y = location.getPartY();
-
-        if (part == null || part.getX() != x || part.getY() != y) {
-            if (part != null) {
-                part.remove(this);
-            }
-            part = World.getInstance().getMap().getPart(x, y);
-            part.add(this);
-        } */
+        /*
+           * int x = location.getPartX(), y = location.getPartY();
+           *
+           * if (part == null || part.getX() != x || part.getY() != y) { if (part
+           * != null) { part.remove(this); } part =
+           * World.getInstance().getMap().getPart(x, y); part.add(this); }
+           */
 
         this.location = location;
     }

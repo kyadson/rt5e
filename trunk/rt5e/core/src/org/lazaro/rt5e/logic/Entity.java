@@ -83,7 +83,6 @@ public abstract class Entity extends Locatable {
         return teleporting;
     }
 
-
     public void process() {
 
         _process();

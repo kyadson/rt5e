@@ -23,12 +23,10 @@ package org.lazaro.rt5e.utility;
  * @author Lazaro
  */
 public class NameUtilities {
-    private static final char[] VALID_CHARS = {
-            '_', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-            'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
-            't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2',
-            '3', '4', '5', '6', '7', '8', '9'
-    };
+    private static final char[] VALID_CHARS = {'_', 'a', 'b', 'c', 'd', 'e',
+            'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
+            's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4',
+            '5', '6', '7', '8', '9'};
 
     public static String formatNameForDisplay(String string) {
         final char ac[] = string.replace("_", " ").toCharArray();
@@ -72,11 +70,15 @@ public class NameUtilities {
         for (int i = 0; i < string.length() && i < 12; i++) {
             char c = string.charAt(i);
             l *= 37L;
-            if (c >= 'A' && c <= 'Z') l += (1 + c) - 65;
-            else if (c >= 'a' && c <= 'z') l += (1 + c) - 97;
-            else if (c >= '0' && c <= '9') l += (27 + c) - 48;
+            if (c >= 'A' && c <= 'Z')
+                l += (1 + c) - 65;
+            else if (c >= 'a' && c <= 'z')
+                l += (1 + c) - 97;
+            else if (c >= '0' && c <= '9')
+                l += (27 + c) - 48;
         }
-        while (l % 37L == 0L && l != 0L) l /= 37L;
+        while (l % 37L == 0L && l != 0L)
+            l /= 37L;
         return l;
     }
 

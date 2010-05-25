@@ -38,7 +38,6 @@ public class NodeCollectionIterator<N extends Node> implements Iterator<N> {
         }
     }
 
-
     public boolean hasNext() {
         return offset != indexes.length;
     }

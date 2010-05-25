@@ -37,17 +37,49 @@ public class Actions597 implements Actions {
         this.player = player;
     }
 
-    public Actions sendAccessMask(int set1, int set2, int interfaceId1, int childId1, int interfaceId2, int childId2) {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+    public Actions sendAccessMask(int set1, int set2, int interfaceId1,
+                                  int childId1, int interfaceId2, int childId2) {
+        return this; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     public Actions sendFixedScreen() {
         sendWindow(548);
+        sendTab(159, 748); // HP bar
+        sendTab(161, 749); // Prayer bar
+        sendTab(162, 750); // Energy bar
+        sendTab(164, 747); // Summoning bar
+        sendTab(45, 751);
+        sendTab(171, 752);
+        sendTab(14, 754);
+        sendTab(12, 745);
+        sendTab(181, 884);
+        sendTab(182, 320);
+        sendTab(183, 190);
+        sendTab(184, 259);
+        sendTab(185, 149);
+        sendTab(186, 387);
+        sendTab(187, 271);
+        sendTab(188, 192);
+        sendTab(189, 891);
+        sendTab(190, 550);
+        sendTab(191, 551);
+        sendTab(192, 589);
+        sendTab(193, 261);
+        sendTab(194, 464);
+        sendTab(195, 187);
+        sendTab(196, 34);
+        sendTab(199, 182);
+        sendInterface(137, 752, 9, true);
         return this;
     }
 
-    public Actions sendInterface(int id, int window, int location, boolean walkable) {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+    public Actions sendInterface(int id, int window, int location,
+                                 boolean walkable) {
+        PacketBuilder pb = new PacketBuilder(101);
+        pb.putLEShort(0).putInt(window << 16 | location).putByteS(walkable ? 1 : 0).putLEShortA(id);
+        player.getConnection().write(pb.toPacket());
+        return this;
     }
 
     public Actions sendLobbyResponse(int response) {
@@ -78,11 +110,13 @@ public class Actions597 implements Actions {
             responseBlock.putGJString2("127.0.0.1"); // TODO
 
             Packet responseBlockMessage = responseBlock.toPacket();
-            pb.putByte(responseBlockMessage.getLength()).put(responseBlockMessage.getBytes());
+            pb.putByte(responseBlockMessage.getLength()).put(
+                    responseBlockMessage.getBytes());
 
             player.getConnection().write(pb.toPacket());
         } else {
-            player.getConnection().write(pb.toPacket()).addListener(ChannelFutureListener.CLOSE);
+            player.getConnection().write(pb.toPacket()).addListener(
+                    ChannelFutureListener.CLOSE);
         }
         return this;
     }
@@ -90,8 +124,7 @@ public class Actions597 implements Actions {
     public Actions sendLogin() {
         sendMapRegion();
 
-        sendFixedScreen();
-        player.setOnLogin(true);
+        player.onLogin();
         return this;
     }
 
@@ -102,27 +135,35 @@ public class Actions597 implements Actions {
         if (response == LoginResponse.LOGIN.getResponseCode()) {
             PacketBuilder responseBlock = new PacketBuilder();
 
-            responseBlock.putByte(player.getRights().getValue()).putByte(0).putByte(0).putByte(0).putByte(0).putByte(0).putShort(player.getIndex()).putByte(1).putTriByte(0).putByte(1);
+            responseBlock.putByte(player.getRights().getValue()).putByte(0)
+                    .putByte(0).putByte(0).putByte(0).putByte(0).putShort(
+                    player.getIndex()).putByte(1).putTriByte(0)
+                    .putByte(1);
 
             Packet responseBlockPacket = responseBlock.toPacket();
-            pb.putByte(responseBlockPacket.getLength()).put(responseBlockPacket.getBytes());
+            pb.putByte(responseBlockPacket.getLength()).put(
+                    responseBlockPacket.getBytes());
 
             player.getConnection().write(pb.toPacket());
         } else {
-            player.getConnection().write(pb.toPacket()).addListener(ChannelFutureListener.CLOSE);
+            player.getConnection().write(pb.toPacket()).addListener(
+                    ChannelFutureListener.CLOSE);
         }
         return this;
     }
 
     public Actions sendLogout() {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+        return this; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     public Actions sendMapRegion() {
         PacketBuilder pb = new PacketBuilder(95, Packet.Type.VAR_SHORT);
 
         if (player.isOnLogin()) {
-            pb.putBits(30, player.getLocation().getX() << 14 | player.getLocation().getY() & 0x3fff | player.getLocation().getZ() << 28);
+            pb.putBits(30, player.getLocation().getX() << 14
+                    | player.getLocation().getY() & 0x3fff
+                    | player.getLocation().getZ() << 28);
             for (int i = 1; i < 2048; i++) {
                 if (i != player.getIndex()) {
                     pb.putBits(18, 0);
@@ -130,17 +171,26 @@ public class Actions597 implements Actions {
             }
         }
 
-        pb.putShortA(player.getLocation().getPartX()).putByteS(player.getLocation().getZ()).putShort(player.getLocation().getPartY()).putByte(1);
+        pb.putShortA(player.getLocation().getPartX()).putByteS(
+                player.getLocation().getZ()).putShort(
+                player.getLocation().getPartY()).putByte(1);
 
-        boolean forceRegion = (player.getLocation().getPartX() / 8 == 48 || player.getLocation().getPartX() / 8 == 49) && player.getLocation().getPartY() / 8 == 48;
-        if (player.getLocation().getPartX() / 8 == 48 && player.getLocation().getPartY() / 8 == 148) {
+        boolean forceRegion = (player.getLocation().getPartX() / 8 == 48 || player
+                .getLocation().getPartX() / 8 == 49)
+                && player.getLocation().getPartY() / 8 == 48;
+        if (player.getLocation().getPartX() / 8 == 48
+                && player.getLocation().getPartY() / 8 == 148) {
             forceRegion = true;
         }
-        for (int xCalc = (player.getLocation().getPartX() - 6) / 8; xCalc <= (player.getLocation().getPartX() + 6) / 8; xCalc++) {
-            for (int yCalc = (player.getLocation().getPartY() - 6) / 8; yCalc <= (player.getLocation().getPartY() + 6) / 8; yCalc++) {
+        for (int xCalc = (player.getLocation().getPartX() - 6) / 8; xCalc <= (player
+                .getLocation().getPartX() + 6) / 8; xCalc++) {
+            for (int yCalc = (player.getLocation().getPartY() - 6) / 8; yCalc <= (player
+                    .getLocation().getPartY() + 6) / 8; yCalc++) {
                 int region = yCalc + (xCalc << 8);
                 int[] key = WorldApp.getMapXTEA().getKey(region);
-                if (forceRegion && (yCalc == 49 || yCalc == 149 || yCalc == 147 || xCalc == 50 || xCalc == 49 && yCalc == 47)) {
+                if (forceRegion
+                        && (yCalc == 49 || yCalc == 149 || yCalc == 147
+                        || xCalc == 50 || xCalc == 49 && yCalc == 47)) {
                     for (int i = 0; i < 4; i++) {
                         pb.putInt(key[i]);
                     }
@@ -158,23 +208,54 @@ public class Actions597 implements Actions {
     }
 
     public Actions sendMessage(String message) {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+        return this; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     public Actions sendMessage(String message, String messageExtension, int req) {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+        return this; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     public Actions sendResizableScreen() {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+        sendWindow(746);
+        sendTab(170, 748); // HP bar
+        sendTab(171, 749); // Prayer bar
+        sendTab(172, 750); // Energy bar
+        sendTab(173, 747); // Summoning bar
+        sendTab(11, 745);
+        sendTab(15, 751);
+        sendTab(18, 752);
+        sendTab(19, 754);
+        sendTab(34, 884);
+        sendTab(35, 320);
+        sendTab(36, 190);
+        sendTab(37, 259);
+        sendTab(38, 149);
+        sendTab(39, 387);
+        sendTab(40, 271);
+        sendTab(41, 192);
+        sendTab(42, 891);
+        sendTab(43, 550);
+        sendTab(44, 551);
+        sendTab(45, 589);
+        sendTab(46, 261);
+        sendTab(47, 464);
+        sendTab(48, 187);
+        sendTab(49, 34);
+        sendTab(52, 182);
+        sendInterface(137, 752, 9, true);
+        return this;
     }
 
     public Actions sendSkill(int skillId) {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+        return this; // To change body of implemented methods use File |
+        // Settings | File Templates.
     }
 
     public Actions sendTab(int location, int id) {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+        sendInterface(id, player.getDisplayMode() == DisplayMode.FIXED ? 548 : 746, location, true);
+        return this;
     }
 
     public Actions sendWindow(int window) {
@@ -194,14 +275,17 @@ public class Actions597 implements Actions {
     }
 
     public Actions switchToFixedScreen() {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+        sendFixedScreen();
+        return this;
     }
 
     public Actions switchToResizableScreen() {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+        sendResizableScreen();
+        return this;
     }
 
-    public Actions switchWindows(int windowFrom, int windowPosFrom, int windowTo, int windowPosTo) {
-        return this;  //To change body of implemented methods use File | Settings | File Templates.
+    public Actions switchWindows(int windowFrom, int windowPosFrom,
+                                 int windowTo, int windowPosTo) {
+        return this;
     }
 }

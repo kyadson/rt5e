@@ -23,7 +23,9 @@ package org.lazaro.rt5e.logic.login;
  * @author Lazaro
  */
 public enum LoginResponse {
-    ALREADY_ONLINE(5), BANNED(4), CLIENT_UPDATED(6), CURRENTLY_UPDATING(14), ERROR(13), INVALID_DETAILS(3), LOGIN(2), LOGIN_LIMIT_EXCEEDED(9), LOGIN_SERVER_OFFLINE(8), WORLD_FULL(7);
+    ALREADY_ONLINE(5), BANNED(4), CLIENT_UPDATED(6), CURRENTLY_UPDATING(14), ERROR(
+            13), INVALID_DETAILS(3), LOGIN(2), LOGIN_LIMIT_EXCEEDED(9), LOGIN_SERVER_OFFLINE(
+            8), WORLD_FULL(7);
 
     public static LoginResponse valueFor(int responseCode) {
         switch (responseCode) {
@@ -65,6 +67,7 @@ public enum LoginResponse {
         return responseCode;
     }
 
+    @Override
     public String toString() {
         return "response=" + super.toString().replace("_", " ").toLowerCase();
     }

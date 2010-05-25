@@ -35,23 +35,33 @@ public class PacketHandlerWorker implements Runnable {
         try {
             int count = 0;
 
-            Configuration config = new Configuration(Constants.PACKET_HANDLER_CONFIG);
+            Configuration config = new Configuration(
+                    Constants.PACKET_HANDLER_CONFIG);
             String[] handlerNames = config.getStringArray("packet_handler");
             for (int i = 0; i < handlerNames.length; i++) {
                 if (handlerNames[i] != null) {
                     try {
-                        Class<?> handlerClass = Class.forName(handlerNames[i]);
-                        PacketHandler handler = (PacketHandler) handlerClass.newInstance();
+                        Class<?> handlerClass = Class
+                                .forName(Constants.PACKET_HANDLER_PACKAGE + "."
+                                        + handlerNames[i]);
+                        PacketHandler handler = (PacketHandler) handlerClass
+                                .newInstance();
                         PacketHandler.PACKET_HANDLER[i] = handler;
                         count++;
                     } catch (ClassNotFoundException e) {
-                        System.err.println("Could not find packet handler [opcode=" + i + ", name=" + handlerNames[i] + "]");
+                        System.err
+                                .println("Could not find packet handler [opcode="
+                                        + i + ", name=" + handlerNames[i] + "]");
                         e.printStackTrace();
                     } catch (InstantiationException e) {
-                        System.err.println("Error loading packet handler [opcode=" + i + ", name=" + handlerNames[i] + "]");
+                        System.err
+                                .println("Error loading packet handler [opcode="
+                                        + i + ", name=" + handlerNames[i] + "]");
                         e.printStackTrace();
                     } catch (IllegalAccessException e) {
-                        System.err.println("Error loading message handler [opcode=" + i + ", name=" + handlerNames[i] + "]");
+                        System.err
+                                .println("Error loading message handler [opcode="
+                                        + i + ", name=" + handlerNames[i] + "]");
                         e.printStackTrace();
                     }
                 }
@@ -66,13 +76,18 @@ public class PacketHandlerWorker implements Runnable {
 
     public void run() {
         for (Player player : Context.getWorld().getGlobalPlayers()) {
-            if (player.getConnection().isConnected() && player.getConnection().isOpen()) {
-                for (Packet packet = player.getPacketQueue().poll(); packet != null; packet = player.getPacketQueue().poll()) {
-                    PacketHandler handler = PacketHandler.PACKET_HANDLER[packet.getOpcode()];
+            if (player.getConnection().isConnected()
+                    && player.getConnection().isOpen()) {
+                for (Packet packet = player.getPacketQueue().poll(); packet != null; packet = player
+                        .getPacketQueue().poll()) {
+                    PacketHandler handler = PacketHandler.PACKET_HANDLER[packet
+                            .getOpcode()];
                     if (handler != null) {
                         handler.handle(player, packet);
                     } else {
-                        System.err.println("Unhandled packet [player=" + player.getName() + ", opcode=" + packet.getOpcode() + "]");
+                        System.err.println("Unhandled packet [player="
+                                + player.getName() + ", opcode="
+                                + packet.getOpcode() + "]");
                     }
                     player.setPacketReceived(packet.getOpcode(), false);
                 }

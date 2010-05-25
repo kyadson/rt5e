@@ -32,57 +32,39 @@ import java.util.concurrent.TimeUnit;
  * @author Lazaro
  */
 public class Engine {
-    private static final double THREAD_MULTIPLIER = 1.0;
-
     private final static Engine instance = new Engine();
+
+    private static final double THREAD_MULTIPLIER = 1.0;
 
     public static Engine getInstance() {
         return instance;
     }
 
-    private Engine() {
-    }
-
-    private Semaphore semaphore = new Semaphore();
-
-    public ScheduledExecutorService getCoreExecutor() {
-        return coreExecutor;
-    }
-
-    private boolean running = false;
-    private List<Event> logicEvents = new LinkedList<Event>();
-    private List<Event> miscEvents = new LinkedList<Event>();
-    private ScheduledExecutorService coreExecutor = Executors.newSingleThreadScheduledExecutor();
     private Executor asyncExecutor = Executors.newSingleThreadExecutor();
-    private ScheduledExecutorService parallelExecutor = Executors.newScheduledThreadPool((int) ((Runtime.getRuntime().availableProcessors() == 1 ? 2 : Runtime.getRuntime().availableProcessors()) * THREAD_MULTIPLIER));
+
     private Executor blockingExecutor = Executors.newFixedThreadPool(8);
 
-    public Executor getAsyncExecutor() {
-        return asyncExecutor;
-    }
+    private ScheduledExecutorService coreExecutor = Executors
+            .newSingleThreadScheduledExecutor();
 
-    public ScheduledExecutorService getParallelExecutor() {
-        return parallelExecutor;
-    }
+    private List<Event> logicEvents = new LinkedList<Event>();
+    private List<Event> miscEvents = new LinkedList<Event>();
+    private ScheduledExecutorService parallelExecutor = Executors
+            .newScheduledThreadPool((int) ((Runtime.getRuntime()
+                    .availableProcessors() == 1 ? 2 : Runtime.getRuntime()
+                    .availableProcessors()) * THREAD_MULTIPLIER));
+    private boolean running = false;
+    private Semaphore semaphore = new Semaphore();
 
-    public Executor getBlockingExecutor() {
-        return blockingExecutor;
+    private Engine() {
     }
 
     public void execute(Runnable r) {
         asyncExecutor.execute(r);
     }
 
-    public void executeParallel(Runnable r) {
-        parallelExecutor.execute(r);
-    }
-
     public void executeBlocking(Runnable r) {
         blockingExecutor.execute(r);
-    }
-
-    public Semaphore getSemaphore() {
-        return semaphore;
     }
 
     private void executeEvent(final Event event) {
@@ -99,7 +81,7 @@ public class Engine {
                 if (event.isRunning()) {
                     executeEvent(event);
                 } else {
-                    synchronized(logicEvents) {
+                    synchronized (logicEvents) {
                         logicEvents.remove(event);
                     }
                 }
@@ -121,12 +103,36 @@ public class Engine {
                 if (event.isRunning()) {
                     executeMiscEvent(event);
                 } else {
-                    synchronized(miscEvents) {
+                    synchronized (miscEvents) {
                         miscEvents.remove(event);
                     }
                 }
             }
         }, event.getTimeRemaining(), TimeUnit.MILLISECONDS);
+    }
+
+    public void executeParallel(Runnable r) {
+        parallelExecutor.execute(r);
+    }
+
+    public Executor getAsyncExecutor() {
+        return asyncExecutor;
+    }
+
+    public Executor getBlockingExecutor() {
+        return blockingExecutor;
+    }
+
+    public ScheduledExecutorService getCoreExecutor() {
+        return coreExecutor;
+    }
+
+    public ScheduledExecutorService getParallelExecutor() {
+        return parallelExecutor;
+    }
+
+    public Semaphore getSemaphore() {
+        return semaphore;
     }
 
     public void start() {

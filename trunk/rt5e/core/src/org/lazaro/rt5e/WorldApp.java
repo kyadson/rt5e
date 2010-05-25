@@ -43,20 +43,79 @@ import java.util.concurrent.TimeUnit;
  * @author Lazaro
  */
 public class WorldApp {
-    public static boolean isActive() {
-        return active;
-    }
-
     private static boolean active = false;
 
-    private static ExecutorService bossExecutor = Executors.newCachedThreadPool();
-    private static ExecutorService workerExecutor = Executors.newCachedThreadPool();
+    private static ExecutorService bossExecutor = Executors
+            .newCachedThreadPool();
+
+    private static MapXTEA mapXTEA = null;
+    private static ExecutorService workerExecutor = Executors
+            .newCachedThreadPool();
 
     public static MapXTEA getMapXTEA() {
         return mapXTEA;
     }
 
-    private static MapXTEA mapXTEA = null;
+    public static boolean isActive() {
+        return active;
+    }
+
+    public static void main(String[] args) {
+        active = true;
+
+        NativeConsole.setHeader("RT5E [World Server]");
+        Logger.setupLogging();
+        Logger.printInfo();
+
+        System.out.println("Starting world server...");
+        Logger.incrementIndentationTab();
+
+        try {
+            Context.setConfiguration(new Configuration(
+                    Constants.WORLD_SERVER_CONFIG));
+            System.out.println("Loaded settings");
+
+            Context.setCache(new Cache(Constants.CACHE_DIRECTORY));
+            System.out.println("Loaded cache");
+
+            mapXTEA = new MapXTEA();
+
+            Context.setWorld(new World(Context.getConfiguration().getInt(
+                    "WORLD_ID")));
+            Context.getWorld().start();
+            System.out.println("Loaded world");
+
+            Context.setLoginWorker(new LoginWorker());
+            new Thread(Context.getLoginWorker()).start();
+            System.out.println("Loaded login worker(s)");
+
+            PacketHandlerWorker.loadPacketHandlers();
+
+            Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(
+                    Context.getWorld(), 0, 600, TimeUnit.MILLISECONDS);
+            Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(
+                    new PacketHandlerWorker(), 300, 600, TimeUnit.MILLISECONDS);
+
+            Engine.getInstance().submitMiscEvent(new Monitor());
+            Engine.getInstance().start();
+            System.out.println("Started engine");
+
+            startupNetworking();
+            System.out.println("Bound port : "
+                    + (Context.getConfiguration().getInt(
+                    "WORLD_SERVER_PORT_OFFSET") + Context
+                    .getConfiguration().getInt("WORLD_ID")));
+
+            ProcessPriority.setProcessPriority();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            System.exit(ExitCodes.UNKNOWN_ERROR);
+        }
+
+        Logger.resetIndentation();
+        System.out.println("DONE!");
+        System.out.println();
+    }
 
     private static void startupNetworking() throws Throwable {
         ChannelFactory factory = new NioServerSocketChannelFactory(
@@ -73,56 +132,8 @@ public class WorldApp {
         bootstrap.setOption("child.tcpNoDelay", false);
         bootstrap.setOption("child.keepAlive", true);
 
-        bootstrap.bind(new InetSocketAddress(Context.getConfiguration().getInt("WORLD_SERVER_PORT_OFFSET") + Context.getConfiguration().getInt("WORLD_ID")));
-    }
-
-    public static void main(String[] args) {
-        active = true;
-
-        NativeConsole.setHeader("RT5E [World Server]");
-        Logger.setupLogging();
-        Logger.printInfo();
-
-        System.out.println("Starting world server...");
-        Logger.incrementIndentationTab();
-
-        try {
-            Context.setConfiguration(new Configuration(Constants.WORLD_SERVER_CONFIG));
-            System.out.println("Loaded settings");
-
-            Context.setCache(new Cache(Constants.CACHE_DIRECTORY));
-            System.out.println("Loaded cache");
-
-            mapXTEA = new MapXTEA();
-
-            Context.setWorld(new World(Context.getConfiguration().getInt("WORLD_ID")));
-            Context.getWorld().start();
-            System.out.println("Loaded world");
-
-            Context.setLoginWorker(new LoginWorker());
-            new Thread(Context.getLoginWorker()).start();
-            System.out.println("Loaded login worker(s)");
-
-            PacketHandlerWorker.loadPacketHandlers();
-
-            Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(Context.getWorld(), 0, 600, TimeUnit.MILLISECONDS);
-            Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(new PacketHandlerWorker(), 300, 600, TimeUnit.MILLISECONDS);
-
-            Engine.getInstance().submitMiscEvent(new Monitor());
-            Engine.getInstance().start();
-            System.out.println("Started engine");
-
-            startupNetworking();
-            System.out.println("Bound port : " + (Context.getConfiguration().getInt("WORLD_SERVER_PORT_OFFSET") + Context.getConfiguration().getInt("WORLD_ID")));
-
-            ProcessPriority.setProcessPriority();
-        } catch (Throwable e) {
-            e.printStackTrace();
-            System.exit(ExitCodes.UNKNOWN_ERROR);
-        }
-
-        Logger.resetIndentation();
-        System.out.println("DONE!");
-        System.out.println();
+        bootstrap.bind(new InetSocketAddress(Context.getConfiguration().getInt(
+                "WORLD_SERVER_PORT_OFFSET")
+                + Context.getConfiguration().getInt("WORLD_ID")));
     }
 }

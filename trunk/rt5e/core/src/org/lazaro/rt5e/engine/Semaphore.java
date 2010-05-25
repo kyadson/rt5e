@@ -23,21 +23,8 @@ package org.lazaro.rt5e.engine;
  * @author Lazaro
  */
 public class Semaphore {
-    private Object lock = new Object();
     private Permit currentPermit = null;
-
-    public Permit acquirePermit() throws InterruptedException {
-        return acquirePermit(0);
-    }
-
-    public Permit acquirePermit(long timeout) throws InterruptedException {
-        synchronized (lock) {
-            if (currentPermit != null) {
-                lock.wait(timeout);
-            }
-            return currentPermit = new Permit();
-        }
-    }
+    private Object lock = new Object();
 
     public Permit acquireForcedPermit() throws InterruptedException {
         return acquireForcedPermit(0);
@@ -49,6 +36,19 @@ public class Semaphore {
                 currentPermit.cancelPermit();
             }
             return acquirePermit(timeout);
+        }
+    }
+
+    public Permit acquirePermit() throws InterruptedException {
+        return acquirePermit(0);
+    }
+
+    public Permit acquirePermit(long timeout) throws InterruptedException {
+        synchronized (lock) {
+            if (currentPermit != null) {
+                lock.wait(timeout);
+            }
+            return currentPermit = new Permit();
         }
     }
 

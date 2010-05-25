@@ -49,13 +49,16 @@ public interface Actions {
         }
     }
 
-    public Actions sendAccessMask(int set1, int set2, int interfaceId1, int childId1, int interfaceId2, int childId2);
+    public Actions sendAccessMask(int set1, int set2, int interfaceId1,
+                                  int childId1, int interfaceId2, int childId2);
 
     public Actions sendFixedScreen();
 
-    public Actions sendInterface(int id, int window, int location, boolean walkable);
+    public Actions sendInterface(int id, int window, int location,
+                                 boolean walkable);
 
-    // public Actions sendItems(int interfaceId, ItemCollection items, boolean positionBoolean); // TODO
+    // public Actions sendItems(int interfaceId, ItemCollection items, boolean
+    // positionBoolean); // TODO
 
     public Actions sendLobbyResponse(int response);
 
@@ -85,5 +88,6 @@ public interface Actions {
 
     public Actions switchToResizableScreen();
 
-    public Actions switchWindows(int windowFrom, int windowPosFrom, int windowTo, int windowPosTo);
+    public Actions switchWindows(int windowFrom, int windowPosFrom,
+                                 int windowTo, int windowPosTo);
 }

@@ -27,17 +27,20 @@ import org.lazaro.rt5e.login.LSException;
  * @author Lazaro
  */
 public class WorldListUpdater extends Event {
+    private static WorldListUpdater instance = new WorldListUpdater();
+
     public static WorldListUpdater getInstance() {
         return instance;
     }
-
-    private static WorldListUpdater instance = new WorldListUpdater();
-
 
     private byte[] cachedWorldList = null;
 
     public WorldListUpdater() {
         super(1000);
+    }
+
+    public byte[] getCachedWorldList() {
+        return cachedWorldList;
     }
 
     public void run() {
@@ -47,9 +50,5 @@ public class WorldListUpdater extends Event {
             cachedWorldList = null;
             e.printStackTrace();
         }
-    }
-
-    public byte[] getCachedWorldList() {
-        return cachedWorldList;
     }
 }

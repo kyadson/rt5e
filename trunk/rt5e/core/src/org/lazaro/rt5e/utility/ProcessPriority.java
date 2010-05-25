@@ -31,9 +31,13 @@ public class ProcessPriority {
 
     public static void setProcessPriority() {
         if (Platform.isWindows()) {
-            W32API.HANDLE currentProcess = Kernel32.INSTANCE.GetCurrentProcess();
-            if (Kernel32.INSTANCE.SetPriorityClass(currentProcess, WIN32_PROCESS_PRIORITY_CLASS)) {
-                System.out.println("Set process to " + win32PriorityName(WIN32_PROCESS_PRIORITY_CLASS) + " priority mode");
+            W32API.HANDLE currentProcess = Kernel32.INSTANCE
+                    .GetCurrentProcess();
+            if (Kernel32.INSTANCE.SetPriorityClass(currentProcess,
+                    WIN32_PROCESS_PRIORITY_CLASS)) {
+                System.out.println("Set process to "
+                        + win32PriorityName(WIN32_PROCESS_PRIORITY_CLASS)
+                        + " priority mode");
             }
         } else if (Platform.isLinux()) {
             // TODO Write low level code for Linux

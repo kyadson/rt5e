@@ -44,7 +44,8 @@ public class MapXTEA {
     }
 
     public void createPackedFile() throws IOException {
-        DataOutputStream output = new DataOutputStream(new FileOutputStream(Constants.MAP_XTEA_FILE));
+        DataOutputStream output = new DataOutputStream(new FileOutputStream(
+                Constants.MAP_XTEA_FILE));
         File directory = new File(Constants.MAP_XTEA_DIR);
         if (directory.isDirectory()) {
             for (File file : directory.listFiles()) {

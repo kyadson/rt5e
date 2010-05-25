@@ -46,14 +46,18 @@ public class RS2FileDescriptor {
     }
 
     private int crc = 0;
+    private boolean exists = false;
     private int id;
     private int nameHash = 0;
     private int revision = 0;
     private SubRS2FileDescriptor[] subFiles = null;
-    private boolean exists = false;
 
     public RS2FileDescriptor(int id) {
         this.id = id;
+    }
+
+    public boolean exists() {
+        return exists;
     }
 
     public int getCRC() {
@@ -80,6 +84,10 @@ public class RS2FileDescriptor {
         this.crc = crc;
     }
 
+    public void setExists(boolean exists) {
+        this.exists = exists;
+    }
+
     public void setNameHash(int nameHash) {
         this.nameHash = nameHash;
     }
@@ -90,13 +98,5 @@ public class RS2FileDescriptor {
 
     public void setSubFiles(SubRS2FileDescriptor[] subFiles) {
         this.subFiles = subFiles;
-    }
-
-    public boolean exists() {
-        return exists;
-    }
-
-    public void setExists(boolean exists) {
-        this.exists = exists;
     }
 }

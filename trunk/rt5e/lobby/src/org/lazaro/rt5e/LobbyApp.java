@@ -43,31 +43,14 @@ import java.util.concurrent.TimeUnit;
  * @author Lazaro
  */
 public class LobbyApp {
-    public static boolean isActive() {
-        return active;
-    }
-
     private static boolean active = false;
 
     private static ExecutorService bossExecutor = Executors.newCachedThreadPool();
+
     private static ExecutorService workerExecutor = Executors.newCachedThreadPool();
 
-    private static void startupNetworking() throws Throwable {
-        ChannelFactory factory = new NioServerSocketChannelFactory(
-                bossExecutor, workerExecutor);
-        ConnectionHandler handler = new ConnectionHandler();
-
-        ServerBootstrap bootstrap = new ServerBootstrap(factory);
-        ChannelPipeline pipeline = bootstrap.getPipeline();
-        pipeline.addLast("monitor", BandwidthMonitor.getInstance());
-        pipeline.addLast("handler", handler);
-        pipeline.addLast("encoder", new StandardPacketEncoder());
-        pipeline.addLast("decoder", new HandshakeDecoder());
-
-        bootstrap.setOption("child.tcpNoDelay", false);
-        bootstrap.setOption("child.keepAlive", true);
-
-        bootstrap.bind(new InetSocketAddress(Context.getConfiguration().getInt("LOBBY_SERVER_PORT")));
+    public static boolean isActive() {
+        return active;
     }
 
     public static void main(String[] args) {
@@ -116,5 +99,23 @@ public class LobbyApp {
         Logger.resetIndentation();
         System.out.println("DONE!");
         System.out.println();
+    }
+
+    private static void startupNetworking() throws Throwable {
+        ChannelFactory factory = new NioServerSocketChannelFactory(
+                bossExecutor, workerExecutor);
+        ConnectionHandler handler = new ConnectionHandler();
+
+        ServerBootstrap bootstrap = new ServerBootstrap(factory);
+        ChannelPipeline pipeline = bootstrap.getPipeline();
+        pipeline.addLast("monitor", BandwidthMonitor.getInstance());
+        pipeline.addLast("handler", handler);
+        pipeline.addLast("encoder", new StandardPacketEncoder());
+        pipeline.addLast("decoder", new HandshakeDecoder());
+
+        bootstrap.setOption("child.tcpNoDelay", false);
+        bootstrap.setOption("child.keepAlive", true);
+
+        bootstrap.bind(new InetSocketAddress(Context.getConfiguration().getInt("LOBBY_SERVER_PORT")));
     }
 }

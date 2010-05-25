@@ -34,10 +34,11 @@ package org.lazaro.rt5e.utility.crypto;
  * @author Bob Jenkins
  */
 public class ISAACCipher {
-    private static final int LOG_SIZE = 8; // Log of size of results[] and memory[]
+    private static final int LOG_SIZE = 8; // Log of size of results[] and
+    private static final int RATIO = 0x9e3779b9; // The golden ratio memory[]
+    // memory[]
     private static final int SIZE = 1 << LOG_SIZE; // Size of results[] and
     private static final int MASK = (SIZE - 1) << 2; // For pseudorandom lookup
-    private static final int RATIO = 0x9e3779b9; // The golden ratio memory[]
 
     private int accumulator; // Accumulator
     private int count; // Count through the results in results[]
@@ -259,4 +260,3 @@ public class ISAACCipher {
             memory[i % memory.length] ^= seed[i];
     }
 }
-

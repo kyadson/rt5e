@@ -43,7 +43,8 @@ public class NativeConsole {
     }
 
     public static void setColor(int foreground, int background) {
-        if (supported && (currentForeground != foreground || currentBackground != background)) {
+        if (supported
+                && (currentForeground != foreground || currentBackground != background)) {
             Kernel32.INSTANCE.SetConsoleTextAttribute(Kernel32.INSTANCE
                     .GetStdHandle(Kernel32.STD_OUTPUT_HANDLE),
                     (short) (foreground | background * 16));
@@ -54,7 +55,8 @@ public class NativeConsole {
     }
 
     public static void setHeader(String header) {
-        if (supported && (currentHeader == null || !currentHeader.equals(header))) {
+        if (supported
+                && (currentHeader == null || !currentHeader.equals(header))) {
             currentHeader = header;
             Kernel32.INSTANCE.SetConsoleTitle(header);
         }

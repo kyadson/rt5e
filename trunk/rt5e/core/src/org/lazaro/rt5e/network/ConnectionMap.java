@@ -30,6 +30,10 @@ import java.util.Map;
 public class ConnectionMap {
     private static Map<Channel, Connection> connectionMap = new HashMap<Channel, Connection>();
 
+    public static Connection forChannel(Channel channel) {
+        return connectionMap.get(channel);
+    }
+
     public static void register(Connection connection) {
         connectionMap.put(connection.getChannel(), connection);
     }
@@ -40,9 +44,5 @@ public class ConnectionMap {
 
     public static void release(Connection connection) {
         connectionMap.remove(connection.getChannel());
-    }
-
-    public static Connection forChannel(Channel channel) {
-        return connectionMap.get(channel);
     }
 }

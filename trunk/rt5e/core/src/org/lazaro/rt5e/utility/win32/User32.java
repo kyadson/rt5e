@@ -28,6 +28,8 @@ import org.lazaro.rt5e.utility.win32.GDI32.RECT;
  * @author twalljava@dev.java.net
  */
 public interface User32 extends W32API {
+    User32 INSTANCE = (User32) Native.loadLibrary("user32", User32.class,
+            DEFAULT_OPTIONS);
 
     class BLENDFUNCTION extends Structure {
         public byte AlphaFormat;
@@ -165,9 +167,6 @@ public interface User32 extends W32API {
     int IMAGE_ENHMETAFILE = 3;
 
     int IMAGE_ICON = 1;
-
-    User32 INSTANCE = (User32) Native.loadLibrary("user32", User32.class,
-            DEFAULT_OPTIONS);
 
     int LR_COLOR = 0x0002;
 

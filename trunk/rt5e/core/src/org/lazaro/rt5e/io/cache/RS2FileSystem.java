@@ -57,9 +57,10 @@ public class RS2FileSystem {
         try {
             ByteBuffer index = indexFile.getChannel().map(
                     FileChannel.MapMode.READ_ONLY, 6 * fileId, 6);
-            int length = ((index.get() & 0xFF) << 16) | ((index.get() & 0xFF) << 8) | (index.get() & 0xFF);
-            int position = ((index.get() & 0xFF) << 16) | ((index.get() & 0xFF) << 8) | (index.get() & 0xFF);
-
+            int length = ((index.get() & 0xFF) << 16)
+                    | ((index.get() & 0xFF) << 8) | (index.get() & 0xFF);
+            int position = ((index.get() & 0xFF) << 16)
+                    | ((index.get() & 0xFF) << 8) | (index.get() & 0xFF);
 
             if (length == 0) {
                 return null;
@@ -76,11 +77,13 @@ public class RS2FileSystem {
                 }
 
                 ByteBuffer block = cacheFile.getChannel().map(
-                        FileChannel.MapMode.READ_ONLY, position * 520, amount + 8);
+                        FileChannel.MapMode.READ_ONLY, position * 520,
+                        amount + 8);
 
                 int nextFileId = block.getShort() & 0xffff;
                 int currentOffset = block.getShort() & 0xffff;
-                position = ((block.get() & 0xFF) << 16) | ((block.get() & 0xFF) << 8) | (block.get() & 0xFF);
+                position = ((block.get() & 0xFF) << 16)
+                        | ((block.get() & 0xFF) << 8) | (block.get() & 0xFF);
                 int nextFileSystemId = block.get() & 0xff;
 
                 /* Header checks */
@@ -100,12 +103,16 @@ public class RS2FileSystem {
 
                 /* Checks for next block details */
                 if (nextFileId != fileId) {
-                    throw new IOException("Invalid next file id read! [cache=" + id + ", file=" + fileId + ", next file id=" + nextFileId + "]");
+                    throw new IOException("Invalid next file id read! [cache="
+                            + id + ", file=" + fileId + ", next file id="
+                            + nextFileId + "]");
                 }
 
                 if (nextFileSystemId != id) {
                     throw new IOException(
-                            "Invalid next file system id read! [cache=" + id + ", file=" + fileId + ", next cache=" + nextFileSystemId + "]");
+                            "Invalid next file system id read! [cache=" + id
+                                    + ", file=" + fileId + ", next cache="
+                                    + nextFileSystemId + "]");
                 }
                 offset++;
             }
@@ -118,7 +125,8 @@ public class RS2FileSystem {
                         : fileLength];
                 buffer.get(file);
                 ByteBuffer fileBuffer = ByteBuffer.wrap(file);
-                return new RS2File(id, fileId, compression, fileLength, fileBuffer);
+                return new RS2File(id, fileId, compression, fileLength,
+                        fileBuffer);
 
             } catch (Exception e) {
 
@@ -131,8 +139,41 @@ public class RS2FileSystem {
         return null;
     }
 
+    public RS2File getFileForName(String name) {
+        if (descriptorTable.isTitled()) {
+            int nameHash = RS2FileDescriptorTable.hashName(name);
+            RS2FileDescriptor fileDescriptor = descriptorTable
+                    .getDescriptorMap().get(nameHash);
+            if (fileDescriptor != null) {
+                return getFile(fileDescriptor.getId());
+            }
+        }
+        return null;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public RandomAccessFile getIndexFile() {
+        return indexFile;
+    }
+
+    public int getLength() {
+        try {
+            return (int) (indexFile.length() / 6);
+        } catch (IOException e) {
+        }
+        return 0;
+    }
+
+    public void setDescriptorTable(RS2FileDescriptorTable descriptorTable) {
+        this.descriptorTable = descriptorTable;
+    }
+
     @Deprecated
-    public boolean setFile(int fileId, int compression, byte[] data, int decompressedLength) {
+    public boolean setFile(int fileId, int compression, byte[] data,
+                           int decompressedLength) {
         try {
             boolean fileExists = getFile(fileId) != null;
             byte[] readBuffer = new byte[520];
@@ -149,11 +190,12 @@ public class RS2FileSystem {
             byte[] containerData = baos.toByteArray();
             int fileLength = containerData.length;
 
-
             if (fileExists) {
                 indexFile.seek(fileId * 6);
                 int readThisCycle;
-                for (int i1 = 0; i1 < 6; i1 += readThisCycle) // Read the previous file index
+                for (int i1 = 0; i1 < 6; i1 += readThisCycle) // Read the
+                // previous file
+                // index
                 {
                     readThisCycle = indexFile.read(readBuffer, i1, 6 - i1);
                     if (readThisCycle == -1) {
@@ -161,21 +203,27 @@ public class RS2FileSystem {
                     }
                 }
 
-                int lastFileSize = ((readBuffer[0] & 0xff) << 16) + ((readBuffer[1] & 0xff) << 8) + (readBuffer[2] & 0xff);
-                curSectorId = ((readBuffer[3] & 0xff) << 16) + ((readBuffer[4] & 0xff) << 8) + (readBuffer[5] & 0xff);
+                int lastFileSize = ((readBuffer[0] & 0xff) << 16)
+                        + ((readBuffer[1] & 0xff) << 8)
+                        + (readBuffer[2] & 0xff);
+                curSectorId = ((readBuffer[3] & 0xff) << 16)
+                        + ((readBuffer[4] & 0xff) << 8)
+                        + (readBuffer[5] & 0xff);
 
                 if ((fileLength / 520) > (lastFileSize / 520)) {
-                    //if (reportBoundsError) {
-                    //updateFile(fileId, fileBuffer);
-                    //throw new IOException("New file sector count extends previous file bounds. Cache must be rebuilt");
-                    //}
+                    // if (reportBoundsError) {
+                    // updateFile(fileId, fileBuffer);
+                    // throw new
+                    // IOException("New file sector count extends previous file bounds. Cache must be rebuilt");
+                    // }
                     curSectorId = (int) ((cacheFile.length() + 519L) / 520L);
                     if (curSectorId == 0) {
                         curSectorId = 1;
                     }
                 }
-                if (curSectorId <= 0 || (long) curSectorId > cacheFile.length() / 520L) {
-                    //throw new IOException("Sector extends cache bounds!");
+                if (curSectorId <= 0
+                        || curSectorId > cacheFile.length() / 520L) {
+                    // throw new IOException("Sector extends cache bounds!");
                 }
             } else {
                 curSectorId = (int) ((cacheFile.length() + 519L) / 520L);
@@ -206,19 +254,28 @@ public class RS2FileSystem {
                     }
 
                     if (j2 == 8) {
-                        int sectorFileNumber = ((readBuffer[0] & 0xff) << 8) + (readBuffer[1] & 0xff);
-                        int prevFilePartitionNo = ((readBuffer[2] & 0xff) << 8) + (readBuffer[3] & 0xff);
-                        nextSectorId = ((readBuffer[4] & 0xff) << 16) + ((readBuffer[5] & 0xff) << 8) + (readBuffer[6] & 0xff);
+                        int sectorFileNumber = ((readBuffer[0] & 0xff) << 8)
+                                + (readBuffer[1] & 0xff);
+                        int prevFilePartitionNo = ((readBuffer[2] & 0xff) << 8)
+                                + (readBuffer[3] & 0xff);
+                        nextSectorId = ((readBuffer[4] & 0xff) << 16)
+                                + ((readBuffer[5] & 0xff) << 8)
+                                + (readBuffer[6] & 0xff);
                         int prevCacheNo = readBuffer[7] & 0xff;
                         if (sectorFileNumber != fileId) {
-                            throw new IOException("Sector file number didn't match expected file number");
+                            throw new IOException(
+                                    "Sector file number didn't match expected file number");
                         } else if (prevFilePartitionNo != expectedFilePartitionNo) {
-                            throw new IOException("Sector file part number didn't match expected file part number");
+                            throw new IOException(
+                                    "Sector file part number didn't match expected file part number");
                         } else if (prevCacheNo != id) {
-                            throw new IOException("Sector cache number didn't match expected cache number");
+                            throw new IOException(
+                                    "Sector cache number didn't match expected cache number");
                         }
-                        if (nextSectorId < 0 || (long) nextSectorId > cacheFile.length() / 520L) {
-                            throw new IOException("Sector extends cache bounds!");
+                        if (nextSectorId < 0
+                                || nextSectorId > cacheFile.length() / 520L) {
+                            throw new IOException(
+                                    "Sector extends cache bounds!");
                         }
                     }
                 }
@@ -245,11 +302,13 @@ public class RS2FileSystem {
                 readBuffer[7] = (byte) id;
                 cacheFile.seek(curSectorId * 520);
                 cacheFile.write(readBuffer, 0, 8);
-                int amountOfDataWrittenThisCycle = fileLength - dataWrittenSoFar;
+                int amountOfDataWrittenThisCycle = fileLength
+                        - dataWrittenSoFar;
                 if (amountOfDataWrittenThisCycle > 512) {
                     amountOfDataWrittenThisCycle = 512;
                 }
-                cacheFile.write(containerData, dataWrittenSoFar, amountOfDataWrittenThisCycle);
+                cacheFile.write(containerData, dataWrittenSoFar,
+                        amountOfDataWrittenThisCycle);
                 dataWrittenSoFar += amountOfDataWrittenThisCycle;
                 curSectorId = nextSectorId;
             }
@@ -268,45 +327,14 @@ public class RS2FileSystem {
                     descriptor.setRevision(descriptor.getRevision() + 1);
                 }
 
-                cache.getDescriptorTableFile().setFile(id, 0, descriptorTable.toByteArray(), 0);
+                cache.getDescriptorTableFile().setFile(id, 0,
+                        descriptorTable.toByteArray(), 0);
             }
-
 
             return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
         return false;
-    }
-
-    public RS2File getFileForName(String name) {
-        if (descriptorTable.isTitled()) {
-            int nameHash = RS2FileDescriptorTable.hashName(name);
-            RS2FileDescriptor fileDescriptor = descriptorTable.getDescriptorMap().get(nameHash);
-            if (fileDescriptor != null) {
-                return getFile(fileDescriptor.getId());
-            }
-        }
-        return null;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public RandomAccessFile getIndexFile() {
-        return indexFile;
-    }
-
-    public int getLength() {
-        try {
-            return (int) (indexFile.length() / 6);
-        } catch (IOException e) {
-        }
-        return 0;
-    }
-
-    public void setDescriptorTable(RS2FileDescriptorTable descriptorTable) {
-        this.descriptorTable = descriptorTable;
     }
 }

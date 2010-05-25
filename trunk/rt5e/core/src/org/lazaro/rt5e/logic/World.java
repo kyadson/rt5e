@@ -27,33 +27,33 @@ import org.lazaro.rt5e.login.WorldConnector;
  * @author Lazaro
  */
 public class World implements Runnable {
-    public int getId() {
-        return id;
-    }
+    private NodeCollection<Player> globalPlayers = new NodeCollection<Player>();
 
     private final int id;
 
-    public boolean isRunning() {
-        return running;
-    }
-
-    public void setRunning(boolean running) {
-        this.running = running;
-    }
-
     private boolean running = true;
 
-    public WorldConnector getSession() {
-        return session;
-    }
-
     private WorldConnector session;
+
+    public World(int id) {
+        this.id = id;
+    }
 
     public NodeCollection<Player> getGlobalPlayers() {
         return globalPlayers;
     }
 
-    private NodeCollection<Player> globalPlayers = new NodeCollection<Player>();
+    public int getId() {
+        return id;
+    }
+
+    public WorldConnector getSession() {
+        return session;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
 
     public boolean register(Player player) {
         boolean success = globalPlayers.add(player);
@@ -68,14 +68,15 @@ public class World implements Runnable {
         System.out.println("Removed player [" + player + "]");
     }
 
-    public World(int id) {
-        this.id = id;
+    public void run() {
+
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 
     public void start() throws Exception {
         session = new WorldConnector();
-    }
-
-    public void run() {
     }
 }
