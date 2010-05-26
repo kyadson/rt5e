@@ -33,7 +33,6 @@ import java.util.zip.GZIPInputStream;
 public class RS2File {
     public static final int COMPRESSION_NONE = 0, COMPRESSION_GZIP = 2,
             COMPRESSION_BZIP2 = 1;
-
     private int compression;
     private ByteBuffer data;
     private final int id;

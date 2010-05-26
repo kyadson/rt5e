@@ -111,29 +111,19 @@ public interface GDI32 extends W32API {
     int BI_JPEG = 4;
     int BI_PNG = 5;
     int BI_RGB = 0;
-
     int BI_RLE4 = 2;
     int BI_RLE8 = 1;
     int COMPLEXREGION = 3;
     int DIB_PAL_COLORS = 1;
-
     int DIB_RGB_COLORS = 0;
-
     int ERROR = 0;
-
     int NULLREGION = 1;
     int RDH_RECTANGLES = 1;
-
     int RGN_AND = 1;
-
     int RGN_COPY = 5;
-
     int RGN_DIFF = 4;
-
     int RGN_OR = 2;
-
     int RGN_XOR = 3;
-
     int SIMPLEREGION = 2;
     int WINDING = 2;
 

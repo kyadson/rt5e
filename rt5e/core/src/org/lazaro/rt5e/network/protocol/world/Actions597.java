@@ -24,6 +24,7 @@ import org.lazaro.rt5e.WorldApp;
 import org.lazaro.rt5e.engine.event.impl.WorldListUpdater;
 import org.lazaro.rt5e.logic.login.LoginResponse;
 import org.lazaro.rt5e.logic.player.Player;
+import org.lazaro.rt5e.logic.player.Skills;
 import org.lazaro.rt5e.network.Packet;
 import org.lazaro.rt5e.network.PacketBuilder;
 
@@ -124,6 +125,8 @@ public class Actions597 implements Actions {
     public Actions sendLogin() {
         sendMapRegion();
 
+        sendSkills();
+        sendRunningEnergy();
         player.onLogin();
         return this;
     }
@@ -248,9 +251,19 @@ public class Actions597 implements Actions {
         return this;
     }
 
+    public Actions sendRunningEnergy() {
+        return this;
+    }
+
     public Actions sendSkill(int skillId) {
-        return this; // To change body of implemented methods use File |
-        // Settings | File Templates.
+        return this;
+    }
+
+    public Actions sendSkills() {
+        for (int i = 0; i < Skills.SKILL_COUNT; i++) {
+            sendSkill(i);
+        }
+        return this;
     }
 
     public Actions sendTab(int location, int id) {

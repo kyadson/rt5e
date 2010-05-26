@@ -57,7 +57,6 @@
  * <keiron@aftexsw.com> to whom the Ant project is very grateful for his
  * great code.
  */
-
 package org.lazaro.rt5e.utility.bzip2;
 
 import java.io.IOException;
@@ -90,7 +89,6 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
     protected static final int QSORT_STACK_SIZE = 1000;
     protected static final int SETMASK = (1 << 21);
     protected static final int CLEARMASK = (~SETMASK);
-
     protected static final int SMALL_THRESH = 20;
 
     protected static void hbMakeCodeLengths(char[] len, int[] freq,
@@ -243,11 +241,8 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
     }
 
     private int allowableBlockSize;
-
     private char[] block;
-
     private int blockCRC, combinedCRC;
-
     boolean blockRandomised;
 
     /*
@@ -258,13 +253,10 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
     int bsBuff;
     int bsLive;
     private OutputStream bsStream;
-
     int bytesOut;
     boolean closed = false;
-
     private int currentChar = -1;
     private boolean firstAttempt;
-
     private int[] ftab;
     /*
       * Knuth's increments seem to work better than Incerpi-Sedgewick here.
@@ -273,7 +265,6 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
       */
     private int[] incs = {1, 4, 13, 40, 121, 364, 1093, 3280, 9841, 29524,
             88573, 265720, 797161, 2391484};
-
     private boolean[] inUse = new boolean[256];
     /*
       * index of the last char in the block, so the block size == last + 1.
@@ -282,9 +273,7 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
     CRC mCrc = new CRC();
     private int[] mtfFreq = new int[MAX_ALPHA_SIZE];
     private int nBlocksRandomised;
-
     private int nInUse;
-
     private int nMTF;
 
     /*
@@ -295,12 +284,9 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
     private int runLength = 0;
     private char[] selector = new char[MAX_SELECTORS];
     private char[] selectorMtf = new char[MAX_SELECTORS];
-
     private char[] seqToUnseq = new char[256];
     private short[] szptr;
-
     private char[] unseqToSeq = new char[256];
-
     private int workDone;
 
     /*
@@ -308,9 +294,7 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
       * randomise the block slightly, and try again.
       */
     private int workFactor;
-
     private int workLimit;
-
     private int[] zptr;
 
     public CBZip2OutputStream(OutputStream inStream) throws IOException {
@@ -1424,7 +1408,6 @@ public class CBZip2OutputStream extends OutputStream implements BZip2Constants {
                     }
                 }
             }
-
         }
 
         /* Now the selectors. */

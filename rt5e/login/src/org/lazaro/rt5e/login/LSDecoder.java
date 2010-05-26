@@ -79,6 +79,8 @@ public class LSDecoder extends FrameDecoder {
                         return null;
                     }
 
+                    world.setSQLSession(LoginApp.getSQLConnectionPool().acquire());
+
                     if (world.isLobbyWorld())
                         LoginApp.getLobbyWorlds().put(world.getId(), world);
                     else

@@ -19,6 +19,7 @@
  */
 package org.lazaro.rt5e.logic;
 
+import org.lazaro.rt5e.Constants;
 import org.lazaro.rt5e.logic.map.Direction;
 import org.lazaro.rt5e.logic.map.Tile;
 import org.lazaro.rt5e.logic.mask.Masks;
@@ -33,18 +34,13 @@ import java.util.List;
  */
 public abstract class Entity extends Locatable {
     public static final Tile SPAWN = Tile.locate(3222, 3222, 0);
-
+    private Packet cachedAppearanceBlock = null;
     private Packet cachedMaskBlock = null;
     private boolean dead = false;
-
     protected final Direction direction = new Direction();
-
-    private final List<Player> localPlayers = new ArrayList<Player>(255);
-
+    private final List<Player> localPlayers = new ArrayList<Player>(Constants.MAX_LOCAL_PLAYERS);
     protected final Masks masks = new Masks();
-
     private Tile teleportDestination = null;
-
     private boolean teleporting = false;
 
     protected abstract void _process();
@@ -84,7 +80,6 @@ public abstract class Entity extends Locatable {
     }
 
     public void process() {
-
         _process();
     }
 
@@ -111,5 +106,17 @@ public abstract class Entity extends Locatable {
 
     public void setTeleporting(boolean teleporting) {
         this.teleporting = teleporting;
+    }
+
+    public Packet getCachedAppearanceBlock() {
+        return cachedAppearanceBlock;
+    }
+
+    public void setCachedAppearanceBlock(Packet cachedAppearanceBlock) {
+        this.cachedAppearanceBlock = cachedAppearanceBlock;
+    }
+
+    public boolean hasCachedAppearanceBlock() {
+        return cachedAppearanceBlock != null;
     }
 }

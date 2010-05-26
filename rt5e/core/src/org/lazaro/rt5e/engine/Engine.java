@@ -33,7 +33,6 @@ import java.util.concurrent.TimeUnit;
  */
 public class Engine {
     private final static Engine instance = new Engine();
-
     private static final double THREAD_MULTIPLIER = 1.0;
 
     public static Engine getInstance() {
@@ -41,12 +40,9 @@ public class Engine {
     }
 
     private Executor asyncExecutor = Executors.newSingleThreadExecutor();
-
     private Executor blockingExecutor = Executors.newFixedThreadPool(8);
-
     private ScheduledExecutorService coreExecutor = Executors
             .newSingleThreadScheduledExecutor();
-
     private List<Event> logicEvents = new LinkedList<Event>();
     private List<Event> miscEvents = new LinkedList<Event>();
     private ScheduledExecutorService parallelExecutor = Executors

@@ -27,9 +27,7 @@ import org.lazaro.rt5e.network.Connection;
 public class LoginRequest {
     private Connection connection;
     private int loginOpcode;
-
     private String name;
-
     private String password;
 
     public LoginRequest(Connection connection, String name, String password,

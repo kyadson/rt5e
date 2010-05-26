@@ -34,7 +34,6 @@ import org.lazaro.rt5e.network.protocol.world.LoginDecoder597;
  * @author Lazaro
  */
 public class HandshakeDecoder extends FrameDecoder {
-
     @Override
     protected Object decode(ChannelHandlerContext ctx, Channel channel,
                             ChannelBuffer buffer) throws Exception {

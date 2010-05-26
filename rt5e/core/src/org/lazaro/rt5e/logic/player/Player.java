@@ -21,7 +21,9 @@ package org.lazaro.rt5e.logic.player;
 
 import org.lazaro.rt5e.Constants;
 import org.lazaro.rt5e.logic.Entity;
+import org.lazaro.rt5e.logic.map.PlayerWaypointQueue;
 import org.lazaro.rt5e.logic.map.Tile;
+import org.lazaro.rt5e.logic.map.WaypointQueue;
 import org.lazaro.rt5e.network.Connection;
 import org.lazaro.rt5e.network.Packet;
 import org.lazaro.rt5e.network.protocol.world.Actions;
@@ -36,7 +38,6 @@ import java.util.Queue;
 public class Player extends Entity {
     public static enum Gender {
         FEMALE(1), MALE(0);
-
         private int value;
 
         private Gender(int value) {
@@ -50,7 +51,6 @@ public class Player extends Entity {
 
     public static enum Rights {
         ADMINISTRATOR(2), MODERATOR(1), PLAYER(0);
-
         private int value;
 
         private Rights(int value) {
@@ -63,36 +63,31 @@ public class Player extends Entity {
     }
 
     private Actions actions;
-
     private Connection connection;
-
     private Actions.DisplayMode displayMode = null;
-
     private Gender gender = Gender.MALE;
-
     private int loginOpcode = 0;
-
     private Tile mapRegion = null;
-
     private boolean mapRegionChanged = false;
-
     private String name = null;
-
     private long nameHash = 0;
     private boolean onLogin = true;
-
     private Queue<Packet> packetQueue = new ArrayDeque();
-
     private boolean[] packetReceived = new boolean[256];
-
     private String password = null;
-
     private Rights rights = Rights.PLAYER;
+    private boolean running = false;
+    private int runningEnergy = 100;
+    private WaypointQueue waypointQueue;
+    private Skills skills;
+    private Appearance appearance = new Appearance();
 
     public Player(Connection connection) {
         this.connection = connection;
 
         actions = new Actions597(this);
+        waypointQueue = new PlayerWaypointQueue(this);
+        skills = new Skills(this);
     }
 
     @Override
@@ -209,6 +204,34 @@ public class Player extends Entity {
 
     public void setRights(Rights rights) {
         this.rights = rights;
+    }
+
+    public boolean isRunning() {
+        return running;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    public int getRunningEnergy() {
+        return runningEnergy;
+    }
+
+    public void setRunningEnergy(int runningEnergy) {
+        this.runningEnergy = runningEnergy;
+    }
+
+    public WaypointQueue getWaypointQueue() {
+        return waypointQueue;
+    }
+
+    public Skills getSkills() {
+        return skills;
+    }
+
+    public Appearance getAppearance() {
+        return appearance;
     }
 
     @Override

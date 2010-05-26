@@ -70,17 +70,11 @@ import java.io.InputStream;
  */
 public class CBZip2InputStream extends InputStream implements BZip2Constants {
     private static final int NO_RAND_PART_A_STATE = 5;
-
     private static final int NO_RAND_PART_B_STATE = 6;
-
     private static final int NO_RAND_PART_C_STATE = 7;
-
     private static final int RAND_PART_A_STATE = 2;
-
     private static final int RAND_PART_B_STATE = 3;
-
     private static final int RAND_PART_C_STATE = 4;
-
     private static final int START_BLOCK_STATE = 1;
 
     @SuppressWarnings("unused")
@@ -123,26 +117,20 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
       */
     private int blockSize100k;
     private int bsBuff;
-
     private int bsLive;
     private InputStream bsStream;
-
     private int computedBlockCRC, computedCombinedCRC;
-
     private int currentChar = -1;
     private int currentState = START_BLOCK_STATE;
     int i, tPos;
     int i2, count, chPrev, ch2;
-
     private boolean[] inUse = new boolean[256];
-
     int j2;
 
     /*
       * index of the last char in the block, so the block size == last + 1.
       */
     private int last;
-
     private int[][] limit = new int[N_GROUPS][MAX_ALPHA_SIZE];
     private char[] ll8;
     private CRC mCrc = new CRC();
@@ -153,12 +141,9 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
       */
     private int origPtr;
     private int[][] perm = new int[N_GROUPS][MAX_ALPHA_SIZE];
-
     int rNToGo = 0;
-
     int rTPos = 0;
     private char[] selector = new char[MAX_SELECTORS];
-
     private char[] selectorMtf = new char[MAX_SELECTORS];
     private char[] seqToUnseq = new char[256];
     private int storedBlockCRC, storedCombinedCRC;
@@ -170,7 +155,6 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
       * freq table collected to save a pass over the data during decompression.
       */
     private int[] unzftab = new int[256];
-
     char z;
 
     public CBZip2InputStream(InputStream zStream) {

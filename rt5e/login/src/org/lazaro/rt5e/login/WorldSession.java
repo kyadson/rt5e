@@ -19,7 +19,10 @@
  */
 package org.lazaro.rt5e.login;
 
+import org.lazaro.rt5e.LoginApp;
+import org.lazaro.rt5e.io.SQLSession;
 import org.lazaro.rt5e.network.Connection;
+import org.lazaro.rt5e.utility.Destroyed;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -27,12 +30,11 @@ import java.util.List;
 /**
  * @author Lazaro
  */
-public class WorldSession {
+public class WorldSession implements Destroyed {
     private Connection connection;
+    private SQLSession sqlSession;
     private int id = -1;
-
     private boolean lobbyWorld = false;
-
     private List<String> players = new LinkedList<String>();
 
     public WorldSession(Connection connection) {
@@ -65,5 +67,20 @@ public class WorldSession {
 
     public void setPlayers(List<String> players) {
         this.players = players;
+    }
+
+    public SQLSession getSQLSession() {
+        return sqlSession;
+    }
+
+    public void setSQLSession(SQLSession sqlSession) {
+        this.sqlSession = sqlSession;
+    }
+
+    public void destroy() {
+        LoginApp.getSQLConnectionPool().release(sqlSession);
+        for (String player : players) {
+            LoginApp.getPlayers().remove(player);
+        }
     }
 }

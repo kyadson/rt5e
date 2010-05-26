@@ -30,7 +30,6 @@ import java.util.Map;
  * @author Lazaro, Defyboy
  */
 public class RS2FileDescriptorTable {
-
     public static int hashName(String s) {
         int r = 0;
         for (int i = 0; i < s.length(); i++) {
@@ -78,7 +77,6 @@ public class RS2FileDescriptorTable {
         for (int i = 0; i < count; i++) {
             entries[spacing[i]].setExists(true);
             entries[spacing[i]].setCRC(buffer.getInt());
-
         }
         for (int i = 0; i < count; i++) {
             entries[spacing[i]].setRevision(buffer.getInt());
@@ -91,14 +89,12 @@ public class RS2FileDescriptorTable {
                 subEntries[j] = new RS2FileDescriptor.SubRS2FileDescriptor();
             }
             entry.setSubFiles(subEntries);
-
         }
         for (int i = 0; i < count; i++) {
             RS2FileDescriptor entry = entries[spacing[i]];
             for (int j = 0; j < entry.getSubFiles().length; j++) {
                 entry.getSubFiles()[j].setOffset(buffer.getShort() & 0xffff);
             }
-
         }
         if (titled) {
             for (int i = 0; i < count; i++) {
@@ -107,7 +103,6 @@ public class RS2FileDescriptorTable {
                     entries[spacing[i]].getSubFiles()[j].setNameHash(buffer
                             .getInt());
                 }
-
             }
         }
     }

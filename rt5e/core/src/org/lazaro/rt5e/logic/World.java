@@ -28,11 +28,8 @@ import org.lazaro.rt5e.login.WorldConnector;
  */
 public class World implements Runnable {
     private NodeCollection<Player> globalPlayers = new NodeCollection<Player>();
-
     private final int id;
-
     private boolean running = true;
-
     private WorldConnector session;
 
     public World(int id) {

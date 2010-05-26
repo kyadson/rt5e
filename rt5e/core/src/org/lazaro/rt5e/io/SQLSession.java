@@ -20,6 +20,7 @@
 package org.lazaro.rt5e.io;
 
 import org.lazaro.rt5e.utility.Configuration;
+import org.lazaro.rt5e.utility.Pooled;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -29,10 +30,10 @@ import java.util.Properties;
 /**
  * @author Lazaro
  */
-public class SQLHandler {
+public class SQLSession implements Pooled {
     private Connection connection;
 
-    public SQLHandler(Configuration configuration)
+    public void init(Configuration configuration)
             throws InstantiationException, IllegalAccessException,
             ClassNotFoundException, SQLException {
         // Set up the properties
@@ -57,5 +58,8 @@ public class SQLHandler {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public void recycle() {
     }
 }

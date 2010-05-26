@@ -31,13 +31,9 @@ import org.lazaro.rt5e.utility.Configuration;
  */
 public class Context {
     private static Cache cache = null;
-
     private static Configuration configuration = null;
-
     private static LoginWorker loginWorker = null;
-
     private static boolean running = true;
-
     private static World world = null;
 
     public static Cache getCache() {

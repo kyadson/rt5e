@@ -87,7 +87,7 @@ public class LSMessageHandler extends SimpleChannelHandler {
             resp = LoginResponse.ALREADY_ONLINE;
         } else {
             try {
-                ResultSet rs = LoginApp.getSQLHandler()
+                ResultSet rs = world.getSQLSession()
                         .getConnection().createStatement().executeQuery(
                                 "SELECT * FROM saved_games WHERE userName='"
                                         + userName + "' LIMIT 1");
@@ -104,21 +104,19 @@ public class LSMessageHandler extends SimpleChannelHandler {
                         player.setCoordZ(rs.getInt("coord_z"));
                         resp = LoginResponse.LOGIN;
                     } else {
-                        // result = LoginProcessor.INVALID_DETAILS; // If you
-                        // want people to register some how
-                        // OR
-                        LoginApp.getSQLHandler()
-                                .getConnection().createStatement()
-                                .executeUpdate(
-                                        "INSERT INTO saved_games (username, password) VALUES ('"
-                                                + userName + "', '" + password
-                                                + "')"); // If you want to
-                        // automatically
-                        // create an account
-                        // like most private
-                        // servers do.
-                        loadPlayer(world, userName, password, loginOpcode);
-                        return;
+                        if (Constants.REGISTER_ACCOUNTS) {
+                            resp = LoginResponse.INVALID_DETAILS;
+                            break;
+                        } else {
+                            world.getSQLSession()
+                                    .getConnection().createStatement()
+                                    .executeUpdate(
+                                            "INSERT INTO saved_games (username, password) VALUES ('"
+                                                    + userName + "', '" + password
+                                                    + "')");
+                            loadPlayer(world, userName, password, loginOpcode);
+                            return;
+                        }
                     }
                 } while (false);
             } catch (Exception e) {
@@ -135,10 +133,9 @@ public class LSMessageHandler extends SimpleChannelHandler {
             if (loginOpcode != 19) {
                 LoginApp.getPlayers().put(userName, world);
                 world.getPlayers().add(userName);
-
+                System.out.println("Registered player [name=" + userName + ", world="
+                        + world.getId() + "]");
             }
-            System.out.println("Registered player [name=" + userName + ", world="
-                    + world.getId() + "]");
         }
         world.getConnection().write(mb.toPacket());
     }
@@ -179,7 +176,7 @@ public class LSMessageHandler extends SimpleChannelHandler {
         query.append(", coord_z='").append(player.getCoordZ()).append("'");
         query.append(" WHERE userName='").append(userName).append("'");
         try {
-            LoginApp.getSQLHandler().getConnection()
+            world.getSQLSession().getConnection()
                     .createStatement().executeUpdate(query.toString());
         } catch (Exception e) {
             System.err.println("Unable to save player : " + userName

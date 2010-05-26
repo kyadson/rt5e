@@ -137,7 +137,6 @@ public interface User32 extends W32API {
 
     int AC_SRC_ALPHA = 0x01;
     int AC_SRC_NO_ALPHA = 0x02;
-
     int AC_SRC_NO_PREMULT_ALPHA = 0x01;
     int AC_SRC_OVER = 0x00;
     int DWL_DLGPROC = 4;
@@ -151,49 +150,27 @@ public interface User32 extends W32API {
     int FLASHW_ALL = (FLASHW_CAPTION | FLASHW_TRAY);
     int GWL_EXSTYLE = -20;
     int GWL_HINSTANCE = -6;
-
     int GWL_ID = -12;
-
     int GWL_STYLE = -16;
-
     int GWL_USERDATA = -21;
-
     int GWL_WNDPROC = -4;
-
     int IMAGE_BITMAP = 0;
-
     int IMAGE_CURSOR = 2;
-
     int IMAGE_ENHMETAFILE = 3;
-
     int IMAGE_ICON = 1;
-
     int LR_COLOR = 0x0002;
-
     int LR_COPYDELETEORG = 0x0008;
-
     int LR_COPYFROMRESOURCE = 0x4000;
-
     int LR_COPYRETURNORG = 0x0004;
-
     int LR_CREATEDIBSECTION = 0x2000;
-
     int LR_DEFAULTCOLOR = 0x0000;
-
     int LR_DEFAULTSIZE = 0x0040;
-
     int LR_LOADFROMFILE = 0x0010;
-
     int LR_LOADMAP3DCOLORS = 0x1000;
-
     int LR_LOADTRANSPARENT = 0x0020;
-
     int LR_MONOCHROME = 0x0001;
-
     int LR_SHARED = 0x8000;
-
     int LR_VGACOLOR = 0x0080;
-
     int LWA_ALPHA = 2;
     int LWA_COLORKEY = 1;
     int ULW_ALPHA = 2;
@@ -206,27 +183,18 @@ public interface User32 extends W32API {
     int VK_MENU = 18;
     int VK_RCONTROL = 0xA3;
     int VK_RMENU = 0xA5;
-
     int VK_RSHIFT = 0xA1;
-
     int VK_SHIFT = 16;
-
     int WH_KEYBOARD = 2;
-
     int WH_KEYBOARD_LL = 13;
-
     int WH_MOUSE = 7;
-
     int WH_MOUSE_LL = 14;
-
     int WM_KEYDOWN = 256;
     int WM_KEYUP = 257;
     int WM_SYSKEYDOWN = 260;
     int WM_SYSKEYUP = 261;
     int WS_EX_COMPOSITED = 0x20000000;
-
     int WS_EX_LAYERED = 0x80000;
-
     int WS_EX_TRANSPARENT = 32;
 
     LRESULT CallNextHookEx(HHOOK hhk, int nCode, WPARAM wParam, LPARAM lParam);

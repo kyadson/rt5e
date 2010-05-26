@@ -57,7 +57,6 @@ public interface Shell32 extends W32API {
     int CSIDL_APPDATA = 0x001a; // <user name>\Application Data
     int CSIDL_BITBUCKET = 0x000a; // <desktop>\Recycle Bin
     int CSIDL_CDBURN_AREA = 0x003b; // USERPROFILE\Local Settings\Application
-
     int CSIDL_COMMON_ADMINTOOLS = 0x002f; // All Users\Start
     int CSIDL_COMMON_ALTSTARTUP = 0x001e; // non localized common startup
     int CSIDL_COMMON_APPDATA = 0x0023; // All Users\Application Data
@@ -73,7 +72,6 @@ public interface Shell32 extends W32API {
 
     // RISC
     int CSIDL_COMMON_TEMPLATES = 0x002d; // All Users\Templates
-
     int CSIDL_COMMON_VIDEO = 0x0037; // All Users\My Video
 
     // Data\Microsoft\CD Burning
@@ -133,7 +131,6 @@ public interface Shell32 extends W32API {
     int FOF_SILENT = 4;
     int FOF_SIMPLEPROGRESS = 256;
     int FOF_WANTMAPPINGHANDLE = 32;
-
     DWORD SHGFP_TYPE_CURRENT = new DWORD(0); // current value for user, verify
     // it exists
     DWORD SHGFP_TYPE_DEFAULT = new DWORD(1); // default value, may not exist

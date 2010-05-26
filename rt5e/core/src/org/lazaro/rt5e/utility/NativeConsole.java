@@ -32,7 +32,6 @@ public class NativeConsole {
             COLOR_LIGHT_GREEN = 0xa, COLOR_LIGHT_AQUA = 0xb,
             COLOR_LIGHT_RED = 0xc, COLOR_LIGHT_PURPLE = 0xd,
             COLOR_LIGHT_YELLOW = 0xe, COLOR_BRIGHT_WHITE = 0xf;
-
     private static int currentBackground = COLOR_BLACK;
     private static int currentForeground = COLOR_GRAY;
     private static String currentHeader = null;
