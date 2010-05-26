@@ -23,16 +23,13 @@ import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
-import org.lazaro.rt5e.io.SQLHandler;
+import org.lazaro.rt5e.io.SQLSession;
 import org.lazaro.rt5e.login.LSConnectionHandler;
 import org.lazaro.rt5e.login.LSDecoder;
 import org.lazaro.rt5e.login.LSMessageHandler;
 import org.lazaro.rt5e.login.WorldSession;
 import org.lazaro.rt5e.network.StandardPacketEncoder;
-import org.lazaro.rt5e.utility.Configuration;
-import org.lazaro.rt5e.utility.Logger;
-import org.lazaro.rt5e.utility.NativeConsole;
-import org.lazaro.rt5e.utility.ProcessPriority;
+import org.lazaro.rt5e.utility.*;
 
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -48,7 +45,7 @@ public class LoginApp {
     private static Map<Integer, WorldSession> gameWorlds = new HashMap<Integer, WorldSession>();
     private static Map<Integer, WorldSession> lobbyWorlds = new HashMap<Integer, WorldSession>();
     private static Map<String, WorldSession> players = new HashMap<String, WorldSession>();
-    private static SQLHandler sqlHandler = null;
+    private static ObjectPool<SQLSession> sqlConnectionPool = null;
     private static ExecutorService workerExecutor = Executors.newCachedThreadPool();
 
     public static Map<Integer, WorldSession> getGameWorlds() {
@@ -63,8 +60,8 @@ public class LoginApp {
         return players;
     }
 
-    public static SQLHandler getSQLHandler() {
-        return sqlHandler;
+    public static ObjectPool<SQLSession> getSQLConnectionPool() {
+        return sqlConnectionPool;
     }
 
     public static void main(String[] args) {
@@ -76,12 +73,16 @@ public class LoginApp {
             System.out.println("Starting login server...");
             Logger.incrementIndentationTab();
 
-
             Context.setConfiguration(new Configuration(Constants.LOGIN_SERVER_CONFIG));
             System.out.println("Loaded settings");
 
-            sqlHandler = new SQLHandler(Context.getConfiguration());
-            System.out.println("Connected to SQL database");
+            sqlConnectionPool = new ObjectPool(SQLSession.class, new Initiator() {
+                public void init(Initiated object) throws Exception {
+                    SQLSession session = (SQLSession) object;
+                    session.init(Context.getConfiguration());
+                }
+            }, Constants.SQL_CONNECTION_POOL_COUNT);
+            System.out.println("Pooled " + sqlConnectionPool.size() + " SQL connections.");
 
             startupNetworking();
             System.out.println("Bound port : " + Context.getConfiguration().getInt("LOGIN_SERVER_PORT"));

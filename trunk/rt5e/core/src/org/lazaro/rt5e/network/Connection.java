@@ -28,15 +28,10 @@ import org.lazaro.rt5e.utility.crypto.ISAACCipher;
  */
 public class Connection {
     private Object attachment = null;
-
     private Channel channel = null;
-
     private long clientSessionKey = 0;
-
     private ISAACCipher incommingISAACCipher = null;
-
     private ISAACCipher outgoingISAACCipher = null;
-
     private long serverSessionKey = 0;
 
     public Connection(Channel channel) {

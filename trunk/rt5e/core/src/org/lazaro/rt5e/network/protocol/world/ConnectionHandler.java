@@ -28,7 +28,6 @@ import org.lazaro.rt5e.network.ConnectionMap;
  */
 @ChannelPipelineCoverage("all")
 public class ConnectionHandler extends SimpleChannelHandler {
-
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
         Channel ch = ctx.getChannel();

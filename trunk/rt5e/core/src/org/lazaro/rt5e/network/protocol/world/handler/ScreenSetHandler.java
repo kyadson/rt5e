@@ -44,7 +44,6 @@ public class ScreenSetHandler implements PacketHandler {
                 case FULL_SCREEN:
                     player.getActions().sendResizableScreen();
                     break;
-
             }
             player.getActions().sendAccessMask(
                     65535,
@@ -66,7 +65,6 @@ public class ScreenSetHandler implements PacketHandler {
                 case FULL_SCREEN:
                     player.getActions().switchToResizableScreen();
                     break;
-
             }
         }
     }

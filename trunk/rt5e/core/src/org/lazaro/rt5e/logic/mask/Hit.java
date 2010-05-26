@@ -27,7 +27,6 @@ import org.lazaro.rt5e.logic.Node;
 public class Hit implements Mask {
     public static final int NO_DAMAGE = 0, NORMAL_DAMAGE = 1,
             POISON_DAMAGE = 2, DESEASE_DAMAGE = 3;
-
     private int damage;
     private Node from;
     private int type;

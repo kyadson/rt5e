@@ -57,7 +57,6 @@
  * <keiron@aftexsw.com> to whom the Ant project is very grateful for his
  * great code.
  */
-
 package org.lazaro.rt5e.utility.bzip2;
 
 /**
@@ -67,7 +66,6 @@ package org.lazaro.rt5e.utility.bzip2;
  * @author <a href="mailto:keiron@aftexsw.com">Keiron Liddle</a>
  */
 public interface BZip2Constants {
-
     int baseBlockSize = 100000;
     int G_SIZE = 50;
     int MAX_ALPHA_SIZE = 258;
@@ -117,6 +115,5 @@ public interface BZip2Constants {
             668, 108, 645, 990, 626, 197, 510, 357, 358, 850, 858, 364, 936,
             638};
     int RUNA = 0;
-
     int RUNB = 1;
 }

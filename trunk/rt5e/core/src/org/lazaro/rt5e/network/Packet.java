@@ -42,7 +42,6 @@ public class Packet {
     }
 
     private int bitPosition = 0;
-
     protected ChannelBuffer buffer;
     protected int length;
     protected int opcode;
@@ -61,7 +60,6 @@ public class Packet {
 
     public void get(byte[] packed) {
         buffer.readBytes(packed);
-
     }
 
     public byte getA() {

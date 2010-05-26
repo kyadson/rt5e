@@ -127,12 +127,10 @@ public class RS2FileSystem {
                 ByteBuffer fileBuffer = ByteBuffer.wrap(file);
                 return new RS2File(id, fileId, compression, fileLength,
                         fileBuffer);
-
             } catch (Exception e) {
 
                 e.printStackTrace();
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }

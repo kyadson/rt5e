@@ -24,7 +24,6 @@ package org.lazaro.rt5e.io.cache;
  */
 public class RS2FileDescriptor {
     public static class SubRS2FileDescriptor {
-
         private int nameHash = 0;
         private int offset = 0;
 

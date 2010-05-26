@@ -44,10 +44,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class WorldApp {
     private static boolean active = false;
-
     private static ExecutorService bossExecutor = Executors
             .newCachedThreadPool();
-
     private static MapXTEA mapXTEA = null;
     private static ExecutorService workerExecutor = Executors
             .newCachedThreadPool();
@@ -92,9 +90,9 @@ public class WorldApp {
             PacketHandlerWorker.loadPacketHandlers();
 
             Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(
-                    Context.getWorld(), 0, 600, TimeUnit.MILLISECONDS);
+                    Context.getWorld(), 0, Constants.UPDATE_INTERVAL, TimeUnit.MILLISECONDS);
             Engine.getInstance().getCoreExecutor().scheduleAtFixedRate(
-                    new PacketHandlerWorker(), 300, 600, TimeUnit.MILLISECONDS);
+                    new PacketHandlerWorker(), 300, Constants.PACKET_HANDLING_INTERVAL, TimeUnit.MILLISECONDS);
 
             Engine.getInstance().submitMiscEvent(new Monitor());
             Engine.getInstance().start();

@@ -17,13 +17,10 @@
  * along with RT5E.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-package org.lazaro.rt5e.logic.mask;
+package org.lazaro.rt5e.utility;
 
 /**
  * @author Lazaro
  */
-public interface Mask {
-    public static enum MaskType {
-        ANIMATION, APPEARANCE, CHAT, FACE_DIRECTION, FORCED_CHAT, GRAPHICS, HIT, HIT2
-    }
+public interface Initiated {
 }

@@ -39,7 +39,6 @@ public class ISAACCipher {
     // memory[]
     private static final int SIZE = 1 << LOG_SIZE; // Size of results[] and
     private static final int MASK = (SIZE - 1) << 2; // For pseudorandom lookup
-
     private int accumulator; // Accumulator
     private int count; // Count through the results in results[]
     private int counter; // Counter, guarantees cycle is at least 2^40

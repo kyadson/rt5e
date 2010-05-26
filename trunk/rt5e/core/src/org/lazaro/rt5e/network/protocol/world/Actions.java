@@ -76,7 +76,11 @@ public interface Actions {
 
     public Actions sendResizableScreen();
 
+    public Actions sendRunningEnergy();
+
     public Actions sendSkill(int skillId);
+
+    public Actions sendSkills();
 
     public Actions sendTab(int location, int id);
 

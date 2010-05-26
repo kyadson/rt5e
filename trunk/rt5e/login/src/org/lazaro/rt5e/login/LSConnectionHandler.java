@@ -29,7 +29,6 @@ import org.lazaro.rt5e.network.ConnectionMap;
  */
 @ChannelPipelineCoverage("all")
 public class LSConnectionHandler extends SimpleChannelHandler {
-
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
         Channel ch = ctx.getChannel();
@@ -49,6 +48,8 @@ public class LSConnectionHandler extends SimpleChannelHandler {
             LoginApp.getLobbyWorlds().remove(world.getId());
         else
             LoginApp.getGameWorlds().remove(world.getId());
+
+        world.destroy();
 
         System.out.println("Un-registered world [type=" + (world.isLobbyWorld() ? "lobby" : "normal") + ", id=" + world.getId() + "]");
 

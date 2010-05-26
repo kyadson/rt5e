@@ -44,9 +44,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class LobbyApp {
     private static boolean active = false;
-
     private static ExecutorService bossExecutor = Executors.newCachedThreadPool();
-
     private static ExecutorService workerExecutor = Executors.newCachedThreadPool();
 
     public static boolean isActive() {

@@ -28,7 +28,6 @@ import org.jboss.netty.channel.*;
  */
 @ChannelPipelineCoverage("all")
 public class StandardPacketEncoder extends SimpleChannelHandler {
-
     @Override
     public void writeRequested(ChannelHandlerContext ctx, MessageEvent e) {
         if (e.getMessage() instanceof Packet) {

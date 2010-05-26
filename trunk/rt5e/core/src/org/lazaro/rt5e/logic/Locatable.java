@@ -27,7 +27,6 @@ import org.lazaro.rt5e.logic.map.Tile;
  */
 public class Locatable extends Node {
     private Tile location = null;
-
     private Part part = null;
 
     public Tile getLocation() {

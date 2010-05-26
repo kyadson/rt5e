@@ -48,13 +48,11 @@ public class Constants {
     public static final String LOGIN_SERVER_CONFIG = "./data/login_server.ini";
 
     public static final String MAP_XTEA_DIR = "./data/mapxtea/";
-
     public static final String MAP_XTEA_FILE = "./data/mapxtea.dat";
 
     public static final int[] MESSAGE_LENGTHS = new int[256];
 
     public static final String PACKET_HANDLER_CONFIG = "./data/packet_handlers.ini";
-
     public static final String PACKET_HANDLER_PACKAGE = "org.lazaro.rt5e.network.protocol.world.handler";
 
     /**
@@ -93,4 +91,22 @@ public class Constants {
 
         MESSAGE_LENGTHS[66] = 6; // screen set
     }
+
+    /**
+     * If you are required to register an account before you login
+     * or create an account automatically like most servers.
+     */
+    public static final boolean REGISTER_ACCOUNTS = false;
+
+    public static final int MAX_LOCAL_PLAYERS = 2046;
+
+    /**
+     * How often packets should be handled.
+     */
+    public static final int PACKET_HANDLING_INTERVAL = 600;
+
+    /**
+     * The amount of SQL connections that should be pooled on startup.
+     */
+    public static final int SQL_CONNECTION_POOL_COUNT = 5;
 }

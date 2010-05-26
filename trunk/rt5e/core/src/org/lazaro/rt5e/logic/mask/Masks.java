@@ -142,5 +142,4 @@ public class Masks {
     public void setHit2(Hit hit2) {
         this.hit2 = hit2;
     }
-
 }

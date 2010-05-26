@@ -29,7 +29,6 @@ import java.util.Map;
  */
 @SuppressWarnings("serial")
 public interface W32API extends StdCallLibrary, W32Errors {
-
     class DWORD extends IntegerType {
         public DWORD() {
             this(0);
@@ -243,7 +242,6 @@ public interface W32API extends StdCallLibrary, W32Errors {
             put(OPTION_FUNCTION_MAPPER, W32APIFunctionMapper.ASCII);
         }
     };
-
     /**
      * Standard options to use the unicode version of a w32 API.
      */
@@ -254,16 +252,13 @@ public interface W32API extends StdCallLibrary, W32Errors {
             put(OPTION_FUNCTION_MAPPER, W32APIFunctionMapper.UNICODE);
         }
     };
-
     @SuppressWarnings("unchecked")
     Map DEFAULT_OPTIONS = Boolean.getBoolean("w32.ascii") ? ASCII_OPTIONS
             : UNICODE_OPTIONS;
-
     /**
      * Special HWND value.
      */
     HWND HWND_BROADCAST = new HWND(Pointer.createConstant(0xFFFF));
-
     /**
      * Constant value representing an invalid HANDLE.
      */
