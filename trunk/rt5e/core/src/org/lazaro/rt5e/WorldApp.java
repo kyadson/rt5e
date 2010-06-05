@@ -25,6 +25,7 @@ import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.lazaro.rt5e.engine.Engine;
 import org.lazaro.rt5e.io.MapXTEA;
+import org.lazaro.rt5e.io.XStreamSession;
 import org.lazaro.rt5e.io.cache.Cache;
 import org.lazaro.rt5e.logic.World;
 import org.lazaro.rt5e.logic.login.LoginWorker;
@@ -73,6 +74,10 @@ public class WorldApp {
                     Constants.WORLD_SERVER_CONFIG));
             System.out.println("Loaded settings");
 
+            Context.setXStreamSession(new XStreamSession());
+            Context.getXStreamSession().loadAliases(Constants.XSTREAM_ALIASES);
+            System.out.println("Loaded aliases");
+
             Context.setCache(new Cache(Constants.CACHE_DIRECTORY));
             System.out.println("Loaded cache");
 
@@ -81,7 +86,6 @@ public class WorldApp {
             Context.setWorld(new World(Context.getConfiguration().getInt(
                     "WORLD_ID")));
             Context.getWorld().start();
-            System.out.println("Loaded world");
 
             Context.setLoginWorker(new LoginWorker());
             new Thread(Context.getLoginWorker()).start();

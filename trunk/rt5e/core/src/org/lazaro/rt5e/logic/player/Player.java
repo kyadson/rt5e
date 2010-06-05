@@ -21,6 +21,8 @@ package org.lazaro.rt5e.logic.player;
 
 import org.lazaro.rt5e.Constants;
 import org.lazaro.rt5e.logic.Entity;
+import org.lazaro.rt5e.logic.item.AppearanceListener;
+import org.lazaro.rt5e.logic.item.ItemCollection;
 import org.lazaro.rt5e.logic.map.PlayerWaypointQueue;
 import org.lazaro.rt5e.logic.map.Tile;
 import org.lazaro.rt5e.logic.map.WaypointQueue;
@@ -81,6 +83,11 @@ public class Player extends Entity {
     private WaypointQueue waypointQueue;
     private Skills skills;
     private Appearance appearance = new Appearance();
+    private Packet cachedAppearanceBlock = null;
+    private ItemCollection equipment;
+    private byte[] gpiFlag = new byte[2048];
+    private boolean online = true;
+    private String protocolName = null;
 
     public Player(Connection connection) {
         this.connection = connection;
@@ -88,6 +95,7 @@ public class Player extends Entity {
         actions = new Actions597(this);
         waypointQueue = new PlayerWaypointQueue(this);
         skills = new Skills(this);
+        equipment = new ItemCollection(this, Constants.Equipment.EQUIPMENT_SIZE);
     }
 
     @Override
@@ -155,7 +163,12 @@ public class Player extends Entity {
     }
 
     public void onLogin() {
+        equipment.addListener(new AppearanceListener());
+        equipment.refresh();
+
         actions.sendMessage("Welcome to " + Constants.GAME_NAME + ".");
+
+        masks.setAppearance(true);
     }
 
     public void setConnection(Connection connection) {
@@ -234,9 +247,45 @@ public class Player extends Entity {
         return appearance;
     }
 
+    public Packet getCachedAppearanceBlock() {
+        return cachedAppearanceBlock;
+    }
+
+    public void setCachedAppearanceBlock(Packet cachedAppearanceBlock) {
+        this.cachedAppearanceBlock = cachedAppearanceBlock;
+    }
+
+    public ItemCollection getEquipment() {
+        return equipment;
+    }
+
+    public byte getGPIFlag(int index) {
+        return gpiFlag[index];
+    }
+
+    public void setGPIFlag(int index, byte val) {
+        gpiFlag[index] = val;
+    }
+
+    public boolean isOnline() {
+        return online;
+    }
+
+    public void setOnline(boolean online) {
+        this.online = online;
+    }
+
+    public String getProtocolName() {
+        return protocolName;
+    }
+
+    public void setProtocolName(String protocolName) {
+        this.protocolName = protocolName;
+    }
+
     @Override
     public String toString() {
-        return "name=" + name + ", password=" + password.replaceAll(".", "*")
+        return "name=" + protocolName + ", password=" + password.replaceAll(".", "*")
                 + ", index=" + getIndex();
     }
 }

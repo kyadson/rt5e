@@ -101,4 +101,8 @@ public class Connection {
     public ChannelFuture write(Packet packet) {
         return channel.write(packet);
     }
+
+    public void destroy() {
+        // TODO
+    }
 }

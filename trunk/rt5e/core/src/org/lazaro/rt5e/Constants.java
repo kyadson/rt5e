@@ -23,6 +23,22 @@ package org.lazaro.rt5e;
  * @author Lazaro
  */
 public class Constants {
+    public static class Equipment {
+        public static final int EQUIPMENT_SIZE = 14;
+
+        public static final int AMULET_SLOT = 2;
+        public static final int ARROWS_SLOT = 13;
+        public static final int BOOTS_SLOT = 10;
+        public static final int BOTTOMS_SLOT = 7;
+        public static final int CAPE_SLOT = 1;
+        public static final int CHEST_SLOT = 4;
+        public static final int GLOVES_SLOT = 9;
+        public static final int HELM_SLOT = 0;
+        public static final int RING_SLOT = 12;
+        public static final int SHIELD_SLOT = 5;
+        public static final int WEAPON_SLOT = 3;
+    }
+
     /**
      * The RS2 cache that the server uses.
      */
@@ -109,4 +125,11 @@ public class Constants {
      * The amount of SQL connections that should be pooled on startup.
      */
     public static final int SQL_CONNECTION_POOL_COUNT = 5;
+
+    /**
+     * XML file with a list of object aliases to simplify XML input/output and serialization.
+     */
+    public static final String XSTREAM_ALIASES = "./data/aliases.xml";
+
+    public static final String ITEM_DEFINITIONS = "./data/item_definitions.xml";
 }
