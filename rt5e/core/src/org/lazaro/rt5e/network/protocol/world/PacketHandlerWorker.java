@@ -86,7 +86,7 @@ public class PacketHandlerWorker implements Runnable {
                         handler.handle(player, packet);
                     } else {
                         System.err.println("Unhandled packet [player="
-                                + player.getName() + ", opcode="
+                                + player.getProtocolName() + ", opcode="
                                 + packet.getOpcode() + "]");
                     }
                     player.setPacketReceived(packet.getOpcode(), false);

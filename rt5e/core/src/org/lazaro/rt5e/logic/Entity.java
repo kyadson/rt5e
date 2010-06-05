@@ -34,7 +34,6 @@ import java.util.List;
  */
 public abstract class Entity extends Locatable {
     public static final Tile SPAWN = Tile.locate(3222, 3222, 0);
-    private Packet cachedAppearanceBlock = null;
     private Packet cachedMaskBlock = null;
     private boolean dead = false;
     protected final Direction direction = new Direction();
@@ -106,17 +105,5 @@ public abstract class Entity extends Locatable {
 
     public void setTeleporting(boolean teleporting) {
         this.teleporting = teleporting;
-    }
-
-    public Packet getCachedAppearanceBlock() {
-        return cachedAppearanceBlock;
-    }
-
-    public void setCachedAppearanceBlock(Packet cachedAppearanceBlock) {
-        this.cachedAppearanceBlock = cachedAppearanceBlock;
-    }
-
-    public boolean hasCachedAppearanceBlock() {
-        return cachedAppearanceBlock != null;
     }
 }

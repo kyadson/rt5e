@@ -24,6 +24,7 @@ import org.lazaro.rt5e.Context;
 import org.lazaro.rt5e.logic.player.Player;
 import org.lazaro.rt5e.login.LSException;
 import org.lazaro.rt5e.network.PacketBuilder;
+import org.lazaro.rt5e.utility.NameUtilities;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -43,7 +44,8 @@ public class LoginWorker implements Runnable {
             try {
                 LoginRequest login = loginQueue.take();
                 Player player = new Player(login.getConnection());
-                player.setName(login.getName());
+                player.setName(NameUtilities.formatNameForDisplay(login.getName()));
+                player.setProtocolName(NameUtilities.formatNameForProtocol(login.getName()));
                 player.setPassword(login.getPassword());
                 player.setLoginOpcode(login.getLoginOpcode());
                 LoginResponse response;

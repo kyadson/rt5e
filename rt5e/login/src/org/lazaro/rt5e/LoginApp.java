@@ -24,6 +24,7 @@ import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.lazaro.rt5e.io.SQLSession;
+import org.lazaro.rt5e.io.XStreamSession;
 import org.lazaro.rt5e.login.LSConnectionHandler;
 import org.lazaro.rt5e.login.LSDecoder;
 import org.lazaro.rt5e.login.LSMessageHandler;
@@ -75,6 +76,10 @@ public class LoginApp {
 
             Context.setConfiguration(new Configuration(Constants.LOGIN_SERVER_CONFIG));
             System.out.println("Loaded settings");
+
+            Context.setXStreamSession(new XStreamSession());
+            Context.getXStreamSession().loadAliases(Constants.XSTREAM_ALIASES);
+            System.out.println("Loaded aliases");
 
             sqlConnectionPool = new ObjectPool(SQLSession.class, new Initiator() {
                 public void init(Initiated object) throws Exception {

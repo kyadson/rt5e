@@ -19,6 +19,7 @@
  */
 package org.lazaro.rt5e;
 
+import org.lazaro.rt5e.io.XStreamSession;
 import org.lazaro.rt5e.io.cache.Cache;
 import org.lazaro.rt5e.logic.World;
 import org.lazaro.rt5e.logic.login.LoginWorker;
@@ -35,6 +36,7 @@ public class Context {
     private static LoginWorker loginWorker = null;
     private static boolean running = true;
     private static World world = null;
+    private static XStreamSession xStreamSession;
 
     public static Cache getCache() {
         return cache;
@@ -74,5 +76,13 @@ public class Context {
 
     public static void setWorld(World world) {
         Context.world = world;
+    }
+
+    public static XStreamSession getXStreamSession() {
+        return xStreamSession;
+    }
+
+    public static void setXStreamSession(XStreamSession xStreamSession) {
+        Context.xStreamSession = xStreamSession;
     }
 }

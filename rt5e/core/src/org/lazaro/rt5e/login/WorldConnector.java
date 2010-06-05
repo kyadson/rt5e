@@ -84,11 +84,11 @@ public class WorldConnector implements Runnable {
 
     public LoginResponse loadPlayer(Player player) throws LSException {
         PacketBuilder pb = new PacketBuilder(1);
-        pb.putString(player.getName());
+        pb.putString(player.getProtocolName());
         pb.putByte(player.getLoginOpcode());
         pb.putString(player.getPassword());
         sendPacket(pb.toPacket());
-        Packet packet = waitForPacket(player.getName());
+        Packet packet = waitForPacket(player.getProtocolName());
         LoginResponse result = LoginResponse.valueFor(packet.getUnsigned());
         if (result == LoginResponse.LOGIN) {
             PlayerDefinition def = (PlayerDefinition) packet.getObject();
@@ -146,7 +146,7 @@ public class WorldConnector implements Runnable {
 
     public void savePlayer(Player player) throws LSException {
         PacketBuilder pb = new PacketBuilder(2);
-        pb.putString(player.getName()).putByte(player.getLoginOpcode());
+        pb.putString(player.getProtocolName()).putByte(player.getLoginOpcode());
         PlayerDefinition def = new PlayerDefinition();
         def.setCoordX(player.getLocation().getX());
         def.setCoordY(player.getLocation().getY());
