@@ -89,19 +89,19 @@ public class Actions597 implements Actions {
 
         if (response == LoginResponse.LOGIN.getResponseCode()) {
             PacketBuilder responseBlock = new PacketBuilder();
-            responseBlock.putByte(1);
-            responseBlock.putByte(1);
-            responseBlock.putByte(1);
-            responseBlock.putByte(1);
-            responseBlock.putByte(1);
+            responseBlock.putByte(0);
+            responseBlock.putByte(0);
+            responseBlock.putByte(0);
+            responseBlock.putByte(0);
+            responseBlock.putByte(0);
             responseBlock.putShort(30); // member days left
 
-            responseBlock.putShort(0);
-            responseBlock.putShort(0);
-            responseBlock.putShort(0);
-            responseBlock.putInt(0);
+            responseBlock.putShort(1); // recovery questions
+            responseBlock.putShort(0);  // unread messages
+            responseBlock.putShort(3021); // 3021 - days since last loging
+            responseBlock.putInt(1 << 24 | 2 << 16 | 3 << 8 | 4); // last ip
 
-            responseBlock.putByte(0);
+            responseBlock.putByte(3); // email status (0 - no email, 1 - pending parental confirmation, 2 - pending confirmation, 3 - registered)
             responseBlock.putShort(0);
             responseBlock.putShort(0);
 
