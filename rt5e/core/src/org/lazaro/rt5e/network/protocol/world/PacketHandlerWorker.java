@@ -23,6 +23,7 @@ import org.lazaro.rt5e.Constants;
 import org.lazaro.rt5e.Context;
 import org.lazaro.rt5e.logic.player.Player;
 import org.lazaro.rt5e.network.Packet;
+import org.lazaro.rt5e.network.protocol.world.handler.SilentPacketHandler;
 import org.lazaro.rt5e.utility.Configuration;
 
 import java.io.IOException;
@@ -40,29 +41,34 @@ public class PacketHandlerWorker implements Runnable {
             String[] handlerNames = config.getStringArray("packet_handler");
             for (int i = 0; i < handlerNames.length; i++) {
                 if (handlerNames[i] != null) {
-                    try {
-                        Class<?> handlerClass = Class
-                                .forName(Constants.PACKET_HANDLER_PACKAGE + "."
-                                        + handlerNames[i]);
-                        PacketHandler handler = (PacketHandler) handlerClass
-                                .newInstance();
-                        PacketHandler.PACKET_HANDLER[i] = handler;
+                    if (!handlerNames[i].equalsIgnoreCase("null")) {
+                        try {
+                            Class<?> handlerClass = Class
+                                    .forName(Constants.PACKET_HANDLER_PACKAGE + "."
+                                            + handlerNames[i]);
+                            PacketHandler handler = (PacketHandler) handlerClass
+                                    .newInstance();
+                            PacketHandler.PACKET_HANDLER[i] = handler;
+                            count++;
+                        } catch (ClassNotFoundException e) {
+                            System.err
+                                    .println("Could not find packet handler [opcode="
+                                            + i + ", name=" + handlerNames[i] + "]");
+                            e.printStackTrace();
+                        } catch (InstantiationException e) {
+                            System.err
+                                    .println("Error loading packet handler [opcode="
+                                            + i + ", name=" + handlerNames[i] + "]");
+                            e.printStackTrace();
+                        } catch (IllegalAccessException e) {
+                            System.err
+                                    .println("Error loading message handler [opcode="
+                                            + i + ", name=" + handlerNames[i] + "]");
+                            e.printStackTrace();
+                        }
+                    } else {
+                        PacketHandler.PACKET_HANDLER[i] = new SilentPacketHandler();
                         count++;
-                    } catch (ClassNotFoundException e) {
-                        System.err
-                                .println("Could not find packet handler [opcode="
-                                        + i + ", name=" + handlerNames[i] + "]");
-                        e.printStackTrace();
-                    } catch (InstantiationException e) {
-                        System.err
-                                .println("Error loading packet handler [opcode="
-                                        + i + ", name=" + handlerNames[i] + "]");
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        System.err
-                                .println("Error loading message handler [opcode="
-                                        + i + ", name=" + handlerNames[i] + "]");
-                        e.printStackTrace();
                     }
                 }
             }

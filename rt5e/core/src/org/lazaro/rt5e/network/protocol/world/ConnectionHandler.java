@@ -43,6 +43,7 @@ public class ConnectionHandler extends SimpleChannelHandler {
                                     ChannelStateEvent e) {
         Channel ch = ctx.getChannel();
 
+        ConnectionMap.forChannel(ch).destroy();
         ConnectionMap.release(ch);
 
         System.out.println("Channel disconnected <"
@@ -51,7 +52,7 @@ public class ConnectionHandler extends SimpleChannelHandler {
 
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
-        e.getCause().printStackTrace();
+        // e.getCause().printStackTrace();
 
         Channel ch = e.getChannel();
         ch.close();

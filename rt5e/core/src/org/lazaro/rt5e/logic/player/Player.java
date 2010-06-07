@@ -20,6 +20,7 @@
 package org.lazaro.rt5e.logic.player;
 
 import org.lazaro.rt5e.Constants;
+import org.lazaro.rt5e.Context;
 import org.lazaro.rt5e.logic.Entity;
 import org.lazaro.rt5e.logic.item.AppearanceListener;
 import org.lazaro.rt5e.logic.item.ItemCollection;
@@ -30,6 +31,7 @@ import org.lazaro.rt5e.network.Connection;
 import org.lazaro.rt5e.network.Packet;
 import org.lazaro.rt5e.network.protocol.world.Actions;
 import org.lazaro.rt5e.network.protocol.world.Actions597;
+import org.lazaro.rt5e.utility.Destroyed;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -37,7 +39,15 @@ import java.util.Queue;
 /**
  * @author Lazaro
  */
-public class Player extends Entity {
+public class Player extends Entity implements Destroyed {
+    public void destroy() {
+        if (!destroyed) {
+            destroyed = true;
+
+            Context.getWorld().remove(this);
+        }
+    }
+
     public static enum Gender {
         FEMALE(1), MALE(0);
         private int value;
@@ -64,6 +74,7 @@ public class Player extends Entity {
         }
     }
 
+    private boolean destroyed = false;
     private Actions actions;
     private Connection connection;
     private Actions.DisplayMode displayMode = null;
@@ -104,6 +115,10 @@ public class Player extends Entity {
 
     @Override
     protected void _reset() {
+    }
+
+    public boolean isDestroyed() {
+        return destroyed;
     }
 
     public Actions getActions() {
