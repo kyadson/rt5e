@@ -21,6 +21,7 @@ package org.lazaro.rt5e.network;
 
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
+import org.lazaro.rt5e.logic.player.Player;
 import org.lazaro.rt5e.utility.crypto.ISAACCipher;
 
 /**
@@ -103,6 +104,8 @@ public class Connection {
     }
 
     public void destroy() {
-        // TODO
+        if (attachment instanceof Player) {
+            ((Player) attachment).destroy();
+        }
     }
 }

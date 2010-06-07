@@ -106,6 +106,17 @@ public class Constants {
         MESSAGE_LENGTHS[43] = 0; // world list req
 
         MESSAGE_LENGTHS[66] = 6; // screen set
+        MESSAGE_LENGTHS[34] = 0; // rendered map
+        MESSAGE_LENGTHS[4] = -1; // ??
+        MESSAGE_LENGTHS[5] = 4; // camera values?
+        MESSAGE_LENGTHS[8] = 2; // interface related value?
+        MESSAGE_LENGTHS[22] = 2; // world ping?
+        MESSAGE_LENGTHS[26] = 4; // camera moved
+        MESSAGE_LENGTHS[57] = 1; // window focus
+        MESSAGE_LENGTHS[37] = 6; // mouse clicked
+        MESSAGE_LENGTHS[26] = 4; // player typed
+        MESSAGE_LENGTHS[38] = 5; // normal walk
+        MESSAGE_LENGTHS[58] = 18; // minimap walk
     }
 
     /**

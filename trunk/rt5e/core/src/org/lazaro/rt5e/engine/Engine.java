@@ -32,8 +32,9 @@ import java.util.concurrent.TimeUnit;
  * @author Lazaro
  */
 public class Engine {
-    private final static Engine instance = new Engine();
     private static final double THREAD_MULTIPLIER = 1.0;
+
+    private static final Engine instance = new Engine();
 
     public static Engine getInstance() {
         return instance;

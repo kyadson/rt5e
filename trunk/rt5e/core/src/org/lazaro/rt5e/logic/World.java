@@ -26,6 +26,7 @@ import org.lazaro.rt5e.logic.item.ItemDefinition;
 import org.lazaro.rt5e.logic.player.Player;
 import org.lazaro.rt5e.logic.utility.NodeCollection;
 import org.lazaro.rt5e.logic.utility.PlayerUpdater;
+import org.lazaro.rt5e.login.LSException;
 import org.lazaro.rt5e.login.WorldConnector;
 import org.lazaro.rt5e.network.protocol.world.GPI597;
 import org.lazaro.rt5e.utility.Logger;
@@ -76,8 +77,20 @@ public class World implements Runnable {
         return success;
     }
 
-    public void remove(Player player) {
-        globalPlayers.remove(player);
+    public void remove(final Player player) {
+        boolean success = globalPlayers.remove(player);
+        if (success) {
+            Engine.getInstance().executeBlocking(new Runnable() {
+                public void run() {
+                    try {
+                        session.savePlayer(player);
+                    } catch (LSException e) {
+                        System.err.println("Error saving player [" + player + "]");
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
         System.out.println("Removed player [" + player + "]");
     }
 
